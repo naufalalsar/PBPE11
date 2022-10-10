@@ -1,7 +1,7 @@
 # Tugas Kelompok PBP
 ## Kelompok PBP E11:
 - Mohammad Ferry Husnil Arif (2106709112)
-- Muhammad Naufal Zaky Alsar
+- Muhammad Naufal Zaky Alsar (2106752041)
 - Vander Gerald Sukandi
 - Muhammad Rayhan Denel (2106752161)
 - Bimo Priyohutomo (2106708444)
