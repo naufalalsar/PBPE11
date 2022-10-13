@@ -1,5 +1,7 @@
 # Tugas Kelompok PBP
+
 ## Kelompok PBP E11:
+
 - Mohammad Ferry Husnil Arif (2106709112)
 - Muhammad Naufal Zaky Alsar (2106752041)
 - Vander Gerald Sukandi
@@ -10,21 +12,24 @@
 ## Tautan : https://saku-in.herokuapp.com/
 
 ## Cerita Aplikasi:
-Website ini dirancang untuk membantu orang untuk mengelola keuangan, terlebih khusus untuk mahasiswa yang keuangannya memiliki perhatian khusus. Website ini memiliki beberapa fitur yaitu Dompet (untuk informasi keuangan terkini), catatan pengeluaran/pemasukan, target (memasang target pengumpulan uang), report (menampilkan laporan mengenai keuangan pada waktu tertentu). 
+
+Website ini dirancang untuk membantu orang untuk mengelola keuangan. Website ini memiliki beberapa fitur yaitu Dompet (untuk informasi keuangan terkini), Forum pengeluaran/pemasukan, Untuk mengkonversi satu mata uang ke uang mata lainnya (yang menentukan nilai kurs adalah admin), Berita Finansial Berita finansial yang diberikan oleh admin ada kategori juga untuk berita, Donasi Pengguna bisa mendonasikan sejumlah uangnya dan terintegrasi ke dompet kita (kalau uangnya kurang bakal dikasih warning)
 
 ## Module:
-- Dompet
-<br>Modul yang menampilkan keuangan pengguna saat ini berdasarkan tempat penyimpanan uang contoh: Cash, Bank, E-Wallet.
-- Pengeluaran/pemasukan 
-<br>Input nominal pengeluaran dan pemasukan dalam dompet berdasarkan tempat penyimpanan uang.
-- Catatan
-<br>Menampilkan catatan pemasukan dan pengeluaran pada waktu tertentu
-- Report
-<br>Menampilkan konklusi mengenai keuangan pada waktu tertentu dan menampilkan chart pengeluaran dan pemasukan
-- Homepage
-<br>Menampilkan cerita tentang aplikasi untuk role guest dan membuat login serta register page dan menghubungkan semua modul.
 
+- Dompet
+Modul yang menampilkan keuangan pengguna saat ini. Pengeluaran/pemasukan Input nominal pengeluaran dan pemasukan dalam dompet berdasarkan tempat penyimpanan uang.
+- Forum
+Forum diskusi antara user dan dapat mereply forum
+- Berita Finansial
+Berita finansial yang diberikan oleh admin ada kategori juga untuk berita
+- Kurs
+Untuk mengkonversi satu mata uang ke uang mata lainnya (yang menentukan nilai kurs adalah admin)
+- Donasi
+Pengguna bisa mendonasikan sejumlah uangnya dan terintegrasi ke dompet kita (kalau uangnya kurang bakal dikasih warning). Yang buka donasi user dan ada deskripsi.
 
 ## Role:
+
 - Guest (user yang belum log in)
 - User (pengguna yang sudah terautentifikasi)
+- Admin (Pengguna yang dapat mengupdate kurs dan berita)
