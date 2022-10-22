@@ -18,19 +18,23 @@ Website ini dirancang untuk membantu orang untuk mengelola keuangan. Website ini
 ## Module:
 
 - Dompet
-<br>
+
 Modul yang menampilkan keuangan pengguna saat ini. Pengeluaran/pemasukan Input nominal pengeluaran dan pemasukan dalam dompet berdasarkan tempat penyimpanan uang.
+
 - Forum
-<br>
+
 Forum diskusi antara user dan dapat mereply forum
+
 - Berita Finansial
-<br>
+
 Berita finansial yang diberikan oleh admin ada kategori juga untuk berita
+
 - Kurs
-<br>
+
 Untuk mengkonversi satu mata uang ke uang mata lainnya (yang menentukan nilai kurs adalah admin)
+
 - Donasi
-<br>
+
 Pengguna bisa mendonasikan sejumlah uangnya dan terintegrasi ke dompet kita (kalau uangnya kurang bakal dikasih warning). Yang buka donasi user dan ada deskripsi.
 
 ## Role:
