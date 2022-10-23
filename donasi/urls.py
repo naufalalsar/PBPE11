@@ -1,5 +1,5 @@
 from django.urls import path
-from example_app.views import index
+from donasi.views import index
 
 app_name = 'donasi'
 
