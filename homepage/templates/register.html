@@ -1,0 +1,85 @@
+{% extends 'base.html' %} {% block meta %}
+<title>Registrasi Akun</title>
+{% endblock meta %} {% block content %}
+
+<div
+  class="w-2/3 h-5/6 max-w-sm flex flex-col items-center border border-none rounded-xl shadow-xl bg-neutral-800"
+>
+  <form method="POST" class="w-full flex flex-col items-center gap-y-3">
+    {% csrf_token %}
+
+    <div class="py-3 w-full flex justify-center rounded-t-xl bg-base-300">
+      <h1 class="text-lg md:text-xl font-bold">Register</h1>
+    </div>
+
+    <div
+      class="mt-5 flex flex-col items-start gap-y-1 w-3/4 text-sm md:text-base"
+    >
+      <label for="id_username" class="font-bold">Username</label>
+      <input
+        class="input input-bordered w-full rounded-2xl"
+        type="text"
+        name="username"
+        placeholder="username"
+        maxlength="50"
+        required=""
+        id="id_username"
+      />
+      <span class="helptext text-xs"
+        >Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+        only.</span
+      >
+    </div>
+    <div class="flex flex-col items-start gap-y-1 w-3/4 text-sm md:text-base">
+      <label for="id_password1" class="font-bold">Password</label>
+      <input
+        class="input input-bordered w-full rounded-2xl"
+        type="password"
+        name="password1"
+        placeholder="password"
+        maxlength="50"
+        required
+        autocomplete="new-password"
+        id="id_password1"
+      />
+      <span class="helptext text-xs">
+        <ul>
+          <li>
+            Your password can’t be too similar to your other personal
+            information.
+          </li>
+          <li>Your password must contain at least 8 characters.</li>
+          <li>Your password can’t be a commonly used password.</li>
+          <li>Your password can’t be entirely numeric.</li>
+        </ul>
+      </span>
+    </div>
+    <div class="flex flex-col items-start gap-y-1 w-3/4 text-sm md:text-base">
+      <label for="id_password2" class="font-bold">Confirm Password</label>
+      <input
+        class="input input-bordered w-full rounded-2xl"
+        type="password"
+        name="password2"
+        placeholder="confirm password"
+        maxlength="50"
+        required
+        autocomplete="new-password"
+        id="id_password2"
+      />
+      <span class="helptext text-xs"
+        >Enter the same password as before, for verification.</span
+      >
+    </div>
+    <label role="button" class="w-3/4 mb-5 btn text-xs md:text-sm"
+      ><button type="submit" class="w-full uppercase">register</button></label
+    >
+    <p class="mb-3 text-sm">
+      Atau sudah mempunyai akun?
+      <a href="{% url 'homepage:login' %}" class="hover:underline text-blue-700"
+        >Login</a
+      >
+    </p>
+  </form>
+</div>
+
+{% endblock content %}
