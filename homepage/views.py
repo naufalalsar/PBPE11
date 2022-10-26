@@ -8,7 +8,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.http import JsonResponse
@@ -27,7 +26,7 @@ def login_user(request):
             response = HttpResponseRedirect(reverse("homepage:homepage"))
             return response
         else:
-            messages.info(request, 'Username atau Password salah!')
+            messages.error(request, 'Username atau Password salah!')
     context = {"button_hidden": True}
     return render(request, 'login.html', context)
 
@@ -45,6 +44,8 @@ def register(request):
             form.save()
             messages.success(request, 'Akun telah berhasil dibuat!')
             return redirect('homepage:login')
+        else:
+            messages.error(request, 'Akun gagal dibuat!')
     
     context = {"button_hidden": True}
     return render(request, 'register.html', context)

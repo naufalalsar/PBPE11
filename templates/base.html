@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" data-theme="forest">
+<html lang="en" data-theme="emerald">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,8 +14,8 @@
     {% block meta %} {% endblock meta %}
   </head>
 
-  <body>
-    <div class="navbar bg-base-100 outline outline-1 outline-green-500">
+  <body class="min-h-screen">
+    <div class="w-full navbar bg-primary font-bold">
       <div class="navbar-start">
         <div class="dropdown">
           <label tabindex="0" class="btn btn-ghost btn-circle">
@@ -36,40 +36,39 @@
           </label>
           <ul
             tabindex="0"
-            class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-primary rounded-box w-52"
           >
             <li><a>Homepage</a></li>
             <li><a>Dompet</a></li>
             <li><a>Berita</a></li>
             <li><a>Forum</a></li>
-            <li><a>Kurs</a></li>
+            <li><a href="{% url 'kurs:kurs' %}">Kurs</a></li>
             <li><a>Donasi</a></li>
           </ul>
         </div>
       </div>
       <div class="navbar-center">
-        <a class="btn btn-ghost normal-case text-xl">Saku-In</a>
+        <p class="text-sm md:text-2xl cursor-pointer">Saku-In</p>
       </div>
       <div class="navbar-end">
         {% if user.is_authenticated %}
         <a
           href="{% url 'homepage:logout' %}"
-          role="button"
-          class="btn btn-primary btn-xs text-xs md:btn-sm md:text-base"
-          >Logout</a
+          class="mr-5 text-xs md:text-lg transition duration-200 hover:scale-105"
+          >Log Out</a
         >
         {% elif not button_hidden %}
         <a
           href="{% url 'homepage:login' %}"
           role="button"
           class="btn btn-primary btn-xs text-xs md:btn-sm md:text-base"
-          >Login</a
+          ><span class="hover:font-bold">Log In</span></a
         >
         {% endif %}
       </div>
     </div>
 
-    <main class="bg-base-100 mt-10 flex flex-col items-center">
+    <main class="w-full min-h-screen bg-base-100 mt-24 flex flex-col items-center">
       {% if messages %}
       <div class="w-2/3 max-w-sm">
         <ul>
