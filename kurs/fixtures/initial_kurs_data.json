@@ -1,0 +1,155 @@
+[
+    {
+        "model": "kurs.currency",
+        "pk": 1,
+        "fields": {
+            "code": "ARS",
+            "name": "Argentine Peso",
+            "icon": "images/ARS.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 2,
+        "fields": {
+            "code": "AUD",
+            "name": "Australian Dollar",
+            "icon": "images/AUD.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 3,
+        "fields": {
+            "code": "BRL",
+            "name": "Brazilian Real",
+            "icon": "images/BRL.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 4,
+        "fields": {
+            "code": "CAD",
+            "name": "Canadian Dollar",
+            "icon": "images/CAD.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 5,
+        "fields": {
+            "code": "CNY",
+            "name": "Chinese Yuan",
+            "icon": "images/CNY.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 6,
+        "fields": {
+            "code": "EUR",
+            "name": "Euro",
+            "icon": "images/EUR.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 7,
+        "fields": {
+            "code": "INR",
+            "name": "Indian Rupee",
+            "icon": "images/INR.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 8,
+        "fields": {
+            "code": "IDR",
+            "name": "Indonesian Rupiah",
+            "icon": "images/IDR.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 9,
+        "fields": {
+            "code": "JPY",
+            "name": "Japanese Yen",
+            "icon": "images/JPY.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 10,
+        "fields": {
+            "code": "KRW",
+            "name": "Korean Won",
+            "icon": "images/KRW.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 11,
+        "fields": {
+            "code": "MXN",
+            "name": "Mexican Peso",
+            "icon": "images/MXN.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 12,
+        "fields": {
+            "code": "RUB",
+            "name": "Russian Ruble",
+            "icon": "images/RUB.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 13,
+        "fields": {
+            "code": "SAR",
+            "name": "Saudi Riyal",
+            "icon": "images/SAR.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 14,
+        "fields": {
+            "code": "ZAR",
+            "name": "South African Rand",
+            "icon": "images/ZAR.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 15,
+        "fields": {
+            "code": "TRY",
+            "name": "Turkish Lira",
+            "icon": "images/TRY.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 16,
+        "fields": {
+            "code": "GBP",
+            "name": "British Pound",
+            "icon": "images/GBP.png"
+        }
+    },
+    {
+        "model": "kurs.currency",
+        "pk": 17,
+        "fields": {
+            "code": "USD",
+            "name": "United States Dollar",
+            "icon": "images/USD.png"
+        }
+    }
+]
