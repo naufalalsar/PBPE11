@@ -1,100 +1,82 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" data-theme="emerald">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/daisyui@2.31.0/dist/full.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    {% block meta %} {% endblock meta %}
-  </head>
+<html lang="en" data-theme="emerald" class="h-full">
 
-  <body class="min-h-screen">
-    <div class="w-full navbar bg-primary font-bold">
-      <div class="navbar-start">
-        <div class="dropdown">
-          <label tabindex="0" class="btn btn-ghost btn-circle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h7"
-              />
-            </svg>
-          </label>
-          <ul
-            tabindex="0"
-            class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-primary rounded-box w-52"
-          >
-            <li><a>Homepage</a></li>
-            <li><a>Dompet</a></li>
-            <li><a>Berita</a></li>
-            <li><a>Forum</a></li>
-            <li><a href="{% url 'kurs:kurs' %}">Kurs</a></li>
-            <li><a>Donasi</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="navbar-center">
-        <p class="text-sm md:text-2xl cursor-pointer">Saku-In</p>
-      </div>
-      <div class="navbar-end">
-        {% if user.is_authenticated %}
-        <a
-          href="{% url 'homepage:logout' %}"
-          class="mr-5 text-xs md:text-lg transition duration-200 hover:scale-105"
-          >Log Out</a
-        >
-        {% elif not button_hidden %}
-        <a
-          href="{% url 'homepage:login' %}"
-          role="button"
-          class="btn btn-primary btn-xs text-xs md:btn-sm md:text-base"
-          ><span class="hover:font-bold">Log In</span></a
-        >
-        {% endif %}
-      </div>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.31.0/dist/full.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  {% block meta %} {% endblock meta %}
+</head>
 
-    <main class="w-full min-h-screen bg-base-100 mt-24 flex flex-col items-center">
-      {% if messages %}
-      <div class="w-2/3 max-w-sm">
-        <ul>
-          {% for message in messages %}
-          <div class="alert alert-{{message.tags}} shadow-lg py-2">
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                class="stroke-current flex-shrink-0 w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                ></path>
-              </svg>
-              <span>{{message}}</span>
-            </div>
-          </div>
-          {% endfor %}
+<body class="min-h-screen">
+  <div class="w-full navbar bg-primary font-bold">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <label tabindex="0" class="btn btn-ghost btn-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+          </svg>
+        </label>
+        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-primary rounded-box w-52">
+          <li><a>Homepage</a></li>
+          <li><a href="{% url 'dompet:show_dompet' %}">Dompet</a></li>
+          <li><a>Berita</a></li>
+          <li><a>Forum</a></li>
+          <li><a href="{% url 'kurs:kurs' %}">Kurs</a></li>
+          <li><a>Donasi</a></li>
         </ul>
       </div>
-      {% endif %} {% block content %} {% endblock content %}
-    </main>
-  </body>
+    </div>
+    <div class="navbar-center">
+      <p class="text-sm md:text-2xl cursor-pointer">Saku-In</p>
+    </div>
+    <div class="navbar-end">
+      {% if user.is_authenticated %}
+      <a href="{% url 'homepage:logout' %}" class="mr-5 text-xs md:text-xs transition duration-200 hover:scale-105">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="#000000" stroke-width="2" fill="none"
+          stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </a>
+      {% elif not button_hidden %}
+      <a href="{% url 'homepage:login' %}" role="button"
+        class="mr-5 text-xs md:text-xs transition duration-200 hover:scale-105">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="#000000" stroke-width="2" fill="none"
+          stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+          <polyline points="10 17 15 12 10 7"></polyline>
+          <line x1="15" y1="12" x2="3" y2="12"></line>
+        </svg>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <main class="bg-base-100 mt-10 flex flex-col items-center min-h-screen">
+    {% if messages %}
+    <div class=" w-2/3 max-w-sm">
+      <ul>
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} shadow-lg py-2">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              class="stroke-current flex-shrink-0 w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>{{message}}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %} {% block content %} {% endblock content %}
+  </main>
+</body>
+
 </html>

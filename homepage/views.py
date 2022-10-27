@@ -8,9 +8,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.http import JsonResponse
+from dompet.models import Dompet
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your views here.
 def homepage(request):
@@ -43,6 +47,9 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Akun telah berhasil dibuat!')
+            new_user = User.objects.get(username=form.cleaned_data.get('username'))
+            Dompet.objects.create(user=new_user, saldo=0).save()
+
             return redirect('homepage:login')
         else:
             messages.error(request, 'Akun gagal dibuat!')
