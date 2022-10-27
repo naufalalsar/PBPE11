@@ -30,7 +30,7 @@ def login_user(request):
             response = HttpResponseRedirect(reverse("homepage:homepage"))
             return response
         else:
-            messages.info(request, 'Username atau Password salah!')
+            messages.error(request, 'Username atau Password salah!')
     context = {"button_hidden": True}
     return render(request, 'login.html', context)
 
@@ -51,6 +51,8 @@ def register(request):
             Dompet.objects.create(user=new_user, saldo=0).save()
 
             return redirect('homepage:login')
+        else:
+            messages.error(request, 'Akun gagal dibuat!')
     
     context = {"button_hidden": True}
     return render(request, 'register.html', context)
