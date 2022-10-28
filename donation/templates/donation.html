@@ -74,7 +74,7 @@
 
 
 
-<div class="col-span-4" id="card-row">
+<div class="flex-row" id="card-row">
 
 </div>
 
@@ -95,7 +95,7 @@
             console.log(item.pk)
             item.pk
           let pk = "{% url 'donation:transaksi_donasi' " + item.pk + " %}"
-          htmlString += `\n<div class="row-span-2">
+          htmlString += `\n<div class="col-span-2">
             <div class="card w-96 bg-primary text-primary-content">
                 <div class="card-body">
                   <h2 class="card-title">${item.fields.title}</h2>

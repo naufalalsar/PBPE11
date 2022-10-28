@@ -22,11 +22,6 @@
                 <div class="stat-title">Saldo</div>
                 <div class="stat-value">Rp. {{dompet.saldo}}</div>
                 <div class="stat-actions flex flex-col md:flex-row gap-2">
-                    <!-- <label for="modal-create-arus-kas" role="button" class="btn btn-sm btn-warning">
-                        Buat Catatan
-                    </label>
-                    <button class="btn btn-sm">Donasi</button> -->
-
                     <label for="modal-create-arus-kas" role="button"
                         class="flex flex-col items-center p-2 gap-2 rounded-xl w-1/2 md:w-1/4 bg-primary hover:brightness-[90%] transition-all duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -151,8 +146,7 @@
             <div class="flex flex-col items-start gap-y-1 w-5/6 text-sm md:text-base">
                 <label for="id-tipe" class="label font-bold">Tipe</label>
                 <select class="select select-bordered rounded-xl w-full" name="tipe" id="id-tipe" required="">
-                    <option disabled selected>Pilih salah satu</option>
-                    <option value="1">Pemasukan</option>
+                    <option value="1" selected>Pemasukan</option>
                     <option value="-1">Pengeluaran</option>
                 </select>
             </div>

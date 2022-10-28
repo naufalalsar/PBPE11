@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 style="text-align: center;">Forum</h1>
+
+<!-- The button to open modal -->
+<label for="my-modal" class="btn modal-button">Create Forum</label>
+
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="my-modal" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box">
+    <div class="form-control min-w-full">
+        <div class="form-control">
+            <label class="label">
+              <span class="label-text">Judul</span>
+            </label>
+            <input type="text" class="input input-bordered" id="judul"/>
+        </div>
+        <label class="label">
+          <span class="label-text">Isi</span>
+        </label> 
+        <div class="form-control min-w-full">
+            <textarea class="textarea textarea-bordered" id="isi"></textarea> 
+        </div>
+            <div><button for="my-modal" class="btn btn-secondary" onclick="update()">Create</button></div>
+      </div>
+    <div class="modal-action">
+      <label for="my-modal" class="btn">Close</label>
+    </div>
+  </div>
+</div>
+
+<div class="flex flex-col" id="container">
+    
+</div>
+
+<script>
+    function show(){
+        $.get("/forum/jsonforum", function(data){
+            $("#container").html("")
+            for(let i = 0; i < data.length; i++){
+                let d = new Date(data[i].fields.tanggal.substring(0,10));
+                const date = d.toDateString()
+                $("#container").append(`<div class="card bg-primary text-primary-content">
+  <div class="card-body">
+    <h2 class="card-title">${data[i].fields.judul}</h2>
+    <p>${data[i].fields.isi}</p>
+    <ol class="list-disc">
+  <li>Added : ${date}</li>
+    </ol>
+  </div>
+  <div class="card-actions justify-end">
+      <a class="btn btn-primary" href="/forum/komen/${data[i].pk}">Show More</a>
+      <a class="btn btn-error" onclick="deleteForum(${data[i].pk})">Delete</a>
+    </div>
+</div>`)
+            }
+        })
+    }
+
+    $(document).ready(function(){
+          show();
+      });
+
+    function deleteForum(id){
+        $.ajax({
+          url: `/forum/deleteforum/${id}`,
+          type: "DELETE",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+          },
+        success: function(){
+            show();
+        },
+      })}
+
+      function update(){
+        $.ajax({
+          url: "/forum/addforum/",
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+          },
+          data:{
+            judul : $('#judul').val(),
+            isi : $("#isi").val(),
+          },
+        success: function(){
+          show();
+        },
+      })}
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+
+</script>
+
+
+
+{% endblock content %}
+
