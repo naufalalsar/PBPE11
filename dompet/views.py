@@ -10,7 +10,11 @@ import datetime
 
 @login_required(login_url="homepage:login")
 def show_dompet(request):
-    dompet = Dompet.objects.get(user=request.user)
+    try:
+        dompet = Dompet.objects.get(user=request.user)
+    except Dompet.DoesNotExist:
+        dompet = Dompet.objects.create(user=request.user, saldo=0)
+
     arus_kas = ArusKas.objects.filter(dompet=dompet)
 
     pemasukan, pengeluaran = 0, 0
@@ -69,7 +73,10 @@ def show_arus_kas_json(request):
 @login_required(login_url="homepage:login")
 def create_arus_kas(request):
     if request.method == "POST":
-        dompet = Dompet.objects.get(user=request.user)
+        try:
+            dompet = Dompet.objects.get(user=request.user)
+        except Dompet.DoesNotExist:
+            dompet = Dompet.objects.create(user=request.user, saldo=0)
         nominal = request.POST.get("nominal")
         keterangan = request.POST.get("keterangan")
         tipe = request.POST.get("tipe")
@@ -92,10 +99,13 @@ def create_arus_kas(request):
 @login_required(login_url="homepage:login")
 def create_arus_kas_ajax(request):
     if request.method == "POST":
+        try:
+            dompet = Dompet.objects.get(user=request.user)
+        except Dompet.DoesNotExist:
+            dompet = Dompet.objects.create(user=request.user, saldo=0)
         nominal = request.POST.get("nominal")
         keterangan = request.POST.get("keterangan")
         tipe = request.POST.get("tipe")
-        dompet = Dompet.objects.get(user=request.user)
         temp_saldo = dompet.saldo + int(tipe) * int(nominal)
         if temp_saldo < 0:
             return JsonResponse(
