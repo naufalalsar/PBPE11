@@ -26,7 +26,6 @@ def show_dompet(request):
     context = {
         "nama": request.user.username,
         "dompet": dompet,
-        "arus_kas": arus_kas,
         "pemasukan": pemasukan,
         "pengeluaran": pengeluaran,
         "total": total,
@@ -134,6 +133,8 @@ def filter_arus_kas(request, filter_type):
         arus_kas = arus_kas.filter(created_at__month=datetime.date.today().month)
     elif filter_type == "year":
         arus_kas = arus_kas.filter(created_at__year=datetime.date.today().year)
+    elif filter_type == "all":
+        pass
     else:
         return JsonResponse({"status": "error"})
 
@@ -147,15 +148,14 @@ def filter_arus_kas(request, filter_type):
     is_positive = total >= 0
     total = abs(total)
 
-    resp = {
-        "status": "success",
-        "arus_kas": arus_kas,
+    context = {
+        "nama": request.user.username,
         "pemasukan": pemasukan,
         "pengeluaran": pengeluaran,
         "total": total,
         "is_positive": is_positive,
     }
-    return render(request, "arus_kas.html", context=resp)
+    return render(request, "dompet.html", context=context)
 
 
 @login_required(login_url="homepage:login")

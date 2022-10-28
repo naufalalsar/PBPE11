@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Dompet(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     saldo = models.IntegerField()
 
 
