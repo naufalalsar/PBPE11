@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% load static %} {% block meta %}
+<title>Kurs</title>
+{% endblock meta %} {% block content %}
+<h1 class="text-sm md:text-2xl">Exchange Rate G-20 Country</h1>
+<div class="mt-10 overflow-x-auto">
+  <table class="table w-full">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th></th>
+        <th>Currency</th>
+        <th>Amount</th>
+        <th>Change (1d)</th>
+        <th>Change (1w)</th>
+        <th>Change (1m)</th>
+        <th>Change (1y)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for currency in currencies %}
+      <tr class="hover">
+        <th>{{currency.pk}}</th>
+        <td><img src="{% static currency.icon %}" class="h-4 w-6 inline mr-2" /><span class="font-bold mr-2">{{currency.code}}</span>{{currency.name}}</td>
+        <td>15,574.32</td>
+        <td><span class="text-success">0.8%</span></td>
+        <td><span class="text-error">-0.8%</span></td>
+        <td><span class="text-success">0.8%</span></td>
+        <td><span class="text-success">0.8%</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

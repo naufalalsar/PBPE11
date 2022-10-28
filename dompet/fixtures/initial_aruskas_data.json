@@ -1,0 +1,22 @@
+[
+    {
+        "model": "dompet.ArusKas",
+        "pk": 1,
+        "fields": {
+            "created_at": "2022-09-01",
+            "jenis": "Pemasukan",
+            "jumlah": 1000000,
+            "keterangan": "Pemasukan awal"
+        }
+    },
+    {
+        "model": "dompet.ArusKas",
+        "pk": 2,
+        "fields": {
+            "created_at": "2022-01-01",
+            "jenis": "Pengeluaran",
+            "jumlah": 1000000,
+            "keterangan": "Pengeluaran awal"
+        }
+    }
+]
