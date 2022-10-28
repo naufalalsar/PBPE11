@@ -8,7 +8,7 @@
 
 <br></br>
 
-  <div class="flex flex-row">
+  <div class="flex flex-col md:flex-row">
     <div><p>Category Filter : </p></div>
     <div><button class="btn btn-secondary" onclick="show_all()">All</button></div>
     <div><button class="btn btn-secondary" onclick="show_filter('uang')">Money</button></div>
@@ -20,7 +20,7 @@
 
 <br></br>
 
-<div class="flex flex-col" id="container">
+<div class="flex flex-col w-3/4" id="container">
     
 </div>
 
@@ -31,7 +31,7 @@
             for(let i = 0; i < data.length; i++){
                 let d = new Date(data[i].fields.date.substring(0,10));
                 const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content">
+                $("#container").append(`<div class="card bg-primary text-primary-content w-full">
   <div class="card-body">
     <h2 class="card-title">${data[i].fields.title}</h2>
     <ol class="list-disc">
@@ -60,7 +60,7 @@
                 if(data[i].fields.category == filter){
                 let d = new Date(data[i].fields.date.substring(0,10));
                 const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content">
+                $("#container").append(`<div class="card bg-primary text-primary-content w-full">
   <div class="card-body">
     <h2 class="card-title">${data[i].fields.title}</h2>
     <ol class="list-disc">
@@ -68,11 +68,11 @@
   <li>Category : ${data[i].fields.category}</li>
   <li>Writer : ${data[i].fields.writer}</li>
     </ol>
-    <div class="card-actions justify-end">
+  </div>
+  <div class="card-actions justify-end">
       <a class="btn btn-primary" href="/berita/show/${data[i].pk}">Show More</a>
       <a class="btn btn-error" onclick="deleteBerita(${data[i].pk})">Delete</a>
     </div>
-  </div>
 </div>`)}
             }
         })

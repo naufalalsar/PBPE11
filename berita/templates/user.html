@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <h1 style="text-align: center;">Berita Finansial Terkini</h1>
 
 <br></br>
 
-  <div class="flex flex-row">
+<br></br>
+
+  <div class="flex flex-col md:flex-row">
     <div><p>Category Filter : </p></div>
-    <div><button class="btn btn-secondary" onclick="show_all()">Semua</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('uang')">Uang</button></div>
+    <div><button class="btn btn-secondary" onclick="show_all()">All</button></div>
+    <div><button class="btn btn-secondary" onclick="show_filter('uang')">Money</button></div>
     <div><button class="btn btn-secondary" onclick="show_filter('bank')">Bank</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('ekonomi')">Ekonomi</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('kripto')">Kripto</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('saham')">Saham</button></div>
+    <div><button class="btn btn-secondary" onclick="show_filter('ekonomi')">Economy</button></div>
+    <div><button class="btn btn-secondary" onclick="show_filter('bank')">Crypto</button></div>
+    <div><button class="btn btn-secondary" onclick="show_filter('saham')">Stock</button></div>
   </div>
 
 <br></br>
 
-<div class="flex flex-col" id="container">
+<div class="flex flex-col w-3/4" id="container">
     
 </div>
 
@@ -39,6 +40,7 @@
   </div>
   <div class="card-actions justify-end">
       <a class="btn btn-primary" href="/berita/show/${data[i].pk}">Show More</a>
+      
     </div>
 </div>`)
             }
@@ -64,15 +66,36 @@
   <li>Category : ${data[i].fields.category}</li>
   <li>Writer : ${data[i].fields.writer}</li>
     </ol>
-    <div class="card-actions justify-end">
-      <a class="btn btn-primary" href="/berita/show/${data[i].pk}">Show More</a>
-    </div>
   </div>
+  <div class="card-actions justify-end">
+      <a class="btn btn-primary" href="/berita/show/${data[i].pk}">Show More</a>
+      
+    </div>
 </div>`)}
             }
         })
     }
 
+    
+
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
 
 </script>
+
 {% endblock content %}
