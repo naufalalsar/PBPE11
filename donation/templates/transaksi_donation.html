@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block meta %}
+<title>Add Donasi</title>
+{% endblock meta %}
+
+{% block content %}
+
+{% for d in donasi %}
+<h1>{{ d.title }}</h1>
+<p>{{ d.description }}</p>
+<p>{{ d.achieved }}</p>
+<p>{{ d.target }}</p>
+
+<form id="form" method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="jumlahDonasi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Jumlah Donasi</label>
+        <input type="text" name="jumlahDonasi" id="jumlahDonasi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Masukkan judul" required>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+        <button data-modal-toggle="defaultModal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" id="button" type="submit"  value="Submit">Donasi</button>
+        
+    </div>
+
+</form>
+{% endfor %}
+
+
+{% endblock content %}

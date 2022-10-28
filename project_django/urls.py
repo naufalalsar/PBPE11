@@ -23,5 +23,7 @@ urlpatterns = [
     # path('berita/', include('berita.urls')),
     # path('forum/', include('forum.urls')),
     # path('kurs/', include('kurs.urls')),
-    # path('donasi/', include('donasi.urls')),
+    path('donasi/', include('donasi.urls')),
+    path('donation/', include('donation.urls')),
+
 ]
