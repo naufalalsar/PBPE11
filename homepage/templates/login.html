@@ -1,52 +1,29 @@
 {% extends 'base.html' %} {% block meta %}
 <title>Login</title>
 {% endblock meta %} {% block content %}
-<div
-  class="w-2/3 h-5/6 max-w-sm flex flex-col items-center border border-none rounded-xl shadow-xl bg-neutral-800"
->
+<div class="w-2/3 h-5/6 mt-10 max-w-sm flex flex-col items-center border border-none rounded-xl shadow-xl bg-base-300">
   <form method="POST" class="w-full flex flex-col items-center gap-y-3">
     {% csrf_token %}
 
-    <div class="py-3 w-full flex justify-center rounded-t-xl bg-base-300">
+    <div class="py-3 w-full flex justify-center rounded-t-xl bg-primary">
       <h1 class="text-lg md:text-xl font-bold">Login</h1>
     </div>
 
-    <div
-      class="mt-5 flex flex-col items-start gap-y-1 w-3/4 text-sm md:text-base"
-    >
+    <div class="mt-5 flex flex-col items-start gap-y-1 w-3/4 text-sm md:text-base">
       <label for="id_username" class="font-bold">Username</label>
-      <input
-        class="input input-bordered w-full rounded-2xl"
-        type="text"
-        name="username"
-        placeholder="username"
-        maxlength="50"
-        required=""
-        id="id_username"
-      />
+      <input class="input input-bordered w-full rounded-2xl" type="text" name="username" placeholder="username"
+        maxlength="50" required="" id="id_username" />
     </div>
     <div class="flex flex-col items-start gap-y-1 w-3/4 text-sm md:text-base">
       <label for="id_password" class="font-bold">Password</label>
-      <input
-        class="input input-bordered w-full rounded-2xl"
-        type="password"
-        name="password"
-        placeholder="password"
-        maxlength="50"
-        required=""
-        id="id_password"
-      />
+      <input class="input input-bordered w-full rounded-2xl" type="password" name="password" placeholder="password"
+        maxlength="50" required="" id="id_password" />
     </div>
-    <label role="button" class="w-3/4 mt-3 mb-5 btn text-xs md:text-sm"
-      ><button type="submit" class="w-full uppercase">login</button></label
-    >
+    <label role="button" class="w-3/4 mt-3 mb-5 btn text-xs md:text-sm"><button type="submit"
+        class="w-full uppercase">login</button></label>
     <p class="mb-3 text-sm">
       Belum mempunyai akun?
-      <a
-        href="{% url 'homepage:register' %}"
-        class="hover:underline text-blue-700"
-        >Buat Akun</a
-      >
+      <a href="{% url 'homepage:register' %}" class="hover:underline text-blue-700">Buat Akun</a>
     </p>
   </form>
 </div>
