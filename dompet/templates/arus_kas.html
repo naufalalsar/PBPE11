@@ -4,6 +4,22 @@
 <title>Arus Kas</title>
 <script>
     var pengeluaran = 0, pemasukan = 0, total = 0;
+    var smileEmoji = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#66CC8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-smile">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                    </svg>`;
+    var frownEmoji = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#F87272" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-frown">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                    </svg>`;
     $(document).ready(function () {
         initializeTotalArusKas();
         getArusKas();
@@ -37,10 +53,18 @@
 
         $("#pengeluaran").text("Rp. " + pengeluaran);
         $("#pemasukan").text("Rp. " + pemasukan);
-        if (total < 0) {
-            $("#total").text("-Rp. " + -total);
-        } else {
+        if (total >= 0) {
             $("#total").text("Rp. " + total);
+            $("#total").addClass("text-primary");
+            $("#total").removeClass("text-error");
+            $("#desc").text("Selamat! Pertahankan terus ya...")
+            $("#emoji-placeholder").html(smileEmoji);
+        } else {
+            $("#total").text("-Rp. " + -total);
+            $("#total").addClass("text-error");
+            $("#total").removeClass("text-primary");
+            $("#desc").text("Yuk, coba berhemat dan cari tambahan penghasilan!")
+            $("#emoji-placeholder").html(frownEmoji);
         }
     }
 
@@ -74,7 +98,7 @@
                 data: formData,
                 success: function (data) {
                     $("#outside-modal").click();
-                    $("#id-tipe").val("Pilih salah satu");
+                    $("#id-tipe").val("Pemasukan");
                     $("#id-nominal").val("");
                     $("#id-keterangan").val("");
 
@@ -104,7 +128,6 @@
                     alert("Error!");
                 }
             });
-            return false;
         });
     }
 
@@ -131,7 +154,6 @@
                     alert("Error!");
                 }
             });
-            return false;
         });
     }
 
@@ -265,7 +287,7 @@
         </div>
         <div class="stats shadow rounded-none">
             <div class="stat">
-                <div class="stat-figure">
+                <div class="stat-figure" id="emoji-placeholder">
                     {% if is_positive %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#66CC8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -291,10 +313,10 @@
                 <div class="flex flex-col gap-1">
                     {% if is_positive %}
                     <div class="stat-value text-primary" id="total">Rp. {{total}}</span></div>
-                    <div class="stat-desc">Selamat! Pertahankan terus ya...</div>
+                    <div class="stat-desc" id="desc">Selamat! Pertahankan terus ya...</div>
                     {% else %}
                     <div class="stat-value text-error" id="total">-Rp. {{total}}</div>
-                    <div class="stat-desc">Yuk, coba berhemat dan cari tambahan penghasilan!</div>
+                    <div class="stat-desc" id="desc">Yuk, coba berhemat dan cari tambahan penghasilan!</div>
                     {% endif %}
                 </div>
             </div>
@@ -316,8 +338,7 @@
             <div class="flex flex-col items-start gap-y-1 w-5/6 text-sm md:text-base">
                 <label for="id-tipe" class="label font-bold">Tipe</label>
                 <select class="select select-bordered rounded-xl w-full" name="tipe" id="id-tipe" required="">
-                    <option disabled selected>Pilih salah satu</option>
-                    <option value="1">Pemasukan</option>
+                    <option value="1" selected>Pemasukan</option>
                     <option value="-1">Pengeluaran</option>
                 </select>
             </div>
