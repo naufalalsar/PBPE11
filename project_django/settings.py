@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'homepage',
     'kurs',
     'donasi',
+    'donation',
     'dompet',
 ]
 

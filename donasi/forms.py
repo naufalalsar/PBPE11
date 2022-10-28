@@ -5,5 +5,5 @@ from django import forms
 class DonasiForm(forms.ModelForm):
     class Meta:
         model = Donasi
-        fields = ('user', 'title', 'description', 'start_date', 'end_date')
-        exclude = ['user']
+        fields = ('user', 'title', 'description', 'target', 'achieved')
+        exclude = ['user', 'achieved']
