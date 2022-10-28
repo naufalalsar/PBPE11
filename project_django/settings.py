@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'donasi',
     'berita',
     'forum',
-
 ]
 
 MIDDLEWARE = [

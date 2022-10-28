@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<a class="btn btn-primary" href="/forum">Go Back</a>
+
 {% for i in data %}
 
 <h1 style="text-align: center;">{{i.judul}}</h1>
@@ -91,6 +93,8 @@
           },
           data:{
             komen : $('#komen').val(),
+            idforum : id,
+            
           },
         success: function(){
           show();

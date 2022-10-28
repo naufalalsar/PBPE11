@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Hapus Forum</h1>
+<h1>Hapus Komen</h1>
 
 
 <div class="flex flex-col" id="container">
@@ -24,7 +24,7 @@
     </ol>
   </div>
   <div class="card-actions justify-end">
-      <a class="btn btn-primary" href="/forum/komen">Show More</a>
+      <a class="btn btn-primary" onclick="showforum(${data[i].fields.idforum})">Show Forum</a>
       <a class="btn btn-error" onclick="deleteForum(${data[i].pk})">Delete</a>
     </div>
 </div>`)
@@ -63,6 +63,32 @@
       }
       return cookieValue;
   }
+
+    function showforum(id){
+      console.log(id)
+      $.get(`/forum/jsonforum`, function(data){
+            $("#container").html("")
+            for(let i = 0; i < data.length; i++){
+                if(data[i].pk == id){
+                let d = new Date(data[i].fields.tanggal.substring(0,10));
+                const date = d.toDateString()
+                $("#container").append(`
+                <h2>Forum dari komen yang tadi : </h2>
+                <div class="card bg-primary text-primary-content">
+  <div class="card-body">
+    <h2 class="card-title">${data[i].fields.judul}</h2>
+    <p>${data[i].fields.isi}</p>
+    <ol class="list-disc">
+  <li>Added : ${date}</li>
+    </ol>
+  </div>
+  <div class="card-actions justify-end">
+      <a class="btn btn-primary" onclick="show()">Go Back</a>
+    </div>
+</div>`)
+            }}
+        })
+    }
 
 
 </script>

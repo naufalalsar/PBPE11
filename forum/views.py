@@ -66,7 +66,7 @@ def add_forum(request):
 def add_komen(request, pk):
     if(request.user.is_authenticated):
         if request.method == 'POST':
-            Komen(forum=Forum.objects.get(id=pk),komen=request.POST.get('komen'),user=request.user).save()
+            Komen(forum=Forum.objects.get(id=pk),komen=request.POST.get('komen'),user=request.user,idforum=request.POST.get('idforum')).save()
             return JsonResponse({'message': 'success'})
     else :
         return render(request, "not_login.html")

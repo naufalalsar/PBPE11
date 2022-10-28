@@ -14,3 +14,4 @@ class Komen(models.Model):
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, null=True)
     komen = models.TextField(null=True, blank=True)
     tanggal = models.DateTimeField(auto_now=True)
+    idforum = models.BigIntegerField(null=True)

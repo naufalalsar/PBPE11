@@ -15,5 +15,5 @@ urlpatterns = [
     path('json_komen_user/', json_komen_user, name='json_komen_user'),
     path('json_forum_user/', json_forum_user, name='json_forum_user'),
     path('deleteforumuser/', delete_forum_user, name="deleteforumuser"),
-     path('deletekomenuser/', delete_komen_user, name="deletekomenuser"),
+    path('deletekomenuser/', delete_komen_user, name="deletekomenuser"),
 ]
