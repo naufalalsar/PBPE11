@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1 style="text-align: center;">Forum</h1>
+<h1 class="font-semibold text-xl ml-2">Forum</h1>
 
 <!-- The button to open modal -->
-<label for="my-modal" class="btn modal-button">Create Forum</label>
+<label for="my-modal" class="btn modal-button mb-5 btn-outline btn-secondary">Create Forum</label>
 
 <!-- Put this part before </body> tag -->
 <input type="checkbox" id="my-modal" class="modal-toggle" />
@@ -13,18 +13,20 @@
     <div class="form-control min-w-full">
         <div class="form-control">
             <label class="label">
-              <span class="label-text">Judul</span>
+              <span class="label-text">Forum Title</span>
             </label>
             <input type="text" class="input input-bordered" id="judul"/>
         </div>
         <label class="label">
-          <span class="label-text">Isi</span>
+          <span class="label-text">Content</span>
         </label> 
         <div class="form-control min-w-full">
             <textarea class="textarea textarea-bordered" id="isi"></textarea> 
         </div>
-            <div><button for="my-modal" class="btn btn-secondary" onclick="update()">Create</button></div>
       </div>
+    <div class="modal-action">
+      <label for="my-modal" class="btn btn-outline btn-primary" onclick="update()">Create</label>
+    </div>
     <div class="modal-action">
       <label for="my-modal" class="btn">Close</label>
     </div>
