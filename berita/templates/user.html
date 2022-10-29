@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+
+{% load static %}
+
+
 {% block meta %}
 <script>
   $(document).ready(function () {
@@ -36,6 +41,8 @@
 <div class="flex flex-col w-3/4 gap-y-2 gap-x-2" id="container">
     
 </div>
+
+{% comment %}
 
 <script>
     function show_all(){
@@ -111,6 +118,11 @@
   }
 
 
+
 </script>
+
+{% endcomment %}
+
+<script src="{% static 'js/berita_user.js' %}"></script>
 
 {% endblock content %}
