@@ -41,4 +41,4 @@ Pengguna bisa mendonasikan sejumlah uangnya dan terintegrasi ke dompet kita (kal
 
 - Guest (user yang belum log in)
 - User (pengguna yang sudah terautentifikasi)
-- Admin (Pengguna yang dapat mengupdate kurs dan berita)
+- Admin (Pengguna yang dapat mengupdate berita)
