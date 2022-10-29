@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="font-semibold text-xl ml-2">Delete Comment</h1>
+
+<a class="btn btn-outline btn-secondary mb-5" href="/forum">Go Back</a>
+
+
+<div class="grid grid-cols-4 gap-3 mx-auto" style="width: 100%;" id="container">
+    
+</div>
+
+
+<script>
+    function show(){
+        $.get("/forum/json_komen_user", function(data){
+            $("#container").html("")
+            for(let i = 0; i < data.length; i++){
+                let d = new Date(data[i].fields.tanggal.substring(0,10));
+                const date = d.toDateString()
+                $("#container").append(`<div class="card bg-primary text-primary-content">
+  <div class="card-body">
+    <h2 class="card-title">${data[i].fields.komen}</h2>
+    <ol class="list-disc">
+  <li>Added : ${date}</li>
+    </ol>
+  </div>
+  <div class="card-actions justify-end">
+      <a class="btn btn-primary" onclick="showforum(${data[i].fields.idforum})">Show Forum</a>
+      <a class="btn btn-error" onclick="deleteForum(${data[i].pk})">Delete</a>
+    </div>
+</div>`)
+            }
+        })
+    }
+
+    $(document).ready(function(){
+          show();
+      });
+
+    function deleteForum(id){
+        $.ajax({
+          url: `/forum/deletekomen/${id}`,
+          type: "DELETE",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+          },
+        success: function(){
+            show();
+        },
+      })}
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+    function showforum(id){
+      console.log(id)
+      $.get(`/forum/jsonforum`, function(data){
+            $("#container").html("")
+            for(let i = 0; i < data.length; i++){
+                if(data[i].pk == id){
+                let d = new Date(data[i].fields.tanggal.substring(0,10));
+                const date = d.toDateString()
+                $("#container").append(`
+                <h2>Forum dari komen yang tadi : </h2>
+                <div class="card bg-primary text-primary-content">
+  <div class="card-body">
+    <h2 class="card-title">${data[i].fields.judul}</h2>
+    <p>${data[i].fields.isi}</p>
+    <ol class="list-disc">
+  <li>Added : ${date}</li>
+    </ol>
+  </div>
+  <div class="card-actions justify-end">
+      <a class="btn btn-primary" onclick="show()">Go Back</a>
+    </div>
+</div>`)
+            }}
+        })
+    }
+
+
+</script>
+
+
+
+{% endblock content %}
+

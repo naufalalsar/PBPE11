@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a class="font-semibold text-xl ml-2" style="text-align: center;" href="/forum">Go Back</a>
+
+{% for i in data %}
+
+<h1 style="text-align: center;">{{i.judul}}</h1>
+
+<p class="font-semibold text-xl ml-2">{{ i.isi }}</p>
+
+<ul class="font-semibold text-sm ml-2" class="list-disc">
+  <li>Added On : {{i.tanggal}}</li>
+</ul>
+
+{% endfor %}
+
+
+<!-- The button to open modal -->
+<label for="my-modal" class="btn modal-button btn-outline btn-secondary">Create Comment</label>
+
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="my-modal" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box">
+    <div class="form-control min-w-full">
+        <div class="form-control">
+            <label class="label">
+              <span class="label-text font-semibold text-2xl">Comment</span>
+            </label>
+            <input type="text" class="input input-bordered" id="komen"/>
+        </div>
+      </div>
+    <div class="modal-action">
+      <label for="my-modal" class="btn btn-outline btn-primary" onclick="update()">Create</label>
+    </div>
+    <div class="modal-action">
+      <label for="my-modal" class="btn">Close</label>
+    </div>
+  </div>
+</div>
+
+<h2 class="font-semibold text-2xl ml-2">Comment :</h2>
+
+<div class="grid grid-cols-4 gap-3 mx-auto" style="width: 100%;" id="container">
+    
+</div>
+
+<script>
+    function show(){
+        var id = "{{pk}}";
+        $.get(`/forum/jsonkomen/${id}`, function(data){
+            $("#container").html("")
+            for(let i = 0; i < data.length; i++){
+                let d = new Date(data[i].fields.tanggal.substring(0,10));
+                const date = d.toDateString()
+                $("#container").append(`<div class="card bg-primary text-primary-content">
+  <div class="card-body">
+    <h2 class="card-title">${data[i].fields.komen}</h2>
+    <ol class="list-disc">
+  <li>Added : ${date}</li>
+    </ol>
+  </div>
+  <div class="card-actions justify-end">
+      <a class="btn btn-error" onclick="deleteKomen(${data[i].pk})">Delete</a>
+    </div>
+</div>`)
+            }
+        })
+    }
+
+    $(document).ready(function(){
+          show();
+      });
+
+    function deleteKomen(id){
+        $.ajax({
+          url: `/forum/deletekomen/${id}`,
+          type: "DELETE",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+          },
+        success: function(){
+            show();
+        },
+      })}
+
+      function update(){
+        var id = "{{pk}}";
+        $.ajax({
+          url: `/forum/addkomen/${id}`,
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+          },
+          data:{
+            komen : $('#komen').val(),
+            idforum : id,
+            
+          },
+        success: function(){
+          show();
+        },
+      })}
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+
+</script>
+
+
+
+{% endblock content %}
+

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block meta %}
+<title>Add Donasi</title>
+{% endblock meta %}
+
+{% block content %}
+<h1>Add Donasi</h1>
+<div>
+    <form method="POST">
+      {% csrf_token %}
+      <p>Title: {{form.title}}</p>
+      <p>Description: {{form.description}}</p>
+      <p>Target: {{form.target}}</p>
+
+
+      <button class="btn btn-outline-light btn-lg px-5" id="button" type="submit"  value="Submit">Submit</button>
+    </form>
+  </div>
+
+
+{% endblock content %}
