@@ -31,7 +31,7 @@ Berita finansial yang diberikan oleh admin ada kategori juga untuk berita
 
 - Kurs
 
-Untuk mengkonversi satu mata uang ke uang mata lainnya (yang menentukan nilai kurs adalah admin)
+Untuk mengkonversi satu mata uang ke uang mata lainnya
 
 - Donasi
 
@@ -41,4 +41,4 @@ Pengguna bisa mendonasikan sejumlah uangnya dan terintegrasi ke dompet kita (kal
 
 - Guest (user yang belum log in)
 - User (pengguna yang sudah terautentifikasi)
-- Admin (Pengguna yang dapat mengupdate kurs dan berita)
+- Admin (Pengguna yang dapat mengupdate berita)

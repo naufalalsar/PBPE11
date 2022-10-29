@@ -172,14 +172,16 @@
           </a>
         </div>
         {% endif %}
-        {% if user.is_authenticated %}
-        {% if not sidebar_hidden %}
-        <p class="duration-200 hover:scale-105 hover:text-primary">{{user.username}}</p>
-        {% endif %}
-        <a href="{% url 'homepage:logout' %}" class="duration-200 hover:scale-105 hover:text-primary">Log out</a>
-        {% else %}
-        <a href="{% url 'homepage:login' %}" class="duration-200 hover:scale-105 hover:text-primary">Log in</a>
-        {% endif %}
+
+        <div class="flex gap-x-10">
+          {% if user.is_authenticated %}
+          <p class="duration-200 hover:text-primary">{{ user.username }} {% if user.is_superuser %}(ADMIN){% endif %}
+          </p>
+          <a href="{% url 'homepage:logout' %}" class="duration-200 hover:text-primary">Log out</a>
+          {% else %}
+          <a href="{% url 'homepage:login' %}" class="duration-200 hover:text-primary" id="login1">Log in</a>
+          {% endif %}
+        </div>
       </div>
     </div>
   </nav>

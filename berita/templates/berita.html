@@ -17,6 +17,7 @@
     <li>Added : {{i.date}}</li>
     <li>Writer : {{i.writer}}</li>
     <li>Source : {{i.source}}</li>
+    <li>Admin : {{i.user.username}}</li>
     {% csrf_token %}
   </ul>
   {% if user.is_superuser %}

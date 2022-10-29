@@ -10,7 +10,7 @@
 {% endblock meta %}
 
 {% block content %}
-<div class="mt-5 flex flex-col gap-5 pb-2">
+<div class="mt-5 flex flex-col gap-5 pb-2 min-w-[50%] mx-2">
     <h5 class="font-semibold text-xl ml-2">Selamat datang, <span
             class="text-3xl font-bold text-secondary">{{nama}}!</span>
     </h5>
@@ -18,10 +18,12 @@
         <div class="stats bg-primary text-primary-content rounded-none">
             <div class="stat">
                 <div class="stat-figure">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48">
                         <path
                             d="M32.6 27.2q1.25 0 2.225-.975.975-.975.975-2.275 0-1.25-.975-2.2-.975-.95-2.225-.95t-2.225.95q-.975.95-.975 2.2 0 1.3.975 2.275.975.975 2.225.975ZM9 36.35V39 9 36.35ZM9 42q-1.15 0-2.075-.9Q6 40.2 6 39V9q0-1.15.925-2.075Q7.85 6 9 6h30q1.2 0 2.1.925Q42 7.85 42 9v6.7h-3V9H9v30h30v-6.65h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm17.9-8.65q-1.7 0-2.7-1-1-1-1-2.65V18.35q0-1.7 1-2.675 1-.975 2.7-.975h13.5q1.7 0 2.7.975 1 .975 1 2.675V29.7q0 1.65-1 2.65t-2.7 1Zm14.2-3V17.7H26.2v12.65Z" />
                     </svg>
+                    -->
+                    <i class="fa-solid fa-wallet transition duration-200 hover:scale-110 text-5xl"></i>
                 </div>
                 <div class="stat-title">Saldo</div>
                 <div class="stat-value">Rp. {{dompet.saldo}}</div>
@@ -139,7 +141,7 @@
 <input type="checkbox" id="modal-create-arus-kas" class="modal-toggle" />
 <label id="outside-modal" for="modal-create-arus-kas" class="modal cursor-pointer">
     <label
-        class="modal-box relative w-2/3 p-0 relative max-w-sm my-14 flex flex-col items-center border border-none rounded-xl shadow-xl bg-base-300"
+        class="modal-box relative min-w-2/3 p-0 relative max-w-sm my-14 flex flex-col items-center border border-none rounded-xl shadow-xl bg-base-300"
         for="">
         <form method="POST" class="w-full flex flex-col items-center gap-y-3 text-xl" id="submit-arus-kas"
             action="{% url 'dompet:create_arus_kas' %}">

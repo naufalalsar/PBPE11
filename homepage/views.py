@@ -29,6 +29,7 @@ def login_user(request):
         if user is not None:
             login(request, user) # melakukan login terlebih dahulu
             response = HttpResponseRedirect(reverse("homepage:homepage"))
+            response.set_cookie('news_count', 0)
             return response
         else:
             messages.error(request, 'Username atau Password salah!')
@@ -38,6 +39,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('homepage:login'))
+    response.delete_cookie('news_count')
     return response
 
 def register(request):

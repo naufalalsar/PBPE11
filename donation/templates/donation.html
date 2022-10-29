@@ -20,14 +20,33 @@
 {% block content %}
 
 <div class="flex flex-col gap-y-2">
+{% if user.is_superuser %}
+<h1 class="text-4xl font-bold text-center">Admin Donation</h1>
+
+{% else %}
+
 <h2 class="text-4xl font-bold text-center">Donasi</h2>
+
+{% endif %}
+
 <br>
 <p>Ingin Galang Dana?</p>
 <a class="btn btn-primary p-2 m-3" type="button" data-modal-toggle="defaultModal">
     Galang Dana
 </a>
 <div class="flex justify-center items-center">
-  <a class="btn btn-error p-2 m-3 w-3/4 justify-center items-center" role="button" href="{% url 'donation:donasi_saya' %}">Hapus Donasi</a>
+
+  {% if user.is_superuser %}
+
+  <a class="btn btn-error p-2 m-3 w-3/4 justify-center items-center" role="button" href="{% url 'donation:donasi_saya' %}">Hapus Donasi (Akses Admin)</a>
+
+{% else %}
+
+<a class="btn btn-error p-2 m-3 w-3/4 justify-center items-center" role="button" href="{% url 'donation:donasi_saya' %}">Hapus Donasi</a>
+
+{% endif %}
+
+
 </div>
 
 
