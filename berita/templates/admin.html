@@ -7,12 +7,15 @@
 {% endblock meta %}
 
 {% block content %}
-<h1 class="text-4xl items-center font-bold">Berita Finansial Terkini</h1>
+
+<div id="show" class="flex flex-col gap-y-2 gap-x-2 w-5/6">
+
+<h1 class="text-4xl items-center text-center font-bold">Berita Finansial Terkini</h1>
 
 <br></br>
 
 
-  <div class="flex flex-col md:flex-row gap-x-2 items-center gap-y-2">
+  <div class="flex flex-col md:flex-row gap-x-2 items-center justify-center gap-y-2">
     <div><p class="font-bold">Category Filter : </p></div>
     <div><button class="btn btn-secondary" onclick="show_all()">All</button></div>
     <div><button class="btn btn-secondary" onclick="show_filter('uang')">Money</button></div>
@@ -24,16 +27,96 @@
 
 <br></br>
 
-<a class="btn btn-primary" href="/berita/add/">Create Berita</a>
+<div class="flex flex-col justify center items-center w-full">
+
+  <a class="btn btn-primary" onclick="createBerita()">Create Berita</a>
+
+</div>
+
 
 <br></br>
 
-<div class="flex flex-col w-3/4 gap-y-2 gap-x-2" id="container">
+<div class="flex flex-col gap-y-2 gap-x-2" id="container">
     
+</div>
+
+</div>
+
+<div id="create" class="w-5/6">
+  <div class='bg-primary rounded-lg p-4'>
+    <h2 class="text-3xl font-bold items-center text-center">Create Berita</h2>
+  </div>
+
+    <br>
+  <div class="flex flex-col justify-center items-center"><button class="btn btn-error" onclick="show_all()">Back</button></div>
+  <div class="form-control w-full flex flex-col gap-y-2">
+    <div class="form-control">
+        <label class="label">
+          <span class="label-text">Title</span>
+        </label>
+        <input type="text" class="input input-bordered" id="title"/>
+    </div>
+   
+    <div class="form-control min-w-full">
+      <label class="label">
+        <span class="label-text">Isi Berita</span>
+      </label> 
+        <textarea class="textarea textarea-bordered" id="content"></textarea> 
+    </div>
+    <label class="label">
+        <span class="label-text">Category</span>
+    </label> 
+        <div class="form-control bg-primary rounded-lg">
+            <label class="label cursor-pointer">
+              <span class="label-text">Uang</span> 
+              <input type="radio" name="radio-6" class="radio" value="uang" checked />
+            </label>
+          </div>
+          <div class="form-control bg-primary rounded-lg">
+            <label class="label cursor-pointer">
+              <span class="label-text">Bank</span> 
+              <input type="radio" name="radio-6" class="radio" value="bank"/>
+            </label>
+          </div>
+          <div class="form-control bg-primary rounded-lg">
+            <label class="label cursor-pointer">
+              <span class="label-text">Ekonomi</span> 
+              <input type="radio" name="radio-6" class="radio" value="ekonomi"/>
+            </label>
+          </div>
+          <div class="form-control bg-primary rounded-lg">
+            <label class="label cursor-pointer">
+              <span class="label-text">Kripto</span> 
+              <input type="radio" name="radio-6" class="radio" value="kripto"/>
+            </label>
+          </div>
+          <div class="form-control bg-primary rounded-lg">
+            <label class="label cursor-pointer">
+              <span class="label-text">Saham</span> 
+              <input type="radio" name="radio-6" class="radio" value="saham"/>
+            </label>
+          </div>
+          <div class="form-control w-1/2">
+            <label class="label">
+              <span class="label-text">Writer</span>
+            </label>
+            <input type="text" class="input input-bordered" id="writer"/>
+        </div>
+        <div class="form-control w-1/2">
+            <label class="label">
+              <span class="label-text">Source</span>
+            </label>
+            <input type="text" class="input input-bordered" id="source" />
+        </div>
+        <div class="flex flex-col justify-center items-center"><button class="btn btn-secondary" onclick="update()">Create</button></div>
+  </div>
+
 </div>
 
 <script>
     function show_all(){
+      $("#create").hide()
+      $("#show").show()
         $.get("/berita/json", function(data){
             $("#container").html("")
             for(let i = 0; i < data.length; i++){
@@ -62,6 +145,8 @@
       });
 
     function show_filter(filter){
+      $("#create").hide()
+      $("#show").show()
         $.get(`/berita/json`, function(data){
             $("#container").html("")
             for(let i = 0; i < data.length; i++){
@@ -114,6 +199,30 @@
       }
       return cookieValue;
   }
+
+  function createBerita(){
+    $("#show").hide()
+    $("#create").show()
+  }
+
+  function update(){
+        $.ajax({
+          url: "/berita/add/",
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+          },
+          data:{
+            title : $('#title').val(),
+            content : $("#content").val(),
+            category : $("input[type='radio'][name='radio-6']:checked").val(),
+            writer : $("#writer").val(),
+            source : $("#source").val(),
+          },
+        success: function(){
+            show_all();
+        },
+      })}
 
 
 </script>
