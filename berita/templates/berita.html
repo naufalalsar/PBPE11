@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for i in data %}
+<h1>{{i.title}}</h1>
+<p>{{i.content}}</p>
+<ul class="list-disc">
+    <li>Category : {{i.category}}</li>
+    <li>Added : {{i.date}}</li>
+    <li>Writer : {{i.writer}}</li>
+    <li>Source : {{i.source}}</li>
+    {% csrf_token %}
+  </ul>
+  {% if user.is_superuser %}
+  <a class="btn btn-error"  href="{% url 'berita:delete_filter' i.pk %}">Delete</a>
+  {% endif %}
+  <a class="btn btn-primary"  href="{% url 'berita:show' %}">Back</a>
+{% endfor %}
+  {% endblock content %}

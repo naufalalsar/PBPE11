@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block meta %}
+<title>Donasi Saya</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class="row" id="card-row">
+{% for d in donasi_saya %}
+<div class="col-span-2">
+    <div class="card w-96 bg-primary text-primary-content">
+        <div class="card-body">
+          <h2 class="card-title">{{d.title}}</h2>
+          <p>Terkumpul: <b>{{d.achieved}}</b></p>
+          <p>Target: <b>{{d.target}}</b></p>
+          <div class="card-actions justify-end">
+            <a class="btn" href="/donation/transaksi_donasi/{{d.pk}}">Detail</a>
+            <a class="btn" href="/donation/hapus_donasi/{{d.pk}}">Hapus</a>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+{% endfor %}
+</div>
+<a class="btn" href="{% url 'donation:index' %}">Kembali</a>
+{% endblock content %}
