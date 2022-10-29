@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 
 
+{% load static %}
+
+
 {% block meta %}
-
-<title>Berita Terkini</title>
-
+<script>
+  $(document).ready(function () {
+    $(".berita-link").addClass("text-primary");
+  });
+</script>
 {% endblock meta %}
+
 
 {% block content %}
 <h1 class ="text-4xl items-center text-center font-bold">Berita Finansial Terkini</h1>
@@ -35,6 +41,8 @@
 <div class="flex flex-col w-3/4 gap-y-2 gap-x-2" id="container">
     
 </div>
+
+{% comment %}
 
 <script>
     function show_all(){
@@ -110,6 +118,11 @@
   }
 
 
+
 </script>
+
+{% endcomment %}
+
+<script src="{% static 'js/berita_user.js' %}"></script>
 
 {% endblock content %}
