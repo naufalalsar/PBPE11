@@ -45,7 +45,12 @@ def show(request):
                 return JsonResponse({'message': 'success'})
         return render(request, "admin.html", context)
     else:
-        count = request.COOKIES['news_count']
+        try:
+            count = request.COOKIES['news_count']
+        except:
+            response = HttpResponseRedirect(reverse("berita:show"))
+            response.set_cookie('news_count', 0)
+            return response
         try :
             context = {
             'last_news' : request.session['last_news'],
