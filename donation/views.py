@@ -60,7 +60,10 @@ def transaksi_donasi(request, id):
     return render(request, 'transaksi_donation.html', context)
 
 def donasi_saya(request):
-    data = Donation.objects.filter(user=request.user)
+    if request.user.is_superuser:
+        data = Donation.objects.all()
+    else :
+        data = Donation.objects.filter(user=request.user)
     context = {
         'donasi_saya': data
     }
