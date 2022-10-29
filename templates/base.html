@@ -71,7 +71,7 @@
         <a class="berita-link" href="">
           <i class="fa-solid fa-newspaper transition duration-200 hover:scale-110 hover:text-primary"></i>
         </a>
-        <a class="forum-link" href="">
+        <a class="forum-link" href="{% url 'forum:show_forum' %}">
           <i class="fa-solid fa-comments transition duration-200 hover:scale-110 hover:text-primary"></i>
         </a>
         <a class="kurs-link" href="{% url 'kurs:kurs' %}">
@@ -160,6 +160,12 @@
     </div>
     {% endif %} {% block content %} {% endblock content %}
   </main>
+
+  <footer class="footer footer-center p-4 bg-base-300 text-base-content" >
+    <div>
+      <p>Copyright © 2022 - All right reserved by PBP-E11</p>
+    </div>
+  </footer>
 </body>
 
 </html>
