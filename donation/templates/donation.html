@@ -13,13 +13,17 @@
 {% endblock meta %}
 
 {% block content %}
-<h2>Donasi</h2>
-<p>Ingin menggalang dana? <button class="btn btn-primary btn-xs text-xs md:btn-sm md:text-base" type="button" data-modal-toggle="defaultModal">
+
+<div class="flex flex-col gap-y-2">
+<h2 class="text-4xl font-bold text-center">Donasi</h2>
+<br>
+<p>Ingin Galang Dana?</p>
+<a class="btn btn-primary p-2 m-3" type="button" data-modal-toggle="defaultModal">
     Galang Dana
-  </button></p>
-
-  <a class="btn btn-outline-primary p-2 m-3" role="button" href="{% url 'donation:donasi_saya' %}">Dibuat</a>
-
+</a>
+<div class="flex justify-center items-center">
+  <a class="btn btn-error p-2 m-3 w-3/4 justify-center items-center" role="button" href="{% url 'donation:donasi_saya' %}">Hapus Donasi</a>
+</div>
 
 
 
@@ -59,9 +63,10 @@
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
                         <button data-modal-toggle="defaultModal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" id="button" type="submit"  value="Submit">Galang Dana</button>
-                        
+                        <button data-modal-toggle="defaultModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
                     </div>
                   </form>
+                  
             </div>
               
           </div>
@@ -73,10 +78,11 @@
 
 
 
-<div class="row" id="card-row">
+<div class="flex flex-col gap-y-2" id="card-row">
 
 </div>
 
+</div>
 
 <script>
     async function getDonasi() {

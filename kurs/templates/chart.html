@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block meta %}
+<title>Chart</title>
+<script>
+    $(document).ready(function () {
+        $("#kurs-link").addClass("text-primary");
+    })
+</script>
+{% endblock meta %}
+
+{% block content %}
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container relative !w-screen">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright"><a href="https://id.tradingview.com/markets/" rel="noopener"
+            target="_blank"><span class="blue-text">Pasar</span></a> oleh TradingView</div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js"
+        async>
+            {
+                "symbols": [
+                    {
+                        "description": "USDIDR",
+                        "proName": "FX_IDC:USDIDR"
+                    },
+                    {
+                        "description": "EURIDR",
+                        "proName": "FX_IDC:EURIDR"
+                    },
+                    {
+                        "description": "JPYIDR",
+                        "proName": "FX_IDC:JPYIDR"
+                    },
+                    {
+                        "description": "CNYIDR",
+                        "proName": "FX_IDC:CNYIDR"
+                    },
+                    {
+                        "description": "GBPIDR",
+                        "proName": "FX_IDC:GBPIDR"
+                    }
+                ],
+                    "showSymbolLogo": true,
+                        "colorTheme": "light",
+                            "isTransparent": false,
+                                "displayMode": "adaptive",
+                                    "locale": "id"
+            }
+        </script>
+</div>
+<!-- TradingView Widget END -->
+<div class="w-2/3 flex flex-col">
+    <div class="w-full flex gap-x-12 justify-center">
+        <div>
+            <div class="h-10 w-10 md:h-16 md:w-16 relative top-4 md:top-6 overflow-hidden rounded-full shadow-lg">
+                <img src="{% static target_currency.icon %}" class="mx-auto h-full w-auto" />
+            </div>
+            <div
+                class="h-10 w-10 md:h-16 md:w-16 relative bottom-4 right-4 md:bottom-6 md:right-6 overflow-hidden rounded-full shadow-lg">
+                <img src="{% static source_currency.icon %}" class="mx-auto h-full w-auto" />
+            </div>
+        </div>
+        <div class="flex flex-col my-auto">
+            <h1 class="text-xl md:text-3xl font-bold">{{source_currency.name}} /</h1>
+            <h1 class="text-xl md:text-3xl font-bold">{{target_currency.name}}</h1>
+        </div>
+    </div>
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container h-96 shadow-2xl">
+        <div id="tradingview_00f66 h-96"></div>
+        <div class="tradingview-widget-copyright"><a href="https://id.tradingview.com/symbols/USDIDR/?exchange=FX_IDC"
+                rel="noopener" target="_blank"><span class="blue-text">{{source_currency.code}}{{target_currency.code}} Chart</span></a> oleh TradingView</div>
+        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+        <script type="text/javascript">
+            new TradingView.widget(
+                {
+                    "autosize": true,
+                    "symbol": "FX_IDC:{{source_currency.code}}{{target_currency.code}}",
+                    "interval": "D",
+                    "timezone": "Etc/UTC",
+                    "theme": "light",
+                    "style": "1",
+                    "locale": "id",
+                    "toolbar_bg": "#f1f3f6",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "container_id": "tradingview_00f66"
+                }
+            );
+        </script>
+    </div>
+    <!-- TradingView Widget END -->
+</div>
+
+
+{% endblock content %}

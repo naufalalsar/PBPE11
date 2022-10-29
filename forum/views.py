@@ -44,6 +44,10 @@ def show_komen(request, pk):
 def json_forum_all(request):
     if(request.user.is_authenticated):
         data = Forum.objects.all()
+        for forum in data :
+            komen = Komen.objects.filter(forum = forum)
+            if komen:
+                forum.komenPertama = komen[0].komen
         return HttpResponse(serializers.serialize("json", data), content_type="application/json")
     else:
         return render(request, "not_login.html")
@@ -95,6 +99,10 @@ def json_komen_user(request):
 def json_forum_user(request):
     if(request.user.is_authenticated):
         data = Forum.objects.filter(user=request.user)
+        for forum in data :
+            komen = Komen.objects.filter(forum = forum)
+            if komen:
+                forum.komenPertama = komen[0].komen
         return HttpResponse(serializers.serialize("json", data), content_type="application/json")
     else :
         return render(request, "not_login.html")

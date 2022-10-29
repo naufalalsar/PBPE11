@@ -1,10 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1 style="text-align: center;">Forum</h1>
+{% block meta %}
+<title>Forum Admin Saku-in!</title>
+{% endblock meta %}
+
+<h1 class="font-semibold text-xl ml-2">Forum</h1>
+
+<div class="dropdown" style="justify-content: left;">
+  <label tabindex="0" class="btn m-1 btn-outline btn-circle btn-secondary">Menu</label>
+  <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+    <li><a class="dropdown-item" href="/forum/deleteforumuser">Delete Forum</a></li>
+    <li><a class="dropdown-item" class="btn btn-primary" href="/forum/deletekomenuser">Delete Comment</a></li>
+  </ul>
+</div>
 
 <!-- The button to open modal -->
-<label for="my-modal" class="btn modal-button">Create Forum</label>
+<label for="my-modal" class="btn modal-button mb-5 btn-outline btn-secondary">Create Forum</label>
 
 <!-- Put this part before </body> tag -->
 <input type="checkbox" id="my-modal" class="modal-toggle" />
@@ -13,25 +25,27 @@
     <div class="form-control min-w-full">
         <div class="form-control">
             <label class="label">
-              <span class="label-text">Judul</span>
+              <span class="label-text">Forum Title</span>
             </label>
             <input type="text" class="input input-bordered" id="judul"/>
         </div>
         <label class="label">
-          <span class="label-text">Isi</span>
+          <span class="label-text">Forum Content</span>
         </label> 
         <div class="form-control min-w-full">
             <textarea class="textarea textarea-bordered" id="isi"></textarea> 
         </div>
-            <div><button for="my-modal" class="btn btn-secondary" onclick="update()">Create</button></div>
       </div>
     <div class="modal-action">
-      <label for="my-modal" class="btn">Close</label>
+      <label for="my-modal" class="btn btn-outline btn-primary" onclick="update()">Create</label>
+    </div>
+    <div class="modal-action">
+      <label for="my-modal" class="btn btn-outline btn-accent">Close</label>
     </div>
   </div>
 </div>
 
-<div class="flex flex-col" id="container">
+<div class="flex flex-col w-3/4" id="container">
     
 </div>
 
@@ -42,18 +56,21 @@
             for(let i = 0; i < data.length; i++){
                 let d = new Date(data[i].fields.tanggal.substring(0,10));
                 const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content">
-  <div class="card-body">
-    <h2 class="card-title">${data[i].fields.judul}</h2>
-    <p>${data[i].fields.isi}</p>
-    <ol class="list-disc">
-  <li>Added : ${date}</li>
-    </ol>
+                $("#container").append(`<div class="stats stats-vertical shadow-xl mb-5">
+  
+  <div class="stat bg-primary text-primary-content">
+    <div class="stat-title text-3xl font-semibold">${data[i].fields.judul}</div>
+    <div class="stat-title text-lg font-bold ">${data[i].fields.isi}</div>
+    <div class="stat-desc">Added : ${date}</div>
   </div>
-  <div class="card-actions justify-end">
-      <a class="btn btn-primary" href="/forum/komen/${data[i].pk}">Show More</a>
-      <a class="btn btn-error" onclick="deleteForum(${data[i].pk})">Delete</a>
+  
+  <div class="stat">
+    <div class="stat-desc text-2xl">${data[i].fields.komenPertama}</div>
+    <div class="card-actions justify-start">
+       <a class="btn btn-info" href="/forum/komen/${data[i].pk}">Liat Komentar</a>
     </div>
+  </div>
+  
 </div>`)
             }
         })
@@ -62,18 +79,6 @@
     $(document).ready(function(){
           show();
       });
-
-    function deleteForum(id){
-        $.ajax({
-          url: `/forum/deleteforum/${id}`,
-          type: "DELETE",
-          headers: {
-            "X-CSRFToken": getCookie("csrftoken")
-          },
-        success: function(){
-            show();
-        },
-      })}
 
       function update(){
         $.ajax({

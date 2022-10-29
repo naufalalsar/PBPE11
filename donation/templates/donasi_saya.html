@@ -7,7 +7,10 @@
 
 {% block content %}
 
-<div class="row" id="card-row">
+
+
+<div class="flex flex-col gap-y-2" id="card-row">
+  <h1 class="text-4xl font-bold">Donasi Saya</h1>
 {% for d in donasi_saya %}
 <div class="col-span-2">
     <div class="card w-96 bg-primary text-primary-content">
@@ -17,7 +20,7 @@
           <p>Target: <b>{{d.target}}</b></p>
           <div class="card-actions justify-end">
             <a class="btn" href="/donation/transaksi_donasi/{{d.pk}}">Detail</a>
-            <a class="btn" href="/donation/hapus_donasi/{{d.pk}}">Hapus</a>
+            <a class="btn btn-error" href="/donation/hapus_donasi/{{d.pk}}">Hapus</a>
           </div>
         </div>
       </div>
@@ -25,6 +28,6 @@
 
 
 {% endfor %}
+<a class="btn" href="{% url 'donation:index' %}">Kembali</a>
 </div>
-
 {% endblock content %}

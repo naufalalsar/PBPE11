@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<a class="btn btn-primary" href="/forum">Go Back</a>
+{% block meta %}
+<title>Forum Comment Admin Saku-in!</title>
+{% endblock meta %}
+
+<a class="btn btn-outline btn-error" href="/forum">Go Back</a>
 
 {% for i in data %}
 
-<h1 style="text-align: center;">{{i.judul}}</h1>
+<h1 class="font-semibold text-xl ml-2" style="text-align: center;">{{i.judul}}</h1>
 
-<p>{{ i.isi }}</p>
+<p class="font-semibold text-xl ml-2">{{ i.isi }}</p>
 
-<ul class="list-disc">
-    <li>Tanggal Ditambahkan : {{i.tanggal}}</li>
+<ul class="font-semibold text-sm ml-2" class="list-disc">
+    <li>Added On : {{i.tanggal}}</li>
 </ul>
 
 {% endfor %}
 
 
 <!-- The button to open modal -->
-<label for="my-modal" class="btn modal-button">Create Komen</label>
+<label for="my-modal" class="btn modal-button btn-outline btn-secondary">Create Comment</label>
 
 <!-- Put this part before </body> tag -->
 <input type="checkbox" id="my-modal" class="modal-toggle" />
@@ -26,21 +30,23 @@
     <div class="form-control min-w-full">
         <div class="form-control">
             <label class="label">
-              <span class="label-text">Komen</span>
+              <span class="label-text font-semibold text-2xl">Comment</span>
             </label>
             <input type="text" class="input input-bordered" id="komen"/>
         </div>
-            <div><button for="my-modal" class="btn btn-secondary" onclick="update()">Create</button></div>
       </div>
+    <div class="modal-action">
+      <label for="my-modal" class="btn btn-outline btn-primary" onclick="update()">Create</label>
+    </div>
     <div class="modal-action">
       <label for="my-modal" class="btn">Close</label>
     </div>
   </div>
 </div>
 
-<h2>Komen : </h2>
+<p class="font-semibold text-2xl ml-2">Comment :</p>
 
-<div class="flex flex-col" id="container">
+<div class="flex flex-col w-3/4" id="container">
     
 </div>
 
@@ -52,16 +58,13 @@
             for(let i = 0; i < data.length; i++){
                 let d = new Date(data[i].fields.tanggal.substring(0,10));
                 const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content">
+                $("#container").append(`<div class="card bg-primary text-primary-content mb-3">
   <div class="card-body">
-    <h2 class="card-title">${data[i].fields.komen}</h2>
+    <h2 class="card-title font-semibold text-xl ml-2">${data[i].fields.komen}</h2>
     <ol class="list-disc">
   <li>Added : ${date}</li>
     </ol>
   </div>
-  <div class="card-actions justify-end">
-      <a class="btn btn-error" onclick="deleteKomen(${data[i].pk})">Delete</a>
-    </div>
 </div>`)
             }
         })
@@ -70,18 +73,6 @@
     $(document).ready(function(){
           show();
       });
-
-    function deleteKomen(id){
-        $.ajax({
-          url: `/forum/deletekomen/${id}`,
-          type: "DELETE",
-          headers: {
-            "X-CSRFToken": getCookie("csrftoken")
-          },
-        success: function(){
-            show();
-        },
-      })}
 
       function update(){
         var id = "{{pk}}";
@@ -94,7 +85,6 @@
           data:{
             komen : $('#komen').val(),
             idforum : id,
-            
           },
         success: function(){
           show();
