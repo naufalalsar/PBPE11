@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% block meta %}
+<title>Delete Forum Saku-in!</title>
+{% endblock meta %}
+
 <h1 class="font-semibold text-xl ml-2">Delete Forum</h1>
 
 <a class="btn btn-outline btn-info mb-5" href="/forum">Go Back</a>
 
-<div class="grid grid-cols-4 gap-3 mx-auto" style="width: 100%;"  id="container">
+<div class="flex flex-col w-3/4"  id="container">
     
 </div>
 
@@ -17,20 +21,45 @@
             for(let i = 0; i < data.length; i++){
                 let d = new Date(data[i].fields.tanggal.substring(0,10));
                 const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content">
+                $("#container").append(`
+                <div class="card bg-primary text-primary-content mb-3">
   <div class="card-body">
     <h2 class="card-title">${data[i].fields.judul}</h2>
-    <p> ${data[i].fields.isi} </p>
     <ol class="list-disc">
   <li>Added : ${date}</li>
     </ol>
+    <a class="card-value">Ingin menghapus forum ini?</a>
   </div>
   <div class="card-actions justify-end">
-      <a class="btn btn-primary" href="/forum/komen/${data[i].pk}/">Show More</a>
-      <a class="btn btn-error" onclick="deleteForum(${data[i].pk})">Delete</a>
+    <a class="btn btn-error" onclick="deleteForum(${data[i].pk})">Delete</a>
     </div>
 </div>`)
             }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+//                 <div class="card bg-primary text-primary-content">
+//   <div class="card-body">
+//     <h2 class="card-title">${data[i].fields.judul}</h2>
+//     <p> ${data[i].fields.isi} </p>
+//     <ol class="list-disc">
+//   <li>Added : ${date}</li>
+//     </ol>
+//   </div>
+//   <div class="card-actions justify-end">
+//       <a class="btn btn-primary" href="/forum/komen/${data[i].pk}/">Show More</a>
+//       <a class="btn btn-error" onclick="deleteForum(${data[i].pk})">Delete</a>
+//     </div>
+// </div>`)
+//             }
         })
     }
 

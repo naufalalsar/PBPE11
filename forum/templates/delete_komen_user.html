@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% block meta %}
+<title>Delete Comment Saku-in!</title>
+{% endblock meta %}
+
 <h1 class="font-semibold text-xl ml-2">Delete Comment</h1>
 
 <a class="btn btn-outline btn-secondary mb-5" href="/forum">Go Back</a>
 
 
-<div class="grid grid-cols-4 gap-3 mx-auto" style="width: 100%;" id="container">
+<div class="flex flex-col w-3/4" id="container">
     
 </div>
 
@@ -18,7 +22,7 @@
             for(let i = 0; i < data.length; i++){
                 let d = new Date(data[i].fields.tanggal.substring(0,10));
                 const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content">
+                $("#container").append(`<div class="card bg-primary text-primary-content mb-3">
   <div class="card-body">
     <h2 class="card-title">${data[i].fields.komen}</h2>
     <ol class="list-disc">
