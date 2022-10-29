@@ -5,11 +5,14 @@ from django.contrib import messages
 from donation.models import Donation
 from dompet.models import Dompet
 from dompet.models import ArusKas
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url="homepage:login")
 def index(request):
     return render(request, 'donation.html')
 
+@login_required(login_url="homepage:login")
 def add_donasi(request):
     if request.method == 'POST':
         
@@ -30,6 +33,7 @@ def add_donasi(request):
 
     return HttpResponseNotFound()
 
+@login_required(login_url="homepage:login")
 def transaksi_donasi(request, id):
     data = Donation.objects.get(pk=id)
     try :
@@ -59,6 +63,7 @@ def transaksi_donasi(request, id):
 
     return render(request, 'transaksi_donation.html', context)
 
+@login_required(login_url="homepage:login")
 def donasi_saya(request):
     if request.user.is_superuser:
         data = Donation.objects.all()
@@ -68,7 +73,8 @@ def donasi_saya(request):
         'donasi_saya': data
     }
     return render(request, 'donasi_saya.html', context)
-    
+
+@login_required(login_url="homepage:login")  
 def hapus_donasi(request, id):
     item = Donation.objects.filter(pk=id)
     item.delete()
@@ -79,6 +85,7 @@ def hapus_donasi(request, id):
     messages.info(request, 'Donasi berhasil terhapus!')
     return redirect('donation:donasi_saya')
 
+@login_required(login_url="homepage:login")
 def show_json(request):
     item = Donation.objects.all()
     return HttpResponse(serializers.serialize('json', item))
