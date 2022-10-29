@@ -31,7 +31,7 @@ Berita finansial yang diberikan oleh admin ada kategori juga untuk berita
 
 - Kurs
 
-Untuk mengkonversi satu mata uang ke uang mata lainnya (yang menentukan nilai kurs adalah admin)
+Untuk mengkonversi satu mata uang ke uang mata lainnya
 
 - Donasi
 
