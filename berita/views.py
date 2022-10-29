@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from berita.models import Berita
 from django.http import JsonResponse
+from berita.forms import BeritaForm
 
 # Create your views here.
 
@@ -19,16 +20,24 @@ from django.http import JsonResponse
 def show(request):
     if request.user.is_superuser:
         count = request.COOKIES['news_count']
+        form = BeritaForm(request.user)
         try :
             context = {
                 'last_news' : request.session['last_news'],
                 'count' : count,
+                'form' : form,
             }
         except :
             context = {
                 'last_news' : 'No Last Seen News Yet',
                 'count' : count,
+                'form' : form,
             }
+        if request.method == 'POST':
+            form = BeritaForm(request.user, request.POST)
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'message': 'success'})
         return render(request, "admin.html", context)
     else:
         count = request.COOKIES['news_count']
@@ -60,10 +69,14 @@ def delete(request, pk):
 @login_required(login_url="homepage:login")
 def add(request):
     if request.user.is_superuser:
+        form = BeritaForm()
         if request.method == 'POST':
-            Berita(user=request.user, title=request.POST.get('title'), content=request.POST.get('content'), category=request.POST.get('category'), writer=request.POST.get('writer'), source=request.POST.get('source')).save()
+            form = BeritaForm(request.POST, user=request.user)
             return JsonResponse({'message': 'success'})
-        return render(request, "create.html")
+        context = {
+            'form' : form,
+        }
+        return render(request, "create.html", context)
     else:
         return render(request, "forbidden.html")
 
