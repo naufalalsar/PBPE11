@@ -19,7 +19,12 @@ from berita.forms import BeritaForm
 @login_required(login_url="homepage:login")
 def show(request):
     if request.user.is_superuser:
-        count = request.COOKIES['news_count']
+        try:
+            count = request.COOKIES['news_count']
+        except:
+            response = HttpResponseRedirect(reverse("berita:show"))
+            response.set_cookie('news_count', 0)
+            return response
         form = BeritaForm(request.user)
         try :
             context = {
