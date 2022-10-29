@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
+
+
+{% block meta %}
+
+<title>Berita</title>
+
+{% endblock meta %}
+
 {% block content %}
 <div class="flex flex-col gap-y-2 items-center w-11/12">
 {% for i in data %}
@@ -9,6 +17,7 @@
     <li>Added : {{i.date}}</li>
     <li>Writer : {{i.writer}}</li>
     <li>Source : {{i.source}}</li>
+    <li>Admin : {{i.user.username}}</li>
     {% csrf_token %}
   </ul>
   {% if user.is_superuser %}

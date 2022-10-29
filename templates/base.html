@@ -54,9 +54,9 @@
         <i class="fa-solid fa-money-bills"></i>
         <p class="text-xl ml-4 font-bold">Saku-In</p>
         {% if user.is_authenticated %}
-        <i class="fa-solid fa-right-to-bracket transition duration-200 hover:scale-110 hover:text-primary"></i>
+        <a href="{% url 'homepage:logout' %}" class="duration-200 hover:scale-105 hover:text-primary">Log out</a>
         {% else %}
-        <i class="fa-solid fa-right-from-bracket transition duration-200 hover:scale-110"></i>
+        <a href="{% url 'homepage:login' %}" class="duration-200 hover:scale-105 hover:text-primary" id="login">Log in</a>
         {% endif %}
       </div>
 
@@ -131,10 +131,14 @@
       <div
         class="w-full fixed top-0 z-40 justify-end p-4 flex gap-x-6 bg-black bg-opacity-90 text-white cursor-pointer items-center pr-8">
         {% if user.is_authenticated %}
-        <p class="duration-200 hover:scale-105 hover:text-primary">{{user.username}}</p>
+        {% if user.is_superuser %}
+        <p class="duration-200 hover:scale-105 hover:text-primary font-bold">{{ user.username }} (ADMIN)</p>
+        {% else %}
+        <p class="duration-200 hover:scale-105 hover:text-primary">{{ user.username }}</p>
+        {% endif %}
         <a href="{% url 'homepage:logout' %}" class="duration-200 hover:scale-105 hover:text-primary">Log out</a>
         {% else %}
-        <a href="{% url 'homepage:login' %}" class="duration-200 hover:scale-105 hover:text-primary">Log in</a>
+        <a href="{% url 'homepage:login' %}" class="duration-200 hover:scale-105 hover:text-primary" id="login1">Log in</a>
         {% endif %}
       </div>
     </div>

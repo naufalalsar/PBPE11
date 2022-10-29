@@ -5,13 +5,13 @@
 <title>Forum Comment Saku-in!</title>
 {% endblock meta %}
 
-<a class="btn btn-outline btn-error" href="/forum">Go Back</a>
+<div class="flex flex-col gap-y-2 gap-x-2">
 
 {% for i in data %}
 
-<h1 class="font-semibold text-xl ml-2" style="text-align: center;">{{i.judul}}</h1>
+<h1 class="font-semibold text-5xl ml-2" style="text-align: center;">{{i.judul}}</h1>
 
-<p class="font-semibold text-xl ml-2">{{ i.isi }}</p>
+<p class="font-semibold text-3xl ml-2">{{ i.isi }}</p>
 
 <ul class="font-semibold text-sm ml-2" class="list-disc">
     <li>Added On : {{i.tanggal}}</li>
@@ -19,6 +19,9 @@
 
 {% endfor %}
 
+<a class="btn btn-outline btn-error" href="/forum">Go Back</a>
+
+<p class="font-semibold text-2xl ml-2">Comment :</p>
 
 <!-- The button to open modal -->
 <label for="my-modal" class="btn modal-button btn-outline btn-secondary">Create Comment</label>
@@ -44,11 +47,15 @@
   </div>
 </div>
 
-<p class="font-semibold text-2xl ml-2">Comment :</p>
+</div>
+
+<br>
 
 <div class="flex flex-col w-3/4" id="container">
     
 </div>
+
+
 
 <script>
     function show(){

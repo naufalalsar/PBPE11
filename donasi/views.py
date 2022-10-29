@@ -2,9 +2,12 @@ from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 from django.core import serializers
 from donasi.forms import DonasiForm
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 from donasi.models import Donasi
 
+
+@login_required(login_url="homepage:login")
 # Create your views here.
 def index(request):
     # form = DonasiForm()
@@ -20,6 +23,8 @@ def index(request):
     # context = {'form': form}
     return render(request, 'donasi.html')
 
+
+@login_required(login_url="homepage:login")
 def add_donasi(request):
     if request.method == 'POST':
         
@@ -39,6 +44,7 @@ def add_donasi(request):
 
     return HttpResponseNotFound()
 
+@login_required(login_url="homepage:login")
 def transaksi_donasi(request, id):
     # data = Donasi.objects.filter(pk=id)
     # // Jika JSON
@@ -46,6 +52,7 @@ def transaksi_donasi(request, id):
     context = {}
     return render(request, 'transaksi_donasi.html', context)
 
+@login_required(login_url="homepage:login")
 def show_json(request):
     item = Donasi.objects.all()
     return HttpResponse(serializers.serialize('json', item))
