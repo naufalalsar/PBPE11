@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 
+
 {% load static %}
 
+
 {% block meta %}
-
-<title>Berita Terkini</title>
-
+<script>
+  $(document).ready(function () {
+    $(".berita-link").addClass("text-primary");
+  });
+</script>
 {% endblock meta %}
+
 
 {% block content %}
 <h1 class ="text-4xl items-center text-center font-bold">Berita Finansial Terkini</h1>
