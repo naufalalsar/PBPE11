@@ -128,8 +128,9 @@
         </a>
       </div>
       <div
-        class="w-full fixed top-0 z-40 justify-end p-4 flex gap-x-4 bg-black bg-opacity-90 text-white cursor-pointer items-center pr-8">
+        class="w-full fixed top-0 z-40 justify-end p-4 flex gap-x-6 bg-black bg-opacity-90 text-white cursor-pointer items-center pr-8">
         {% if user.is_authenticated %}
+        <p class="duration-200 hover:scale-105 hover:text-primary">{{user.username}}</p>
         <a href="{% url 'homepage:logout' %}" class="duration-200 hover:scale-105 hover:text-primary">Log out</a>
         {% else %}
         <a href="{% url 'homepage:login' %}" class="duration-200 hover:scale-105 hover:text-primary">Log in</a>

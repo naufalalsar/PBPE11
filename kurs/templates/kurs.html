@@ -45,22 +45,7 @@
 
   function exchangeCalculator() {
     $("#source-currency-calculator, #target-currency-calculator, #source-amount-calculator").bind("keyup change", function () {
-      var sourceCurrency = $("#source-currency-calculator").val();
-      var targetCurrency = $("#target-currency-calculator").val();
-      var sourceAmount = $("#source-amount-calculator").val();
-      var url = window.location.href + "calculate/" + sourceCurrency + "/" + targetCurrency;
-      if (sourceAmount != "") {
-        $.ajax({
-          url: url,
-          type: "GET",
-          data: {
-            source_amount: sourceAmount,
-          },
-          success: function (data) {
-            $("#target-amount-calculator").val(data.result);
-          },
-        });
-      }
+      getCalculateData();
     });
   }
 
@@ -74,7 +59,7 @@
       $("#target-currency-calculator").val(sourceCurrency);
       $("#source-amount-calculator").val(targetAmount);
       $("#target-amount-calculator").val(sourceAmount);
-      exchangeCalculator();
+      getCalculateData();
     });
   }
 
@@ -88,6 +73,25 @@
           var url = window.location.href + "chart/" + source_currency + "/" + target_currency;
           window.location = url;
         }
+      });
+    }
+  }
+
+  function getCalculateData() {
+    var sourceCurrency = $("#source-currency-calculator").val();
+    var targetCurrency = $("#target-currency-calculator").val();
+    var sourceAmount = $("#source-amount-calculator").val();
+    var url = window.location.href + "calculate/" + sourceCurrency + "/" + targetCurrency;
+    if (sourceAmount != "") {
+      $.ajax({
+        url: url,
+        type: "GET",
+        data: {
+          source_amount: sourceAmount,
+        },
+        success: function (data) {
+          $("#target-amount-calculator").val(data.result);
+        },
       });
     }
   }
