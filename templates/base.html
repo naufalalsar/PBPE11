@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" data-theme="emerald" class="h-full">
+
+<html lang="en" data-theme="emerald">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,58 +9,139 @@
   <link href="https://cdn.jsdelivr.net/npm/daisyui@2.31.0/dist/full.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://kit.fontawesome.com/951fd64367.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'poppins': ['Poppins', 'sans-serif'],
+            'roboto': ['Roboto', 'serif'],
+            'nunito': ['Nunito', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      toggleDropdown();
+    });
+
+    function toggleDropdown() {
+      $("#button-dropdown").click(function () {
+        $("#navbar-dropdown").toggle();
+        $("#logo-dropdown").toggleClass("fa-rotate-270");
+      });
+    }
+  </script>
   {% block meta %} {% endblock meta %}
 </head>
 
-<body class="min-h-screen">
-  <div class="w-full navbar bg-primary font-bold">
-    <div class="navbar-start">
-      <div class="dropdown">
-        <label tabindex="0" class="btn btn-ghost btn-circle">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-          </svg>
-        </label>
-        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-primary rounded-box w-52">
-          <li><a>Homepage</a></li>
-          <li><a href="{% url 'dompet:show_dompet' %}">Dompet</a></li>
-          <li><a>Berita</a></li>
-          <li><a href="{% url 'forum:show_forum' %}">Forum</a></li>
-          <li><a href="{% url 'kurs:kurs' %}">Kurs</a></li>
-          <li><a>Donasi</a></li>
-        </ul>
+<body class="min-h-screen bg-gradient-to-br from-primary to-white">
+  <nav class="font-roboto font-bold">
+    <!-- mobile view -->
+    <div class="md:hidden">
+      <div
+        class="w-full fixed top-0 z-50 p-4 flex justify-between bg-black bg-opacity-90 text-white cursor-pointer rounded-b-3xl items-center">
+
+        <i class="fa-solid fa-money-bills"></i>
+        <p class="text-xl ml-4 font-bold">Saku-In</p>
+        {% if user.is_authenticated %}
+        <i class="fa-solid fa-right-to-bracket transition duration-200 hover:scale-110 hover:text-primary"></i>
+        {% else %}
+        <i class="fa-solid fa-right-from-bracket transition duration-200 hover:scale-110"></i>
+        {% endif %}
+      </div>
+
+      <div
+        class="w-full fixed bottom-0 z-50 p-4 flex justify-between bg-black bg-opacity-90 text-white cursor-pointer rounded-t-3xl items-center">
+        <a class="home-link" href="{% url 'homepage:homepage' %}">
+          <i class="fa-solid fa-home transition duration-200 hover:scale-110 hover:text-primary"></i>
+        </a>
+        <a class="dompet-link" href="">
+          <i class="fa-solid fa-wallet transition duration-200 hover:scale-110 hover:text-primary"></i>
+        </a>
+        <a class="berita-link" href="">
+          <i class="fa-solid fa-newspaper transition duration-200 hover:scale-110 hover:text-primary"></i>
+        </a>
+        <a class="forum-link" href="">
+          <i class="fa-solid fa-comments transition duration-200 hover:scale-110 hover:text-primary"></i>
+        </a>
+        <a class="kurs-link" href="{% url 'kurs:kurs' %}">
+          <i class="fa-solid fa-chart-line transition duration-200 hover:scale-110 hover:text-primary"></i>
+        </a>
+        <a class="donasi-link" href="">
+          <i class="fa-solid fa-hand-holding-heart transition duration-200 hover:scale-110 hover:text-primary"></i>
+        </a>
       </div>
     </div>
-    <div class="navbar-center">
-      <p class="text-sm md:text-2xl cursor-pointer">Saku-In</p>
-    </div>
-    <div class="navbar-end">
-      {% if user.is_authenticated %}
-      <a href="{% url 'homepage:logout' %}" class="mr-5 text-xs md:text-xs transition duration-200 hover:scale-105">
-        <svg viewBox="0 0 24 24" width="24" height="24" stroke="#000000" stroke-width="2" fill="none"
-          stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-          <polyline points="16 17 21 12 16 7"></polyline>
-          <line x1="21" y1="12" x2="9" y2="12"></line>
-        </svg>
-      </a>
-      {% elif not button_hidden %}
-      <a href="{% url 'homepage:login' %}" role="button"
-        class="mr-5 text-xs md:text-xs transition duration-200 hover:scale-105">
-        <svg viewBox="0 0 24 24" width="24" height="24" stroke="#000000" stroke-width="2" fill="none"
-          stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-          <polyline points="10 17 15 12 10 7"></polyline>
-          <line x1="15" y1="12" x2="3" y2="12"></line>
-        </svg>
-      </a>
-      {% endif %}
-    </div>
-  </div>
+    <!-- tablet view -->
+    <div class="hidden md:block">
+      <div
+        class="h-full w-48 fixed left-0 z-50 shadow-2xl p-4 flex flex-col gap-y-3 bg-black text-white cursor-pointer pl-5">
 
-  <main class="bg-base-100 mt-10 flex flex-col items-center min-h-screen">
+        <div class="flex gap-x-3 items-center text-2xl mb-3">
+          <i class="fa-solid fa-money-bills"></i>
+          <p>Saku-In</p>
+        </div>
+        <a class="home-link" href="{% url 'homepage:homepage' %}">
+          <div class="flex gap-x-4 items-center text-sm">
+            <i class="fa-solid fa-home text-lg"></i>
+            <p class="w-full hover:text-primary duration-200">Home</p>
+          </div>
+        </a>
+        <a class="dompet-link" href="">
+          <div class="flex gap-x-4 items-center text-sm">
+            <i class="fa-solid fa-wallet text-lg"></i>
+            <p class="w-full hover:text-primary duration-200">Dompet</p>
+          </div>
+        </a>
+        <a class="berita-link" href="">
+          <div class="flex gap-x-4 items-center text-sm">
+            <i class="fa-regular fa-newspaper text-lg"></i>
+            <p class="w-full hover:text-primary duration-200">Berita</p>
+          </div>
+        </a>
+        <a class="forum-link" href="">
+          <div class="flex gap-x-4 items-center text-sm">
+            <i class="fa-solid fa-comment text-lg"></i>
+            <p class="w-full hover:text-primary duration-200">Forum</p>
+          </div>
+        </a>
+        <a class="kurs-link" href="{% url 'kurs:kurs' %}">
+          <div class="flex gap-x-4 items-center text-sm">
+            <i class="fa-solid fa-chart-line text-lg"></i>
+            <p class="w-full hover:text-primary duration-200">Kurs</p>
+          </div>
+        </a>
+        <a class="donasi-link" href="">
+          <div class="flex gap-x-4 items-center text-sm">
+            <i class="fa-solid fa-hand-holding-dollar text-lg"></i>
+            <p class="w-full hover:text-primary duration-200">Donasi</p>
+          </div>
+        </a>
+      </div>
+      <div
+        class="w-full fixed top-0 z-40 justify-end p-4 flex gap-x-4 bg-black bg-opacity-90 text-white cursor-pointer items-center pr-8">
+        {% if user.is_authenticated %}
+        <a href="{% url 'homepage:logout' %}" class="duration-200 hover:scale-105 hover:text-primary">Log out</a>
+        {% else %}
+        <a href="{% url 'homepage:login' %}" class="duration-200 hover:scale-105 hover:text-primary">Log in</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <main class="md:ml-48 min-h-screen pt-24 pb-36 flex flex-col items-center font-poppins overflow-hidden">
     {% if messages %}
-    <div class=" w-2/3 max-w-sm">
+    <div class="w-2/3 max-w-sm">
       <ul>
         {% for message in messages %}
         <div class="alert alert-{{message.tags}} shadow-lg py-2">
