@@ -15,13 +15,15 @@
 {% block content %}
 
 <div class="flex flex-col gap-y-2">
-<h2 class="text-4xl font-bold">Donasi</h2>
-<p class="text-2xl">Ingin menggalang dana? <button class="btn btn-primary btn-xs text-xs md:btn-sm md:text-base" type="button" data-modal-toggle="defaultModal">
+<h2 class="text-4xl font-bold text-center">Donasi</h2>
+<br>
+<p>Ingin Galang Dana?</p>
+<a class="btn btn-primary p-2 m-3" type="button" data-modal-toggle="defaultModal">
     Galang Dana
-  </button></p>
-
-  <a class="btn btn-error p-2 m-3" role="button" href="{% url 'donation:donasi_saya' %}">Hapus Donasi</a>
-
+</a>
+<div class="flex justify-center items-center">
+  <a class="btn btn-error p-2 m-3 w-3/4 justify-center items-center" role="button" href="{% url 'donation:donasi_saya' %}">Hapus Donasi</a>
+</div>
 
 
 
