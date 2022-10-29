@@ -5,15 +5,17 @@
 <br></br>
 
 
-  <div class="flex flex-col md:flex-row gap-x-2 items-center gap-y-2">
-    <div><p class="font-bold">Category Filter : </p></div>
-    <div><button class="btn btn-secondary" onclick="show_all()">All</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('uang')">Money</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('bank')">Bank</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('ekonomi')">Economy</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('kripto')">Crypto</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('saham')">Stock</button></div>
+<div class="flex flex-col md:flex-row gap-x-2 items-center gap-y-2">
+  <div>
+    <p class="font-bold">Category Filter : </p>
   </div>
+  <div><button class="btn btn-secondary" onclick="show_all()">All</button></div>
+  <div><button class="btn btn-secondary" onclick="show_filter('uang')">Money</button></div>
+  <div><button class="btn btn-secondary" onclick="show_filter('bank')">Bank</button></div>
+  <div><button class="btn btn-secondary" onclick="show_filter('ekonomi')">Economy</button></div>
+  <div><button class="btn btn-secondary" onclick="show_filter('kripto')">Crypto</button></div>
+  <div><button class="btn btn-secondary" onclick="show_filter('saham')">Stock</button></div>
+</div>
 
 <br></br>
 
@@ -22,17 +24,17 @@
 <br></br>
 
 <div class="flex flex-col w-3/4 gap-y-2 gap-x-2" id="container">
-    
+
 </div>
 
 <script>
-    function show_all(){
-        $.get("/berita/json", function(data){
-            $("#container").html("")
-            for(let i = 0; i < data.length; i++){
-                let d = new Date(data[i].fields.date.substring(0,10));
-                const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content w-full">
+  function show_all() {
+    $.get("/berita/json", function (data) {
+      $("#container").html("")
+      for (let i = 0; i < data.length; i++) {
+        let d = new Date(data[i].fields.date.substring(0, 10));
+        const date = d.toDateString()
+        $("#container").append(`<div class="card bg-primary text-primary-content w-full">
   <div class="card-body">
     <h2 class="card-title">${data[i].fields.title}</h2>
     <ol class="list-disc">
@@ -46,22 +48,23 @@
       <a class="btn btn-error" onclick="deleteBerita(${data[i].pk})">Delete</a>
     </div>
 </div>`)
-            }
-        })
-    }
+      }
+    })
+  }
 
-    $(document).ready(function(){
-          show_all();
-      });
+  $(document).ready(function () {
+    show_all();
+    $(".berita-link").addClass("text-primary");
+  });
 
-    function show_filter(filter){
-        $.get(`/berita/json`, function(data){
-            $("#container").html("")
-            for(let i = 0; i < data.length; i++){
-                if(data[i].fields.category == filter){
-                let d = new Date(data[i].fields.date.substring(0,10));
-                const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content w-full">
+  function show_filter(filter) {
+    $.get(`/berita/json`, function (data) {
+      $("#container").html("")
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].fields.category == filter) {
+          let d = new Date(data[i].fields.date.substring(0, 10));
+          const date = d.toDateString()
+          $("#container").append(`<div class="card bg-primary text-primary-content w-full">
   <div class="card-body">
     <h2 class="card-title">${data[i].fields.title}</h2>
     <ol class="list-disc">
@@ -74,38 +77,40 @@
       <a class="btn btn-primary" href="/berita/show/${data[i].pk}">Show More</a>
       <a class="btn btn-error" onclick="deleteBerita(${data[i].pk})">Delete</a>
     </div>
-</div>`)}
-            }
-        })
-    }
-
-    function deleteBerita(id){
-        $.ajax({
-          url: `/berita/delete/${id}`,
-          type: "DELETE",
-          headers: {
-            "X-CSRFToken": getCookie("csrftoken")
-          },
-        success: function(){
-            show_all();
-        },
-      })}
-
-
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-          const cookies = document.cookie.split(';');
-          for (let i = 0; i < cookies.length; i++) {
-              const cookie = cookies[i].trim();
-              // Does this cookie string begin with the name we want?
-              if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
-          }
+</div>`)
+        }
       }
-      return cookieValue;
+    })
+  }
+
+  function deleteBerita(id) {
+    $.ajax({
+      url: `/berita/delete/${id}`,
+      type: "DELETE",
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken")
+      },
+      success: function () {
+        show_all();
+      },
+    })
+  }
+
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
   }
 
 

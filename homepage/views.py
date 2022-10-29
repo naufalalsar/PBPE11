@@ -18,7 +18,8 @@ from django.dispatch import receiver
 
 # Create your views here.
 def homepage(request):
-    return render(request, 'homepage.html')
+    context = {"sidebar_hidden": True}
+    return render(request, 'homepage.html', context)
 
 def login_user(request):
     if request.method == 'POST':
@@ -31,7 +32,7 @@ def login_user(request):
             return response
         else:
             messages.error(request, 'Username atau Password salah!')
-    context = {"button_hidden": True}
+    context = {"sidebar_hidden": True}
     return render(request, 'login.html', context)
 
 def logout_user(request):
@@ -54,5 +55,5 @@ def register(request):
         else:
             messages.error(request, 'Akun gagal dibuat!')
     
-    context = {"button_hidden": True}
+    context = {"sidebar_hidden": True}
     return render(request, 'register.html', context)

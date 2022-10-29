@@ -1,4 +1,13 @@
 {% extends 'base.html' %}
+{% block meta %}
+<script>
+  $(document).ready(function () {
+    $(".berita-link").addClass("text-primary");
+  });
+</script>
+{% endblock meta %}
+
+
 {% block content %}
 <h1 style="text-align: center;">Error 403 - Forbidden</h1>
 <p style="text-align: center;">You do not have permission to access on this feature.</p>

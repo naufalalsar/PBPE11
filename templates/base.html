@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
   <script>
     tailwind.config = {
@@ -23,7 +23,11 @@
             'poppins': ['Poppins', 'sans-serif'],
             'roboto': ['Roboto', 'serif'],
             'nunito': ['Nunito', 'sans-serif'],
+            'raleway': ['Raleway', 'sans-serif'],
           },
+          backgroundImage: {
+            'homepage': "url('/static/images/homepage.jpg')",
+          }
         },
       },
     }
@@ -54,9 +58,11 @@
         <i class="fa-solid fa-money-bills"></i>
         <p class="text-xl ml-4 font-bold">Saku-In</p>
         {% if user.is_authenticated %}
-        <i class="fa-solid fa-right-to-bracket transition duration-200 hover:scale-110 hover:text-primary"></i>
+        <a href="{% url 'homepage:logout' %}"><i
+            class="fa-solid fa-right-to-bracket transition duration-200 hover:scale-110 hover:text-primary"></i></a>
         {% else %}
-        <i class="fa-solid fa-right-from-bracket transition duration-200 hover:scale-110"></i>
+        <a href="{% url 'homepage:logout' %}"><i
+            class="fa-solid fa-right-from-bracket transition duration-200 hover:scale-110"></i></a>
         {% endif %}
       </div>
 
@@ -65,10 +71,12 @@
         <a class="home-link" href="{% url 'homepage:homepage' %}">
           <i class="fa-solid fa-home transition duration-200 hover:scale-110 hover:text-primary"></i>
         </a>
-        <a class="dompet-link" href="">
+        {% if user.is_authenticated %}
+        <a class="dompet-link" href="{% url 'dompet:show_dompet' %}">
           <i class="fa-solid fa-wallet transition duration-200 hover:scale-110 hover:text-primary"></i>
         </a>
-        <a class="berita-link" href="">
+        {% endif %}
+        <a class="berita-link" href="{% url 'berita:show' %}">
           <i class="fa-solid fa-newspaper transition duration-200 hover:scale-110 hover:text-primary"></i>
         </a>
         <a class="forum-link" href="{% url 'forum:show_forum' %}">
@@ -77,13 +85,16 @@
         <a class="kurs-link" href="{% url 'kurs:kurs' %}">
           <i class="fa-solid fa-chart-line transition duration-200 hover:scale-110 hover:text-primary"></i>
         </a>
-        <a class="donasi-link" href="">
+        {% if user.is_authenticated %}
+        <a class="donasi-link" href="{% url 'donation:index' %}">
           <i class="fa-solid fa-hand-holding-heart transition duration-200 hover:scale-110 hover:text-primary"></i>
         </a>
+        {% endif %}
       </div>
     </div>
     <!-- tablet view -->
     <div class="hidden md:block">
+      {% if not sidebar_hidden %}
       <div
         class="h-full w-48 fixed left-0 z-50 shadow-2xl p-4 flex flex-col gap-y-3 bg-black text-white cursor-pointer pl-5">
 
@@ -97,12 +108,14 @@
             <p class="w-full hover:text-primary duration-200">Home</p>
           </div>
         </a>
+        {% if user.is_authenticated %}
         <a class="dompet-link" href="{% url 'dompet:show_dompet' %}">
           <div class="flex gap-x-4 items-center text-sm">
             <i class="fa-solid fa-wallet text-lg"></i>
             <p class="w-full hover:text-primary duration-200">Dompet</p>
           </div>
         </a>
+        {% endif %}
         <a class="berita-link" href="{% url 'berita:show' %}">
           <div class="flex gap-x-4 items-center text-sm">
             <i class="fa-regular fa-newspaper text-lg"></i>
@@ -121,17 +134,48 @@
             <p class="w-full hover:text-primary duration-200">Kurs</p>
           </div>
         </a>
+        {% if user.is_authenticated %}
         <a class="donasi-link" href="{% url 'donation:index' %}">
           <div class="flex gap-x-4 items-center text-sm">
             <i class="fa-solid fa-hand-holding-dollar text-lg"></i>
             <p class="w-full hover:text-primary duration-200">Donasi</p>
           </div>
         </a>
+        {% endif %}
       </div>
+      {% endif %}
+
       <div
-        class="w-full fixed top-0 z-40 justify-end p-4 flex gap-x-6 bg-black bg-opacity-90 text-white cursor-pointer items-center pr-8">
+        class="w-full fixed top-0 z-40 {% if sidebar_hidden %}justify-between{% else %}justify-end{% endif %} p-4 flex bg-black bg-opacity-90 text-white cursor-pointer items-center">
+        {% if sidebar_hidden %}
+        <div class="flex gap-x-3 items-center text-2xl">
+          <i class="fa-solid fa-money-bills"></i>
+          <p>Saku-In</p>
+        </div>
+        <div class="flex gap-x-10">
+          <a class="home-link" href="{% url 'homepage:homepage' %}">
+            <p class="hover:text-primary duration-200">Home</p>
+          </a>
+          {% if user.is_authenticated %}
+          <a class="dompet-link" href="{% url 'dompet:show_dompet' %}">
+            <p class="hover:text-primary duration-200">Dompet</p>
+          </a>
+          {% endif %}
+          <a class="berita-link" href="{% url 'berita:show' %}">
+            <p class="hover:text-primary duration-200">Berita</p>
+          </a>
+          <a class="forum-link" href="{% url 'forum:show_forum' %}">
+            <p class="hover:text-primary duration-200">Forum</p>
+          </a>
+          <a class="kurs-link" href="{% url 'kurs:kurs' %}">
+            <p class="hover:text-primary duration-200">Kurs</p>
+          </a>
+        </div>
+        {% endif %}
         {% if user.is_authenticated %}
+        {% if not sidebar_hidden %}
         <p class="duration-200 hover:scale-105 hover:text-primary">{{user.username}}</p>
+        {% endif %}
         <a href="{% url 'homepage:logout' %}" class="duration-200 hover:scale-105 hover:text-primary">Log out</a>
         {% else %}
         <a href="{% url 'homepage:login' %}" class="duration-200 hover:scale-105 hover:text-primary">Log in</a>
@@ -140,7 +184,8 @@
     </div>
   </nav>
 
-  <main class="md:ml-48 min-h-screen pt-24 pb-36 flex flex-col items-center font-poppins overflow-hidden">
+  <main
+    class="{% if not sidebar_hidden %}md:ml-48 overflow-hidden flex flex-col {% endif %}min-h-screen pt-24 pb-16 items-center font-poppins">
     {% if messages %}
     <div class="w-2/3 max-w-sm">
       <ul>
@@ -161,7 +206,7 @@
     {% endif %} {% block content %} {% endblock content %}
   </main>
 
-  <footer class="footer footer-center p-4 bg-base-300 text-base-content" >
+  <footer class="footer footer-center p-4 bg-base-300 text-base-content">
     <div>
       <p>Copyright © 2022 - All right reserved by PBP-E11</p>
     </div>

@@ -20,7 +20,9 @@
                         <line x1="9" y1="9" x2="9.01" y2="9"></line>
                         <line x1="15" y1="9" x2="15.01" y2="9"></line>
                     </svg>`;
+
     $(document).ready(function () {
+        $(".dompet-link").addClass("text-primary");
         initializeTotalArusKas();
         getArusKas();
         createArusKasListener();
@@ -196,7 +198,7 @@
                 </td>
                 <td>${arus.keterangan}</td>
             </tr >
-            `);
+        `);
     }
 </script>
 {% endblock meta %}
