@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 style="text-align: center;">Berita Finansial Terkini</h1>
+<h1 class="text-4xl items-center font-bold">Berita Finansial Terkini</h1>
+
+<br></br>
+
+
+  <div class="flex flex-col md:flex-row gap-x-2 items-center gap-y-2">
+    <div><p class="font-bold">Category Filter : </p></div>
+    <div><button class="btn btn-secondary" onclick="show_all()">All</button></div>
+    <div><button class="btn btn-secondary" onclick="show_filter('uang')">Money</button></div>
+    <div><button class="btn btn-secondary" onclick="show_filter('bank')">Bank</button></div>
+    <div><button class="btn btn-secondary" onclick="show_filter('ekonomi')">Economy</button></div>
+    <div><button class="btn btn-secondary" onclick="show_filter('kripto')">Crypto</button></div>
+    <div><button class="btn btn-secondary" onclick="show_filter('saham')">Stock</button></div>
+  </div>
 
 <br></br>
 
@@ -8,19 +21,7 @@
 
 <br></br>
 
-  <div class="flex flex-col md:flex-row">
-    <div><p>Category Filter : </p></div>
-    <div><button class="btn btn-secondary" onclick="show_all()">All</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('uang')">Money</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('bank')">Bank</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('ekonomi')">Economy</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('bank')">Crypto</button></div>
-    <div><button class="btn btn-secondary" onclick="show_filter('saham')">Stock</button></div>
-  </div>
-
-<br></br>
-
-<div class="flex flex-col w-3/4" id="container">
+<div class="flex flex-col w-3/4 gap-y-2 gap-x-2" id="container">
     
 </div>
 

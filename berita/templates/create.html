@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="form-control min-w-full">
+<div class="form-control w-5/6 flex flex-col gap-y-2">
     <div class="form-control">
         <label class="label">
           <span class="label-text">Title</span>
         </label>
         <input type="text" class="input input-bordered" id="title"/>
     </div>
-    <label class="label">
-      <span class="label-text">Isi Berita</span>
-    </label> 
+   
     <div class="form-control min-w-full">
+      <label class="label">
+        <span class="label-text">Isi Berita</span>
+      </label> 
         <textarea class="textarea textarea-bordered" id="content"></textarea> 
     </div>
     <label class="label">

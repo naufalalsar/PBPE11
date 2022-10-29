@@ -13,12 +13,14 @@
 {% endblock meta %}
 
 {% block content %}
-<h2>Donasi</h2>
-<p>Ingin menggalang dana? <button class="btn btn-primary btn-xs text-xs md:btn-sm md:text-base" type="button" data-modal-toggle="defaultModal">
+
+<div class="flex flex-col gap-y-2">
+<h2 class="text-4xl font-bold">Donasi</h2>
+<p class="text-2xl">Ingin menggalang dana? <button class="btn btn-primary btn-xs text-xs md:btn-sm md:text-base" type="button" data-modal-toggle="defaultModal">
     Galang Dana
   </button></p>
 
-  <a class="btn btn-outline-primary p-2 m-3" role="button" href="{% url 'donation:donasi_saya' %}">Dibuat</a>
+  <a class="btn btn-error p-2 m-3" role="button" href="{% url 'donation:donasi_saya' %}">Hapus Donasi</a>
 
 
 
@@ -74,10 +76,11 @@
 
 
 
-<div class="flex-row" id="card-row">
+<div class="flex flex-col gap-y-2" id="card-row">
 
 </div>
 
+</div>
 
 <script>
     async function getDonasi() {

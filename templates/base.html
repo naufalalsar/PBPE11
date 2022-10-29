@@ -97,19 +97,19 @@
             <p class="w-full hover:text-primary duration-200">Home</p>
           </div>
         </a>
-        <a class="dompet-link" href="">
+        <a class="dompet-link" href="{% url 'dompet:show_dompet' %}">
           <div class="flex gap-x-4 items-center text-sm">
             <i class="fa-solid fa-wallet text-lg"></i>
             <p class="w-full hover:text-primary duration-200">Dompet</p>
           </div>
         </a>
-        <a class="berita-link" href="">
+        <a class="berita-link" href="{% url 'berita:show' %}">
           <div class="flex gap-x-4 items-center text-sm">
             <i class="fa-regular fa-newspaper text-lg"></i>
             <p class="w-full hover:text-primary duration-200">Berita</p>
           </div>
         </a>
-        <a class="forum-link" href="">
+        <a class="forum-link" href="{% url 'forum:show_forum' %}">
           <div class="flex gap-x-4 items-center text-sm">
             <i class="fa-solid fa-comment text-lg"></i>
             <p class="w-full hover:text-primary duration-200">Forum</p>
@@ -121,7 +121,7 @@
             <p class="w-full hover:text-primary duration-200">Kurs</p>
           </div>
         </a>
-        <a class="donasi-link" href="">
+        <a class="donasi-link" href="{% url 'donation:index' %}">
           <div class="flex gap-x-4 items-center text-sm">
             <i class="fa-solid fa-hand-holding-dollar text-lg"></i>
             <p class="w-full hover:text-primary duration-200">Donasi</p>

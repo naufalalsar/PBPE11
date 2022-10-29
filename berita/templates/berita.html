@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="flex flex-col gap-y-2 items-center w-11/12">
 {% for i in data %}
-<h1>{{i.title}}</h1>
+<h1 class="text-3xl font-bold">{{i.title}}</h1>
 <p>{{i.content}}</p>
 <ul class="list-disc">
     <li>Category : {{i.category}}</li>
@@ -15,4 +16,5 @@
   {% endif %}
   <a class="btn btn-primary"  href="{% url 'berita:show' %}">Back</a>
 {% endfor %}
+</div>
   {% endblock content %}
