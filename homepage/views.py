@@ -30,6 +30,7 @@ def login_user(request):
             login(request, user) # melakukan login terlebih dahulu
             response = HttpResponseRedirect(reverse("homepage:homepage"))
             response.set_cookie('news_count', 0)
+            request.session['last_news'] = 'No Last Seen News Yet'
             return response
         else:
             messages.error(request, 'Username atau Password salah!')
@@ -40,6 +41,7 @@ def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('homepage:login'))
     response.delete_cookie('news_count')
+    request.session['last_news'] = 'No Last Seen News Yet'
     return response
 
 def register(request):

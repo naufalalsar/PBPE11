@@ -16,7 +16,6 @@ from berita.forms import BeritaForm
 
 # Create your views here.
 
-@login_required(login_url="homepage:login")
 def show(request):
     if request.user.is_superuser:
         try:
@@ -63,7 +62,6 @@ def show(request):
             }
         return render(request, "user.html", context)
 
-@login_required(login_url="homepage:login")
 def json_all(request):
     data = Berita.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
@@ -90,7 +88,7 @@ def add(request):
     else:
         return render(request, "forbidden.html")
 
-@login_required(login_url="homepage:login")
+
 def berita(request, pk):
     data = Berita.objects.filter(pk=pk)
     request.session['last_news'] = data[0].title
