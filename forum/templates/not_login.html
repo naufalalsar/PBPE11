@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
+{% block meta %}
+<script>
+  $(document).ready(function () {
+    $(".forum-link").addClass("text-primary");
+  });
+</script>
+{% endblock meta %}
+
 {% block content %}
 <h1 style="text-align: center;">You are not logged in</h1>
 <p style="text-align: center;">You have to login first to access on this feature.</p>

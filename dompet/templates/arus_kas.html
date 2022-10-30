@@ -20,7 +20,9 @@
                         <line x1="9" y1="9" x2="9.01" y2="9"></line>
                         <line x1="15" y1="9" x2="15.01" y2="9"></line>
                     </svg>`;
+
     $(document).ready(function () {
+        $(".dompet-link").addClass("text-primary");
         initializeTotalArusKas();
         getArusKas();
         createArusKasListener();
@@ -74,6 +76,10 @@
             url: "./arus_kas_json",
             success: function (data) {
                 console.log(data);
+                if (data.length == 0) {
+                    $("#arus-kas-table").addClass("hidden");
+                    $("#arus-kas-empty").removeClass("hidden");
+                }
                 for (var i = 0; i < data.length; i++) {
                     appendArusKas(data[i].fields);
                 }
@@ -158,6 +164,8 @@
     }
 
     function appendArusKas(arus) {
+        $("#arus-kas-table").removeClass("hidden");
+        $("#arus-kas-empty").addClass("hidden");
         var tanggal = new Date(arus.created_at).toString()
         console.log(tanggal);
         var _tanggal = tanggal.split(' ', 5);
@@ -177,26 +185,24 @@
                         <line x1="12" y1="8" x2="12" y2="16"></line>
                         <line x1="8" y1="12" x2="16" y2="12"></line>
                     </svg>`
-                : `
-                    <svg xmlns="http://www.w3.org/2000/svg" width = "24" height = "24" viewBox = "0 0 24 24"
+                : `<svg xmlns="http://www.w3.org/2000/svg" width = "24" height = "24" viewBox = "0 0 24 24"
                         fill = "none" stroke = "#F87272" stroke - width="2" stroke - linecap="round"
                         stroke - linejoin="round" class= "feather feather-minus-circle inline" >
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="8" y1="12" x2="16" y2="12"></line>
-                    </svg >`
+                    </svg>`
             }
-                </th >
+                </th>
                 <td class="font-bold mr-2">${tanggal}</td>
                 <td>
                     ${arus.tipe != 1 ? `
                     <span class="text-error">-Rp. ${arus.nominal}</span>`
-                : `
-                    <span class="text-success">+Rp. ${arus.nominal}</span>
-                    `}
+                : `<span class="text-success">+Rp. ${arus.nominal}</span>`}
                 </td>
                 <td>${arus.keterangan}</td>
-            </tr >
-            `);
+
+            </tr>
+        `);
     }
 </script>
 {% endblock meta %}
@@ -205,52 +211,83 @@
 <div class="w-2/3 max-w-sm" id="message-placeholder">
 </div>
 <div class="w-[95%] flex flex-col justify-center lg:flex-row gap-4 pb-2">
-    <div class="flex flex-col w-full lg:w-7/12">
-        <div class="flex justify-between">
-            <label for="modal-create-arus-kas" role="button"
-                class="flex flex-col items-center p-2 gap-2 rounded-xl rounded-b-none sm:w-1/4 md:w-1/6 lg:w-[13%] bg-primary hover:brightness-[90%] transition-all duration-200 ml-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-edit-3">
-                    <path d="M12 20h9"></path>
-                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                </svg>
-                <div class="stat-desc">Buat Catatan</div>
-            </label>
-            <form method="GET" class="mt-5 mr-2" id="filter-arus-kas">
-                <div class="input-group items-center">
-                    <select class="select select-bordered" name="filter_type" id="id-filter-type">
-                        <option disabled selected>Filter by</option>
-                        <option value="date">Today</option>
-                        <option value="week">This Week</option>
-                        <option value="month">This Month</option>
-                        <option value="year">This Year</option>
-                        <option value="reset">Reset</option>
-                    </select>
-                    <button class="btn bg-black" type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-filter">
-                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                        </svg>
-                    </button>
-                </div>
-            </form>
+    <div class="flex flex-col w-full lg:w-7/12 gap-4">
+        <a href="{% url 'dompet:show_dompet' %}"
+            class="btn btn-ghost w-1/3 md:w-1/6 mb-2 border border-black border-solid hover:border-black">
+            <div class="mr-1">BACK</div><i class="fa-sharp fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="hidden" id="arus-kas-table">
+            <div class="flex justify-between">
+                <label for="modal-create-arus-kas" role="button"
+                    class="flex flex-col items-center p-2 gap-2 rounded-xl rounded-b-none sm:w-1/4 md:w-1/6 lg:w-[13%] bg-primary hover:brightness-[90%] transition-all duration-200 ml-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-edit-3">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    <div class="stat-desc text-black">Buat Catatan</div>
+                </label>
+                <form method="GET" class="mt-5 mr-2" id="filter-arus-kas">
+                    <div class="input-group items-center">
+                        <select class="select select-bordered" name="filter_type" id="id-filter-type">
+                            <option disabled selected>Filter by</option>
+                            <option value="date">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                            <option value="reset">Reset</option>
+                        </select>
+                        <button class="btn bg-black" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-filter">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="overflow-x-auto shadow-lg rounded-xl">
+                <table class="table w-full" id="arus-kas-table">
+                    <!-- head -->
+                    <thead>
+                        <tr>
+                            <th class="font-xl">Tipe</th>
+                            <th class="font-xl">Tanggal</th>
+                            <th class="font-xl">Nominal</th>
+                            <th class="font-xl">Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="arus-kas-tbody">
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="overflow-x-auto shadow-lg rounded-xl">
-            <table class="table w-full" id="arus-kas-table">
-                <!-- head -->
-                <thead>
-                    <tr>
-                        <th class="font-xl">Tipe</th>
-                        <th class="font-xl">Tanggal</th>
-                        <th class="font-xl">Nominal</th>
-                        <th class="font-xl">Keterangan</th>
-                    </tr>
-                </thead>
-                <tbody id="arus-kas-tbody">
-                </tbody>
-            </table>
+        <div class="hidden flex flex-col self-center justify-center w-full mt-4" id="arus-kas-empty">
+            <div class="flex flex-col items-center justify-center gap-4 w-full">
+                <div class="flex gap-3 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-alert-circle">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <div class="text-2xl font-bold">Tidak ada catatan</div>
+                </div>
+                <div class="text-xl ml-2">Buat catatan untuk melihat riwayat arus kas</div>
+                <label for="modal-create-arus-kas" role="button"
+                    class="flex flex-col items-center p-2 gap-2 rounded-xl sm:w-1/4 md:w-1/6 lg:w-[13%] bg-primary hover:brightness-[90%] transition-all duration-200 ml-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-edit-3">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    <div class="stat-desc text-black">Buat Catatan</div>
+                </label>
+            </div>
         </div>
     </div>
     <div class="stats stats-vertical shadow-xl max-h-[50vh]">

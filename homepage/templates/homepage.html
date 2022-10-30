@@ -2,50 +2,55 @@
 {% load static %}
 
 {% block meta %}
-<title>Saku-in App!</title>
+<title>Home Page</title>
+<script>
+  $(document).ready(function() {
+    $(".home-link").addClass("text-primary");
+  })
+</script>
+
 {% endblock meta %}
 
 {% block content %}
-<h1 class="font-semibold text-3xl ml-2">About Us</h1>
-<div class="flex-col md:flex-row gap-x-3">
-<div class="card w-96 glass shadow-xl">
-  <div class="card-body">
-    <h2 class="card-title">Muhammad Rayhan Denel</h2>
-    <p>2106752161</p>
-    <p>Information System-2021</p>
+<div class="bg-homepage bg-cover bg-center bg-no-repeat h-[800px] w-full relative -top-24 flex items-center justify-center">
+  <div class="w-3/4 py-16 px-10 flex flex-col bg-white/20 gap-y-8 backdrop-blur-sm text-center items-center justify-center shadow-lg rounded-2xl">
+    <h1 class="text-gray-800 text-3xl md:text-5xl font-bold font-raleway uppercase break-normal">tracking your financial flow</h1>
+    <a href="#list-app" class="px-4 py-2 rounded bg-primary text-white font-semibold text-center focus:outline-none focus:ring focus:ring-offset-2 focus:ring-primary focus:ring-opacity-80 cursor-pointer hover:bg-opacity-90 hover:scale-110 transition-all transition-300 text-base md:text-xl">Get Started</a>
   </div>
 </div>
-
-<div class="card w-96 glass shadow-xl">
-  <div class="card-body">
-    <h2 class="card-title">Aushaaf Fadhillah</h2>
-    <p>NPM</p>
-    <p>Computer Science-2021</p>
-  </div>
+<div>
+  
 </div>
-
-<div class="card w-96 glass shadow-xl">
-  <div class="card-body">
-    <h2 class="card-title">Ferry Husnil</h2>
-    <p>NPM</p>
-    <p>Computer Science-2021</p>
+<div id="list-app" class="flex flex-row flex-wrap justify-center items-center">
+  <div class="w-72 flex flex-col gap-y-6 h-72 justify-between items-center text-center p-4">
+    <i class="fa-solid fa-wallet text-5xl"></i>
+    <h2 class="text-xl uppercase font-semibold">Dompet</h2>
+    <p class="text-sm break-normal w-3/4">Detail catatan arus keuangan</p>
+    <a href="{% url 'dompet:show_dompet' %}" class="w-3/4 py-2 rounded border border-gray-500 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-primary focus:ring-opacity-80 cursor-pointer hover:bg-gray-500/20 transition-all transition-300 text-xs">Learn More</a>
   </div>
-</div>
-
-<div class="card w-96 glass shadow-xl">
-  <div class="card-body">
-    <h2 class="card-title">Bimo Priyohutomo</h2>
-    <p>NPM</p>
-    <p>Information System-2021</p>
+  <div class="w-72 flex flex-col gap-y-6 h-72 justify-between items-center text-center p-4">
+    <i class="fa-solid fa-newspaper text-5xl"></i>
+    <h2 class="text-xl uppercase font-semibold">Berita</h2>
+    <p class="text-sm break-normal w-3/4">Informasi terkini mengenai dunia ekonomi dan finansial</p>
+    <a href="{% url 'berita:show' %}" class="w-3/4 py-2 rounded border border-gray-500 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-primary focus:ring-opacity-80 cursor-pointer hover:bg-gray-500/20 transition-all transition-300 text-xs">Learn More</a>
   </div>
-</div>
-
-<div class="card w-96 glass shadow-xl">
-  <div class="card-body">
-    <h2 class="card-title">Muhammad Naufal Zaky Alsar</h2>
-    <p>2106752041</p>
-    <p>Information System-2021</p>
+  <div class="w-72 flex flex-col gap-y-6 h-72 justify-between items-center text-center p-4">
+    <i class="fa-solid fa-comments text-5xl"></i>
+    <h2 class="text-xl uppercase font-semibold">Forum</h2>
+    <p class="text-sm break-normal w-3/4">Tempat diskusi antar pengguna agar selalu update tentang keuangan</p>
+    <a href="{% url 'forum:show_forum' %}" class="w-3/4 py-2 rounded border border-gray-500 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-primary focus:ring-opacity-80 cursor-pointer hover:bg-gray-500/20 transition-all transition-300 text-xs">Learn More</a>
   </div>
-</div>
+  <div class="w-72 flex flex-col gap-y-6 h-72 justify-between items-center text-center p-4">
+    <i class="fa-solid fa-chart-line text-5xl"></i>
+    <h2 class="text-xl uppercase font-semibold">Kurs</h2>
+    <p class="text-sm break-normal w-3/4">Update harian nilai tukar mata uang antar negara G-20</p>
+    <a href="{% url 'kurs:kurs' %}" class="w-3/4 py-2 rounded border border-gray-500 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-primary focus:ring-opacity-80 cursor-pointer hover:bg-gray-500/20 transition-all transition-300 text-xs">Learn More</a>
+  </div>
+  <div class="w-72 flex flex-col gap-y-6 h-72 justify-between items-center text-center p-4">
+    <i class="fa-solid fa-hand-holding-heart text-5xl"></i>
+    <h2 class="text-xl uppercase font-semibold">Donasi</h2>
+    <p class="text-sm break-normal w-3/4">Berbagi kepada mereka yang membutuhkan</p>
+    <a href="{% url 'donation:index' %}" class="w-3/4 py-2 rounded border border-gray-500 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-primary focus:ring-opacity-80 cursor-pointer hover:bg-gray-500/20 transition-all transition-300 text-xs">Learn More</a>
+  </div>
 </div>
 {% endblock content %}

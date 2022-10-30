@@ -6,10 +6,6 @@ app_name = "kurs"
 urlpatterns = [
     path("", kurs, name="kurs"),
     path("json/<str:currency>", kurs_json, name="kurs_json"),
-    path(
-        "calculate/<str:source_currency>/<str:target_currency>",
-        calculate,
-        name="calculate",
-    ),
+    path("calculate", calculate, name="calculate"),
     path("chart/<str:source_currency>/<str:target_currency>", chart, name="chart"),
 ]

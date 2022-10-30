@@ -7,14 +7,21 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from decimal import Decimal
 
+# calculate all possible pair given target_currency
 def get_data(target_currency):
     currencies = Currency.objects.all()
     exchanges = Exchange.objects.filter(target_currency=target_currency)
-    last_updated = exchanges[0].last_updated if len(exchanges) > 0 else None
     today = date.today()
+    if len(exchanges) == 0:
+        last_updated = None
+    else:
+        for exchange in exchanges:
+            last_updated = exchange.last_updated
+            if last_updated != date.today():
+                break
+    
     if last_updated != today:
         try:
-
             sess = requests.Session()
             yesterday = today - relativedelta(days=1)
             one_week_ago = today - relativedelta(weeks=1)
@@ -185,13 +192,21 @@ def kurs_json(request, currency):
     return HttpResponse(serializers.serialize("json", exchanges, use_natural_foreign_keys=True), content_type="application/json")
 
 
-def calculate(request, source_currency, target_currency):
-    source_currency = Currency.objects.get(code=source_currency)
-    target_currency = Currency.objects.get(code=target_currency)
-    exchange = Exchange.objects.get(source_currency=source_currency, target_currency=target_currency)
-    source_amount = Decimal(request.GET.get("source_amount"))
-    result = round(exchange.amount * source_amount,6)
-    return JsonResponse({"result": result})
+def calculate(request):
+    if request.method == "POST":
+        source_currency = Currency.objects.get(code=request.POST["source_currency"])
+        target_currency = Currency.objects.get(code=request.POST["target_currency"])
+        amount = Decimal(request.POST["amount"])
+        today = date.today()
+        exchanges = get_data(target_currency)
+        for exchange in exchanges:
+            if exchange.source_currency == source_currency:
+                current_exchange = exchange
+        
+        result = round(current_exchange.amount * amount,6)
+        return JsonResponse({"result": result})
+    else:
+        return HttpResponse("only POST method allowed!")
 
 def chart(request, source_currency, target_currency):
     source_currency = Currency.objects.get(code=source_currency)
