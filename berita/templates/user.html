@@ -14,16 +14,16 @@
 
 
 {% block content %}
+
+<div class="flex flex-col gap-x-2 gap-y-2">
+
 <h1 class ="text-4xl items-center text-center font-bold">Berita Finansial Terkini</h1>
 
-<br></br>
+
 
 
 <p class="items-center text-center">Last Seen News : {{ last_news }}</p>
 <p class="items-center text-center">News Read Count This Session : {{ count }}</p>
-
-<br></br>
-
 
 
 <div class="flex flex-col md:flex-row gap-x-2 items-center gap-y-2">
@@ -38,8 +38,10 @@
 
 <br></br>
 
-<div class="flex flex-col w-3/4 gap-y-2 gap-x-2" id="container">
+<div class="flex flex-col gap-y-2 gap-x-2" id="container">
     
+</div>
+
 </div>
 
 {% comment %}
