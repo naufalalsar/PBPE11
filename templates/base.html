@@ -170,6 +170,11 @@
           <a class="kurs-link" href="{% url 'kurs:kurs' %}">
             <p class="hover:text-primary duration-200">Kurs</p>
           </a>
+          {% if user.is_authenticated %}
+          <a class="dompet-link" href="{% url 'donation:index' %}">
+            <p class="hover:text-primary duration-200">Donasi</p>
+          </a>
+          {% endif %}
         </div>
         {% endif %}
 
