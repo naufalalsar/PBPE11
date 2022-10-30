@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% block meta %}
+<title>Create Forum Saku-in!</title>
+{% endblock meta %}
+
+
+
+<div class="w-full max-w-xs">
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="POST" action="{% url 'forum:create_forum' %}">
+        {% csrf_token %}
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="judul">
+          Title
+        </label>
+        <input type="text" name="judul" placeholder="Forum Title" class="form-control form shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      <div class="mb-6">
+        <label for="isi-forum" class="block text-gray-700 text-sm font-bold mb-2">Content</label>
+<textarea class="textarea textarea-bordered w-full h-[40vh] rounded-xl" name="isi"
+maxlength="1000" required="" id="isi-forum" placeholder="Forum Content"></textarea>
+        <p class="text-red-500 text-xs italic">Please input content.</p>
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="button login__submit" type="submit" value="Submit">
+            <span class="btn btn-outline btn-primary" >Create forum</span>
+        </button>
+      </div>
+    </form>
+    <p class="text-center text-gray-500 text-xs">
+      &copy;2020 Acme Corp. All rights reserved.
+    </p>
+  </div>
+
+  {% endblock content %}
