@@ -15,7 +15,7 @@ from django.http import JsonResponse
 
 # Create your views here.
 
-@login_required(login_url="homepage:login")
+# @login_required(login_url="homepage:login")
 def show_forum(request):
     if(request.user.is_superuser):
         return render(request, "forum_admin.html")
