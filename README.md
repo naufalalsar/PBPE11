@@ -39,6 +39,6 @@ Pengguna bisa mendonasikan sejumlah uangnya dan terintegrasi ke dompet kita (kal
 
 ## Role:
 
-- Guest (user yang belum log in)
-- User (pengguna yang sudah terautentifikasi)
-- Admin (Pengguna yang dapat mengupdate berita)
+- Guest (User yang belum log in akses yang dipunya adalah kurs dan membaca berita)
+- User (Pengguna yang sudah terautentifikasi bisa mengakses hampir semua fitur kecuali membuat berita dan menghapus donasi user lain, menghapus forum dan komen user lain, dan membuat berita dan menghapus berita)
+- Admin (Pengguna yang mempunyai akses ke semua fitur seperti : dapat menghapus dan menambah berita, menghapus forum dan komen, menghapus donasi)
