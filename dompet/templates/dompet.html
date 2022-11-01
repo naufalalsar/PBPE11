@@ -6,22 +6,64 @@
 <script>
     $(document).ready(function () {
         $(".dompet-link").addClass("text-primary");
+        $("#dropdown-filter").click(function () {
+            $("#dropdown").toggle();
+        });
+        $(document).click(function (e) {
+            if (!$(e.target).is('#dropdown-filter')) {
+                $("#dropdown").hide();
+            }
+        });
     });
 </script>
 
 {% endblock meta %}
 
 {% block content %}
-<div class="mt-5 flex flex-col gap-5 pb-2 w-[95%] md:w-[83%] lg:min-w-[50%]">
-    <h5 class="font-semibold text-xl ml-2">
-        Selamat datang,
-        <span class="text-3xl font-bold text-secondary">
-            {{nama}}
-            {% if user.is_superuser %} (ADMIN) {% endif %}
-            !
-        </span>
-
-    </h5>
+<div class="mt-5 flex flex-col gap-5 pb-2 w-[90%] md:w-[83%] lg:w-[79%]">
+    <div class="flex flex-wrap justify-between items-center gap-5">
+        <h5 class="font-semibold text-lg md:text-xl ml-2">
+            Selamat datang,
+            <span class="text-3xl font-bold text-secondary">
+                {{nama}}
+                {% if user.is_superuser %} (ADMIN) {% endif %}
+                !
+            </span>
+        </h5>
+        <div>
+            <button id="dropdown-filter" data-dropdown-toggle="dropdown"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                type="button">Filter by<svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg></button>
+            <!-- Dropdown menu -->
+            <div id="dropdown" class="hidden absolute z-10 bg-white rounded divide-y divide-gray-100 shadow">
+                <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdown-filter">
+                    <li>
+                        <a href="{% url 'dompet:show_dompet' 'date' %}"
+                            class="block py-2 px-4 hover:bg-gray-100">Today</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'dompet:show_dompet' 'week' %}" class="block py-2 px-4 hover:bg-gray-100">This
+                            Week</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'dompet:show_dompet' 'month' %}" class="block py-2 px-4 hover:bg-gray-100">This
+                            Month</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'dompet:show_dompet' 'year' %}" class="block py-2 px-4 hover:bg-gray-100">This
+                            Year</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'dompet:show_dompet' %}" class="block py-2 px-4 hover:bg-gray-100">All
+                            Time</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="md:mt-5 stats stats-vertical shadow-xl w-full">
         <div class="stats bg-primary text-primary-content rounded-none">
             <div class="stat">
@@ -34,7 +76,7 @@
                     <i class="fa-solid fa-wallet transition duration-200 hover:scale-110 text-5xl md:text-7xl"></i>
                 </div>
                 <div class="stat-title text-black">Saldo</div>
-                <div class="stat-value">Rp. {{dompet.saldo}}</div>
+                <div class="font-bold text-2xl md:text-3xl">Rp. {{dompet.saldo}}</div>
                 <div class="stat-actions flex flex-col md:flex-row gap-x-4 ml-0 md:ml-0">
                     <label for="modal-create-arus-kas" role="button"
                         class="flex flex-col items-center p-2 gap-2 rounded-xl w-1/2 md:w-[10.5vw] bg-primary hover:brightness-[90%] transition-all duration-200">
@@ -86,7 +128,7 @@
                 </div>
                 <div class="stat-title">Pemasukan</div>
                 <div class="flex justify-between gap-5">
-                    <div class="stat-value">Rp. {{pemasukan}}</div>
+                    <div class="font-bold text-2xl md:text-3xl">Rp. {{pemasukan}}</div>
                 </div>
             </div>
             <div class="divider divider-horizontal"></div>
@@ -101,7 +143,7 @@
                 </div>
                 <div class="stat-title">Pengeluaran</div>
                 <div class="flex justify-between gap-5">
-                    <div class="stat-value">Rp. {{pengeluaran}}</div>
+                    <div class="font-bold text-2xl md:text-3xl">Rp. {{pengeluaran}}</div>
                 </div>
             </div>
         </div>
@@ -132,11 +174,15 @@
                 <div class="stat-title">Total Arus Kas</div>
                 <div class="flex flex-col gap-1">
                     {% if is_positive %}
-                    <div class="stat-value text-primary">Rp. {{total}}</div>
-                    <div class="stat-desc">Selamat! Pertahankan terus ya...</div>
+                    <div class="font-bold text-2xl md:text-3xl text-primary">Rp. {{total}}</div>
+                    {% if total > 1000000000 %}
+                    <div class="stat-desc">Kamu terlalu sultan!<br>Yuk, berbagi dengan donasi!</div>
                     {% else %}
-                    <div class="stat-value text-error">-Rp. {{total}}</div>
-                    <div class="stat-desc">Yuk, coba berhemat dan cari tambahan penghasilan!</div>
+                    <div class="stat-desc">Selamat! Pertahankan terus ya...</div>
+                    {% endif %}
+                    {% else %}
+                    <div class="font-bold text-2xl md:text-3xl text-error">-Rp. {{total}}</div>
+                    <div class="stat-desc">Yuk, cari tambahan penghasilan!<br>Jangan lupa berhemat!</div>
                     {% endif %}
                 </div>
             </div>

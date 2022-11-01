@@ -142,7 +142,7 @@
             e.preventDefault();
             var formData = $(this).serializeArray()[0].value;
             console.log(formData)
-            var url = `./filter_arus_kas/${formData}`;
+            var url = `./filter_arus_kas_ajax/${formData}`;
             $.ajax({
                 type: "GET",
                 url: url,
@@ -169,10 +169,8 @@
         var tanggal = new Date(arus.created_at).toString()
         console.log(tanggal);
         var _tanggal = tanggal.split(' ', 5);
-        tanggal = _tanggal[1];
-        for (var i = 2; i < _tanggal.length; i++) {
-            tanggal += " " + _tanggal[i];
-        }
+        tanggal = _tanggal[1] + " " + _tanggal[2] + ", " + _tanggal[3];
+        waktu = _tanggal[4];
 
         $("#arus-kas-tbody").append(`
             <tr class="hover">
@@ -193,7 +191,7 @@
                     </svg>`
             }
                 </th>
-                <td class="font-bold mr-2">${tanggal}</td>
+                <td class="font-bold mr-2">${tanggal}<div class="stat-desc">${waktu}</div></td>
                 <td>
                     ${arus.tipe != 1 ? `
                     <span class="text-error">-Rp. ${arus.nominal}</span>`
@@ -210,7 +208,7 @@
 {% block content %}
 <div class="w-2/3 max-w-sm" id="message-placeholder">
 </div>
-<div class="w-[95%] flex flex-col justify-center lg:flex-row gap-4 pb-2">
+<div class="mt-5 w-[95%] flex flex-col justify-center lg:flex-row gap-4 pb-2">
     <div class="flex flex-col w-full lg:w-7/12 gap-4">
         <a href="{% url 'dompet:show_dompet' %}"
             class="btn btn-ghost w-1/3 md:w-1/6 mb-2 border border-black border-solid hover:border-black">
@@ -219,14 +217,14 @@
         <div class="hidden" id="arus-kas-table">
             <div class="flex justify-between">
                 <label for="modal-create-arus-kas" role="button"
-                    class="flex flex-col items-center p-2 gap-2 rounded-xl rounded-b-none sm:w-1/4 md:w-1/6 lg:w-[13%] bg-primary hover:brightness-[90%] transition-all duration-200 ml-2">
+                    class="flex flex-col items-center p-2 gap-2 rounded-xl rounded-b-none sm:w-1/4 md:w-1/6 lg:w-[13%] bg-warning hover:brightness-[90%] transition-all duration-200 ml-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="feather feather-edit-3">
                         <path d="M12 20h9"></path>
                         <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                     </svg>
-                    <div class="stat-desc text-black">Buat Catatan</div>
+                    <div class="stat-desc text-black font-semibold">Buat Catatan</div>
                 </label>
                 <form method="GET" class="mt-5 mr-2" id="filter-arus-kas">
                     <div class="input-group items-center">
@@ -304,7 +302,7 @@
                 </div>
                 <div class="stat-title">Pemasukan</div>
                 <div class="flex justify-between gap-5">
-                    <div class="stat-value" id="pemasukan">Rp. {{pemasukan}}</div>
+                    <div class="font-bold text-2xl md:text-3xl" id="pemasukan">Rp. {{pemasukan}}</div>
                 </div>
             </div>
             <div class="stat">
@@ -318,7 +316,7 @@
                 </div>
                 <div class="stat-title">Pengeluaran</div>
                 <div class="flex justify-between gap-5">
-                    <div class="stat-value" id="pengeluaran">Rp. {{pengeluaran}}</div>
+                    <div class="font-bold text-2xl md:text-3xl" id="pengeluaran">Rp. {{pengeluaran}}</div>
                 </div>
             </div>
         </div>
@@ -349,10 +347,11 @@
                 <div class="stat-title">Total Arus Kas</div>
                 <div class="flex flex-col gap-1">
                     {% if is_positive %}
-                    <div class="stat-value text-primary" id="total">Rp. {{total}}</span></div>
+                    <div class="font-bold text-2xl md:text-3xl text-primary" id="total">Rp. {{total}}</span>
+                    </div>
                     <div class="stat-desc" id="desc">Selamat! Pertahankan terus ya...</div>
                     {% else %}
-                    <div class="stat-value text-error" id="total">-Rp. {{total}}</div>
+                    <div class="font-bold text-2xl md:text-3xl text-error" id="total">-Rp. {{total}}</div>
                     <div class="stat-desc" id="desc">Yuk, coba berhemat dan cari tambahan penghasilan!</div>
                     {% endif %}
                 </div>
