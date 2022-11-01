@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 
-<html lang="en" data-theme="emerald">
+<html lang="en" data-theme="emerald" style="scroll-behavior: smooth;">
 
 <head>
   <meta charset="UTF-8" />
@@ -192,7 +192,7 @@
   </nav>
 
   <main
-    class="{% if not sidebar_hidden %}md:ml-48 overflow-hidden flex flex-col {% endif %}min-h-screen pt-24 pb-16 items-center font-poppins">
+    class="{% if not sidebar_hidden %}md:ml-48 overflow-hidden {% endif %} flex flex-col min-h-screen pt-24 pb-16 items-center font-poppins">
     {% if messages %}
     <div class="w-2/3 max-w-sm">
       <ul>

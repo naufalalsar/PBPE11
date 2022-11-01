@@ -4,25 +4,145 @@
 <title>Dompet</title>
 
 <script>
+    var smileEmoji = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#66CC8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-smile">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                    </svg>`;
+    var frownEmoji = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="#F87272" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-frown">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                    </svg>`;
     $(document).ready(function () {
+        getDompetData("./all")
         $(".dompet-link").addClass("text-primary");
+        $("#dropdown-filter").click(function (e) {
+            console.log(e);
+            $("#dropdown").toggle();
+        });
+        $(document).click(function (e) {
+            if (!$(e.target).is('#dropdown-filter, #dropdown-filter *')) {
+                console.log("lol: " + e);
+                $("#dropdown").hide();
+            }
+        });
+        $("#dropdown button").click(function (e) {
+            console.log(e);
+            $("#dropdown-filter").html(`
+                <span>${$(this).text()}</span>
+                <svg id="dropdown-arrow" class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            `);
+            $("#dropdown").removeClass("w-auto block");
+            $("#dropdown").addClass("w-auto block");
+            $("#dropdown").hide();
+
+            let url = "./" + $(e.target).val();
+            getDompetData(url);
+        });
     });
+
+    function getDompetData(url) {
+        console.log(url);
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+                updateDompet(data);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
+
+    function updateDompet(data) {
+        $("#pengeluaran").text("Rp. " + data.pengeluaran);
+        $("#pemasukan").text("Rp. " + data.pemasukan);
+        $("#saldo").text("Rp. " + data.saldo);
+
+        if (data.is_positive) {
+            $("#total-emoji").html(smileEmoji);
+            $("#total").text("Rp. " + data.total);
+            $("#total").removeClass("text-error");
+            $("#total").addClass("text-primary");
+            if (parseInt(data.total) > 1000000000) {
+                $("#total-desc").text("Kamu terlalu sultan!\nYuk, berbagi dengan donasi!");
+            } else {
+                $("#total-desc").text("Selamat! Pertahankan terus ya...");
+            }
+        } else {
+            $("#total-emoji").html(frownEmoji);
+            $("#total").text("-Rp. " + data.total);
+            $("#total").removeClass("text-primary");
+            $("#total").addClass("text-error");
+            $("#total-desc").text("Yuk, cari tambahan penghasilan!\nJangan lupa berhemat!");
+        }
+    }
 </script>
 
 {% endblock meta %}
 
 {% block content %}
-<div class="mt-5 flex flex-col gap-5 pb-2 md:w-[83%] lg:min-w-[50%] mx-2">
-    <h5 class="font-semibold text-xl ml-2">
-        Selamat datang,
-        <span class="text-3xl font-bold text-secondary">
-            {{nama}}
-            {% if user.is_superuser %} (ADMIN) {% endif %}
-            !
-        </span>
-
-    </h5>
-    <div class="md:mt-5 stats stats-vertical shadow-xl">
+<div class="mt-5 flex flex-col gap-5 pb-2 w-[90%] md:w-[83%] lg:w-[79%]">
+    <div class="flex flex-wrap-reverse justify-between items-center gap-5">
+        <h5 class="font-semibold text-lg md:text-xl ml-2">
+            Selamat datang,
+            <span class="text-2xl md:text-3xl font-bold text-secondary">
+                {{nama}}
+                {% if user.is_superuser %} (ADMIN) {% endif %}
+                !
+            </span>
+        </h5>
+        <div>
+            <button id="dropdown-filter" data-dropdown-toggle="dropdown"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                type="button">
+                <span>Filter by</span>
+                <svg id="dropdown-arrow" class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div id="dropdown"
+                class="hidden absolute w-auto block z-10 bg-white rounded-lg rounded-t-none divide-y divide-gray-100 shadow">
+                <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdown-filter">
+                    <li>
+                        <button value="date" class="text-left block w-full py-2 px-4 hover:bg-gray-100">Today</button>
+                    </li>
+                    <li>
+                        <button value="week" class="text-left block w-full py-2 px-4 hover:bg-gray-100">This
+                            Week</button>
+                    </li>
+                    <li>
+                        <button value="month" class="text-left block w-full py-2 px-4 hover:bg-gray-100">This
+                            Month</button>
+                    </li>
+                    <li>
+                        <button value="year" class="text-left block w-full py-2 px-4 hover:bg-gray-100">This
+                            Year</button>
+                    </li>
+                    <li>
+                        <button value="all" class="text-left block w-full py-2 px-4 hover:bg-gray-100">All
+                            Time</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="md:mt-5 stats stats-vertical shadow-xl w-full">
         <div class="stats bg-primary text-primary-content rounded-none">
             <div class="stat">
                 <div class="stat-figure">
@@ -31,13 +151,13 @@
                             d="M32.6 27.2q1.25 0 2.225-.975.975-.975.975-2.275 0-1.25-.975-2.2-.975-.95-2.225-.95t-2.225.95q-.975.95-.975 2.2 0 1.3.975 2.275.975.975 2.225.975ZM9 36.35V39 9 36.35ZM9 42q-1.15 0-2.075-.9Q6 40.2 6 39V9q0-1.15.925-2.075Q7.85 6 9 6h30q1.2 0 2.1.925Q42 7.85 42 9v6.7h-3V9H9v30h30v-6.65h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm17.9-8.65q-1.7 0-2.7-1-1-1-1-2.65V18.35q0-1.7 1-2.675 1-.975 2.7-.975h13.5q1.7 0 2.7.975 1 .975 1 2.675V29.7q0 1.65-1 2.65t-2.7 1Zm14.2-3V17.7H26.2v12.65Z" />
                     </svg>
                     -->
-                    <i class="fa-solid fa-wallet transition duration-200 hover:scale-110 text-5xl"></i>
+                    <i class="fa-solid fa-wallet transition duration-200 hover:scale-110 text-5xl md:text-7xl"></i>
                 </div>
                 <div class="stat-title text-black">Saldo</div>
-                <div class="stat-value">Rp. {{dompet.saldo}}</div>
-                <div class="stat-actions flex flex-col md:flex-row gap-2">
+                <div class="font-bold text-2xl md:text-3xl" id="saldo">Rp. {{dompet.saldo}}</div>
+                <div class="stat-actions flex flex-col md:flex-row gap-x-4 ml-0 md:ml-0">
                     <label for="modal-create-arus-kas" role="button"
-                        class="flex flex-col items-center p-2 gap-2 rounded-xl w-1/2 md:w-1/4 lg:w-1/6 bg-primary hover:brightness-[90%] transition-all duration-200">
+                        class="flex flex-col items-center p-2 gap-2 rounded-xl w-1/2 md:w-[10.5vw] bg-primary hover:brightness-[90%] transition-all duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-edit-3">
@@ -47,7 +167,7 @@
                         <div class="stat-desc text-black">Buat Catatan</div>
                     </label>
                     <a href="{% url 'dompet:show_arus_kas' %}"
-                        class="flex flex-col items-center p-2 gap-2 rounded-xl w-1/2 md:w-1/4 lg:w-1/6 bg-primary hover:brightness-[90%] transition-all duration-200">
+                        class="flex flex-col items-center p-2 gap-2 rounded-xl w-1/2 md:w-[10.5vw] bg-primary hover:brightness-[90%] transition-all duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-clock">
@@ -57,7 +177,7 @@
                         <div class="stat-desc text-black">Riwayat Catatan</div>
                     </a>
                     <a href="{% url 'donation:index' %}"
-                        class="flex flex-col items-center p-2 gap-2 rounded-xl w-1/2 md:w-1/4 lg:w-1/6 bg-primary hover:brightness-[90%] transition-all duration-200">
+                        class="flex flex-col items-center p-2 gap-2 rounded-xl w-1/2 md:w-[10.5vw] bg-primary hover:brightness-[90%] transition-all duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-gift">
@@ -86,8 +206,7 @@
                 </div>
                 <div class="stat-title">Pemasukan</div>
                 <div class="flex justify-between gap-5">
-                    <div class="stat-value">Rp. {{pemasukan}}</div>
-                    <div class="stat-value"></div>
+                    <div class="font-bold text-2xl md:text-3xl" id="pemasukan">Rp. {{pemasukan}}</div>
                 </div>
             </div>
             <div class="divider divider-horizontal"></div>
@@ -102,13 +221,13 @@
                 </div>
                 <div class="stat-title">Pengeluaran</div>
                 <div class="flex justify-between gap-5">
-                    <div class="stat-value">Rp. {{pengeluaran}}</div>
+                    <div class="font-bold text-2xl md:text-3xl" id="pengeluaran">Rp. {{pengeluaran}}</div>
                 </div>
             </div>
         </div>
         <div class="stats shadow rounded-none">
             <div class="stat">
-                <div class="stat-figure">
+                <div class="stat-figure" id="total-emoji">
                     {% if is_positive %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#66CC8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -133,11 +252,17 @@
                 <div class="stat-title">Total Arus Kas</div>
                 <div class="flex flex-col gap-1">
                     {% if is_positive %}
-                    <div class="stat-value text-primary">Rp. {{total}}</div>
-                    <div class="stat-desc">Selamat! Pertahankan terus ya...</div>
+                    <div class="font-bold text-2xl md:text-3xl text-primary" id="total">Rp. {{total}}</div>
+                    {% if total > 1000000000 %}
+                    <div class="stat-desc" id="total-desc">Kamu terlalu sultan!<br>Yuk, berbagi dengan
+                        donasi!</div>
                     {% else %}
-                    <div class="stat-value text-error">-Rp. {{total}}</div>
-                    <div class="stat-desc">Yuk, coba berhemat dan cari tambahan penghasilan!</div>
+                    <div class="stat-desc" id="total-desc">Selamat! Pertahankan terus ya...</div>
+                    {% endif %}
+                    {% else %}
+                    <div class="font-bold text-2xl md:text-3xl text-error" id="total">-Rp. {{total}}</div>
+                    <div class="stat-desc" id="total-desc">Yuk, cari tambahan penghasilan!<br>Jangan lupa berhemat!
+                    </div>
                     {% endif %}
                 </div>
             </div>
