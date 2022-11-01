@@ -56,6 +56,51 @@ def show_dompet(request, filter_type="all"):
 
 
 @login_required(login_url="homepage:login")
+def show_dompet_ajax(request, filter_type="all"):
+    try:
+        dompet = Dompet.objects.get(user=request.user)
+    except Dompet.DoesNotExist:
+        dompet = Dompet.objects.create(user=request.user, saldo=0)
+
+    arus_kas = ArusKas.objects.filter(dompet=dompet)
+    if filter_type == "date":
+        arus_kas = arus_kas.filter(created_at__date=datetime.date.today())
+    elif filter_type == "week":
+        arus_kas = arus_kas.filter(
+            created_at__week=datetime.date.today().isocalendar()[1],
+            created_at__year=datetime.date.today().isocalendar()[0],
+            created_at__month__gte=datetime.date.today().month,
+        )
+    elif filter_type == "month":
+        arus_kas = arus_kas.filter(created_at__month=datetime.date.today().month)
+    elif filter_type == "year":
+        arus_kas = arus_kas.filter(created_at__year=datetime.date.today().year)
+    elif filter_type == "all":
+        pass
+    else:
+        return JsonResponse({"status": "error"})
+
+    pemasukan, pengeluaran = 0, 0
+    for arus in arus_kas:
+        if arus.tipe == 1:
+            pemasukan += arus.nominal
+        else:
+            pengeluaran += arus.nominal
+    total = pemasukan - pengeluaran
+    is_positive = total >= 0
+    total = abs(total)
+
+    context = {
+        "saldo": dompet.saldo,
+        "pemasukan": pemasukan,
+        "pengeluaran": pengeluaran,
+        "total": total,
+        "is_positive": is_positive,
+    }
+    return JsonResponse(context)
+
+
+@login_required(login_url="homepage:login")
 def show_arus_kas(request):
     arus_kas = ArusKas.objects.filter(dompet__user=request.user)
 
