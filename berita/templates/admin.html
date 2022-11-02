@@ -54,7 +54,7 @@
 
 </div>
 
-<div id="create" class="flex flex-col w-5/6 gap-y-2 gap-x-2">
+<div id="create" class="flex flex-col gap-y-2 gap-x-2">
 
   <div class="flex flex-col gap-y-2 gap-x-2 items-center">
     <button class="btn btn-error" onclick="show_all()">Back</button>
@@ -72,7 +72,7 @@
       {% for i in form %}
       <tr>
 
-        <td class="bg-primary">
+        <td class="bg-primary w-5/6">
           {{i.label_tag}} <p> </p>{{i}}
         </td>
       </tr>
