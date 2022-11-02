@@ -4,11 +4,7 @@
 {% block meta %}
 
 <title>Berita Admin</title>
-<script>
-  $(document).ready(function () {
-    $(".berita-link").addClass("text-primary");
-  });
-</script>
+
 {% endblock meta %}
 
 {% block content %}
@@ -54,7 +50,7 @@
 
 </div>
 
-<div id="create" class="flex flex-col gap-y-2 gap-x-2">
+<div id="create" class="w-5/6 gap-y-2 gap-x-2">
 
   <div class="flex flex-col gap-y-2 gap-x-2 items-center">
     <button class="btn btn-error" onclick="show_all()">Back</button>
@@ -63,7 +59,7 @@
   <br>
   <form id="friend-form" class="flex flex-col gap-y-4 gap-x-2 items-center">
     {% csrf_token %}
-    <table class="table flex-col gap-y-2 gap-x-2">
+    <table class="table w-full">
       <thead>
 
       </thead>
@@ -72,7 +68,7 @@
       {% for i in form %}
       <tr>
 
-        <td class="bg-primary w-1/2">
+        <td class="bg-primary">
           {{i.label_tag}} <p> </p>{{i}}
         </td>
       </tr>
