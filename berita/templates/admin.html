@@ -4,7 +4,6 @@
 {% block meta %}
 
 <title>Berita Admin</title>
-<script src="{% static 'js/berita_text.js' %}"></script>
 
 {% endblock meta %}
 
@@ -36,10 +35,9 @@
 
 <br></br>
 
-<div class="flex flex-col gap-x-2 gap-y-2 justify center items-center w-full">
+<div class="flex flex-col justify center items-center w-full">
 
   <a class="btn btn-primary" onclick="createBerita()">Create Berita</a>
-  <a class="btn btn-primary" href="/berita/add/">Create Berita (Mobile)</a>
 
 </div>
 
@@ -52,7 +50,7 @@
 
 </div>
 
-<div id="create" class="w-5/6 gap-y-2 gap-x-2">
+<div id="create" class="w-5/6">
 
   <div class="flex flex-col gap-y-2 gap-x-2 items-center">
     <button class="btn btn-error" onclick="show_all()">Back</button>
@@ -80,208 +78,6 @@
     </table> 
     <button type="submit" value="Submit" class="btn btn-secondary">Create</button>
 </form>
-
-
-
-  {% comment %} 
-  <div class='bg-primary rounded-lg p-4'>
-    <h2 class="text-3xl font-bold items-center text-center">Create Berita</h2>
-  </div>
-
-    <br>
-  <div class="flex flex-col justify-center items-center"><button class="btn btn-error" onclick="show_all()">Back</button></div>
-  <div class="form-control w-full flex flex-col gap-y-2">
-    <div class="form-control">
-        <label class="label">
-          <span class="label-text">Title</span>
-        </label>
-        <input type="text" class="input input-bordered" id="title"/>
-    </div>
-   
-    <div class="form-control min-w-full">
-      <label class="label">
-        <span class="label-text">Isi Berita</span>
-      </label> 
-        <textarea class="textarea textarea-bordered" id="content"></textarea> 
-    </div>
-    <label class="label">
-        <span class="label-text">Category</span>
-    </label> 
-        <div class="form-control bg-primary rounded-lg">
-            <label class="label cursor-pointer">
-              <span class="label-text">Uang</span> 
-              <input type="radio" name="radio-6" class="radio" value="uang" checked />
-            </label>
-          </div>
-          <div class="form-control bg-primary rounded-lg">
-            <label class="label cursor-pointer">
-              <span class="label-text">Bank</span> 
-              <input type="radio" name="radio-6" class="radio" value="bank"/>
-            </label>
-          </div>
-          <div class="form-control bg-primary rounded-lg">
-            <label class="label cursor-pointer">
-              <span class="label-text">Ekonomi</span> 
-              <input type="radio" name="radio-6" class="radio" value="ekonomi"/>
-            </label>
-          </div>
-          <div class="form-control bg-primary rounded-lg">
-            <label class="label cursor-pointer">
-              <span class="label-text">Kripto</span> 
-              <input type="radio" name="radio-6" class="radio" value="kripto"/>
-            </label>
-          </div>
-          <div class="form-control bg-primary rounded-lg">
-            <label class="label cursor-pointer">
-              <span class="label-text">Saham</span> 
-              <input type="radio" name="radio-6" class="radio" value="saham"/>
-            </label>
-          </div>
-          <div class="form-control w-1/2">
-            <label class="label">
-              <span class="label-text">Writer</span>
-            </label>
-            <input type="text" class="input input-bordered" id="writer"/>
-        </div>
-        <div class="form-control w-1/2">
-            <label class="label">
-              <span class="label-text">Source</span>
-            </label>
-            <input type="text" class="input input-bordered" id="source" />
-        </div>
-        <div class="flex flex-col justify-center items-center"><button class="btn btn-secondary" onclick="update()">Create</button></div>
-  </div>
-  {% endcomment %} 
-</div>
-
-{% comment %}
-
-<script>
-
-$("#friend-form").submit(function (e) {
-        // preventing from page reload and default actions
-        e.preventDefault();
-        // serialize the data for sending the form data.
-        var serializedData = $(this).serialize();
-        $.ajax({
-          type : 'POST',
-          url : "/berita/",
-          data : serializedData,
-          success : show_all(),
-        })
-})
-
-    function show_all(){
-      $("#friend-form").trigger('reset');
-      $("#create").hide()
-      $("#show").show()
-        $.get("/berita/json", function(data){
-            $("#container").html("")
-            for(let i = 0; i < data.length; i++){
-                let d = new Date(data[i].fields.date.substring(0,10));
-                const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content w-full">
-  <div class="card-body">
-    <h2 class="card-title">${data[i].fields.title}</h2>
-    <ol class="list-disc">
-  <li>Added : ${date}</li>
-  <li>Category : ${data[i].fields.category}</li>
-  <li>Writer : ${data[i].fields.writer}</li>
-    </ol>
-  </div>
-  <div class="card-actions justify-end">
-      <a class="btn btn-primary" href="/berita/show/${data[i].pk}">Show More</a>
-      <a class="btn btn-error" onclick="deleteBerita(${data[i].pk})">Delete</a>
-    </div>
-</div>`)
-      }
-    })
-  }
-
-    $(document).ready(function(){
-          show_all();
-      });
-
-    function show_filter(filter){
-      $("#create").hide()
-      $("#show").show()
-        $.get(`/berita/json`, function(data){
-            $("#container").html("")
-            for(let i = 0; i < data.length; i++){
-                if(data[i].fields.category == filter){
-                let d = new Date(data[i].fields.date.substring(0,10));
-                const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content w-full">
-  <div class="card-body">
-    <h2 class="card-title">${data[i].fields.title}</h2>
-    <ol class="list-disc">
-  <li>Added : ${date}</li>
-  <li>Category : ${data[i].fields.category}</li>
-  <li>Writer : ${data[i].fields.writer}</li>
-    </ol>
-  </div>
-  <div class="card-actions justify-end">
-      <a class="btn btn-primary" href="/berita/show/${data[i].pk}">Show More</a>
-      <a class="btn btn-error" onclick="deleteBerita(${data[i].pk})">Delete</a>
-    </div>
-</div>`)
-        }
-      }
-    })
-  }
-
-  function deleteBerita(id) {
-    $.ajax({
-      url: `/berita/delete/${id}`,
-      type: "DELETE",
-      headers: {
-        "X-CSRFToken": getCookie("csrftoken")
-      },
-      success: function () {
-        show_all();
-      },
-    })
-  }
-
-
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
-
-  function createBerita(){
-    $("#show").hide()
-    $("#create").show()
-  }
-
-  function update(){
-        $.ajax({
-          url: "/berita/",
-          method: "POST",
-          headers: {
-            "X-CSRFToken": getCookie("csrftoken")
-          },
-          dataType    : 'json', // what type of data do we expect back from the server
-        success: function(){
-            show_all();
-        },
-      })}
-
-
-</script>
-
-{% endcomment %}
 
 <script src="{% static 'js/berita_admin.js' %}"></script>
 
