@@ -4,7 +4,7 @@
 
 - Mohammad Ferry Husnil Arif (2106709112)
 - Muhammad Naufal Zaky Alsar (2106752041)
-- Vander Gerald Sukandi
+- Vander Gerald Sukandi (1906350603)
 - Muhammad Rayhan Denel (2106752161)
 - Bimo Priyohutomo (2106708444)
 - Aushaaf Fadhilah Azzah (2106630063)
