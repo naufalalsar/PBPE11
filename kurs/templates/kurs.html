@@ -51,6 +51,7 @@
 
   function exchangeCurrency() {
     $("#swap-currency").click(function () {
+
       var sourceCurrency = $("#source-currency-calculator").val();
       var targetCurrency = $("#target-currency-calculator").val();
       var sourceAmount = $("#source-amount-calculator").val();
@@ -58,7 +59,6 @@
       $("#source-currency-calculator").val(targetCurrency);
       $("#target-currency-calculator").val(sourceCurrency);
       $("#source-amount-calculator").val(targetAmount);
-      $("#target-amount-calculator").val(sourceAmount);
       getCalculateData();
     });
   }
@@ -198,7 +198,7 @@
         </div>
         <div class="flex justify-left">
           <div class="w-2/5 flex justify-center">
-            <button id="swap-currency"
+            <button id="swap-currency" type="button"
               class="btn btn-primary btn-circle btn-sm transition duration-200 hover:scale-110">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" class="feather feather-repeat w-4 h-4">
