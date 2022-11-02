@@ -78,7 +78,7 @@
             $("#total").removeClass("text-error");
             $("#total").addClass("text-primary");
             if (parseInt(data.total) > 1000000000) {
-                $("#total-desc").text("Kamu terlalu sultan!\nYuk, berbagi dengan donasi!");
+                $("#total-desc").html("Kamu terlalu sultan!<br>Yuk, berbagi dengan donasi!");
             } else {
                 $("#total-desc").text("Selamat! Pertahankan terus ya...");
             }
@@ -87,7 +87,7 @@
             $("#total").text("-Rp. " + data.total);
             $("#total").removeClass("text-primary");
             $("#total").addClass("text-error");
-            $("#total-desc").text("Yuk, cari tambahan penghasilan!\nJangan lupa berhemat!");
+            $("#total-desc").html("Yuk, cari tambahan penghasilan!<br>Jangan lupa berhemat!");
         }
     }
 </script>
