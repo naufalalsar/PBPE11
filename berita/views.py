@@ -77,14 +77,10 @@ def delete(request, pk):
 @login_required(login_url="homepage:login")
 def add(request):
     if request.user.is_superuser:
-        form = BeritaForm()
         if request.method == 'POST':
-            form = BeritaForm(request.POST, user=request.user)
+            Berita(title=request.POST.get('title'), content=request.POST.get('content'), category=request.POST.get('category'), writer=request.POST.get('writer'), source=request.POST.get('source')).save()
             return JsonResponse({'message': 'success'})
-        context = {
-            'form' : form,
-        }
-        return render(request, "create.html", context)
+        return render(request, "create.html")
     else:
         return render(request, "forbidden.html")
 
