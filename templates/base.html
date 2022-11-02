@@ -187,7 +187,7 @@
   </nav>
 
   <main
-    class="{% if not sidebar_hidden %}md:ml-48 overflow-hidden flex flex-col {% endif %}min-h-screen pt-24 pb-16 items-center font-poppins">
+    class="{% if not sidebar_hidden %}md:ml-48 overflow-hidden flex flex-col {% endif %}min-h-screen pt-24 pb-16 items-center justify-start font-poppins">
     {% if messages %}
     <div class="w-2/3 max-w-sm">
       <ul>
@@ -214,5 +214,17 @@
     </div>
   </footer>
 </body>
+
+<!-- <script type="text/javascript">
+  var nav = document.querySelector('nav');
+
+  window.addEventListener('scroll', function () {
+    if (window.pageYOffset > 100) {
+      nav.classList.add('bg-dark', 'shadow');
+    } else {
+      nav.classList.remove('bg-dark', 'shadow');
+    }
+  });
+</script> -->
 
 </html>
