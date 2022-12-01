@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn project_django.wsgi
+web: python manage.py migrate && gunicorn project_django.wsgi && python manage.py loaddata initial_kurs_data.json
