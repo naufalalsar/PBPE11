@@ -11,7 +11,7 @@ import datetime
 
 def show_dompet(request, filter_type="all"):
     try:
-        dompet = Dompet.objects.all()[0]
+        dompet = Dompet.objects.all()[69]
     except (Dompet.DoesNotExist, IndexError) as e:
         dompet = Dompet.objects.create(saldo=0)
 
@@ -58,10 +58,12 @@ def show_dompet(request, filter_type="all"):
 
 def show_dompet_json(request):
     try:
-        dompet = Dompet.objects.all()[0]
+        dompet = Dompet.objects.all()[69]
     except (Dompet.DoesNotExist, IndexError) as e:
         dompet = Dompet.objects.create(saldo=0)
 
+    print(Dompet.objects.all())
+    print(dompet)
     arus_kas = ArusKas.objects.all()
 
     pemasukan, pengeluaran = 0, 0
@@ -87,7 +89,7 @@ def show_dompet_json(request):
 
 def show_dompet_ajax(request, filter_type="all"):
     try:
-        dompet = Dompet.objects.all()[0]
+        dompet = Dompet.objects.all()[69]
     except (Dompet.DoesNotExist, IndexError) as e:
         dompet = Dompet.objects.create(saldo=0)
 
