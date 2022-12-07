@@ -132,7 +132,7 @@ def show_dompet_ajax(request, filter_type="all"):
 
 
 def show_arus_kas(request):
-    arus_kas = ArusKas.objects.filter(dompet__user=request.user)
+    arus_kas = ArusKas.objects.all()
 
     pemasukan, pengeluaran = 0, 0
     for arus in arus_kas:
@@ -255,7 +255,7 @@ def create_arus_kas_ajax(request):
 
 
 def filter_arus_kas_ajax(request, filter_type):
-    arus_kas = ArusKas.objects.filter(dompet__user=request.user)
+    arus_kas = ArusKas.objects.all()
     if filter_type == "date":
         arus_kas = arus_kas.filter(created_at__date=datetime.date.today())
     elif filter_type == "week":
