@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block meta %}
-<script>
-  $(document).ready(function () {
-    $(".berita-link").addClass("text-primary");
-  });
-</script>
+<title>Berita Saku-in!</title>
+<script src="{% static 'js/berita_text.js' %}"></script>
 {% endblock meta %}
 
 {% block content %}
 <div class="form-control w-5/6 flex flex-col gap-y-2">
+  <div class="form-control">
+  <a class="btn btn-error" href="/berita/">Back</a>
+  </div>
   <div class="form-control">
     <label class="label">
       <span class="label-text">Title</span>

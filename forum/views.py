@@ -15,7 +15,7 @@ from django.http import JsonResponse
 
 # Create your views here.
 
-@login_required(login_url="homepage:login")
+# @login_required(login_url="homepage:login")
 def show_forum(request):
     if(request.user.is_superuser):
         return render(request, "forum_admin.html")
@@ -71,6 +71,15 @@ def add_forum(request):
             return JsonResponse({'message': 'success'})
     else :
         return render(request, "not_login.html")
+
+@login_required(login_url='homepage:login')
+def create_forum(request):
+    context = {}
+    if request.method == "POST":
+        temp = Forum(user=request.user, judul=request.POST.get('judul'),isi=request.POST.get('isi'))
+        temp.save()
+        return redirect('forum:show_forum')
+    return render(request, "create_forum.html",context)
 
 @login_required(login_url="homepage:login")
 def add_komen(request, pk):

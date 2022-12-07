@@ -4,7 +4,7 @@
 
 - Mohammad Ferry Husnil Arif (2106709112)
 - Muhammad Naufal Zaky Alsar (2106752041)
-- Vander Gerald Sukandi
+- Vander Gerald Sukandi (1906350603)
 - Muhammad Rayhan Denel (2106752161)
 - Bimo Priyohutomo (2106708444)
 - Aushaaf Fadhilah Azzah (2106630063)
@@ -39,6 +39,6 @@ Pengguna bisa mendonasikan sejumlah uangnya dan terintegrasi ke dompet kita (kal
 
 ## Role:
 
-- Guest (user yang belum log in)
-- User (pengguna yang sudah terautentifikasi)
-- Admin (Pengguna yang dapat mengupdate berita)
+- Guest (User yang belum log in akses yang dipunya adalah kurs dan membaca berita)
+- User (Pengguna yang sudah terautentifikasi bisa mengakses hampir semua fitur kecuali membuat berita dan menghapus donasi user lain, menghapus forum dan komen user lain, dan membuat berita dan menghapus berita)
+- Admin (Pengguna yang mempunyai akses ke semua fitur seperti : dapat menghapus dan menambah berita, menghapus forum dan komen, menghapus donasi)
