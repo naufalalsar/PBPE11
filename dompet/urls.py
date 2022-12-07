@@ -5,7 +5,7 @@ app_name = "dompet"
 
 urlpatterns = [
     path("", show_dompet, name="show_dompet"),
-    path("<str:filter_type>", show_dompet_ajax, name="show_dompet_ajax"),
+    path("dompet_json/json", show_dompet_json, name="show_dompet_json"),
     path("create_arus_kas/", create_arus_kas, name="create_arus_kas"),
     path(
         "create_arus_kas_ajax/",
@@ -19,4 +19,5 @@ urlpatterns = [
         filter_arus_kas_ajax,
         name="filter_arus_kas_ajax",
     ),
+    path("<str:filter_type>", show_dompet_ajax, name="show_dompet_ajax"),
 ]
