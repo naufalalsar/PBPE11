@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block meta %}
-<script>
-  $(document).ready(function () {
-    $(".berita-link").addClass("text-primary");
-  });
-</script>
+<title>Berita Saku-in!</title>
+<script src="{% static 'js/berita_text.js' %}"></script>
 {% endblock %}
 
 {% block content %}

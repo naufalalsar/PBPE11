@@ -10,9 +10,8 @@
 </script>
 {% endblock meta %}
 
-<h1 class="font-semibold text-5xl ml-2">Forum</h1>
+<h1 class="font-semibold text-xl ml-2">Forum</h1>
 
-<br>
 <div class="dropdown" style="justify-content: left;">
   <label tabindex="0" class="btn m-1 btn-outline btn-circle btn-secondary">Menu</label>
   <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -21,9 +20,10 @@
   </ul>
 </div>
 
-<br>
 <!-- The button to open modal -->
-<label for="my-modal" class="btn modal-button mb-5 btn-outline btn-secondary">Create Forum</label>
+<label for="my-modal" class="btn modal-button mb-5 btn-outline btn-secondary">Modal Create Forum</label>
+<a class=" btn btn-outline btn-dark mb-5" href="{% url 'forum:create_forum'%}">Form Create Forum
+</a>
 
 <!-- Put this part before </body> tag -->
 <input type="checkbox" id="my-modal" class="modal-toggle" />
@@ -78,27 +78,7 @@
     </div>
   </div>
   
-</div>`)
-                
-                
-                
-                
-                
-                
-                
-//                 <div class="card bg-primary text-primary-content mb-3">
-//   <div class="card-body">
-//     <h2 class="card-title">${data[i].fields.judul}</h2>
-//     <p>${data[i].fields.isi}</p>
-//     <ol class="list-disc">
-//   <li>Added : ${date}</li>
-//     </ol>
-//   </div>
-//   <div class="card-actions justify-end">
-//       <a class="btn btn-info" href="/forum/komen/${data[i].pk}">Show More</a>
-//     </div>
-// </div>`)
-            }
+</div>`)}
         })
     }
 
