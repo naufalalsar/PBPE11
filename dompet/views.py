@@ -46,7 +46,6 @@ def show_dompet(request, filter_type="all"):
     print(dompet)
 
     context = {
-        "nama": request.user.username,
         "dompet": dompet,
         "pemasukan": pemasukan,
         "pengeluaran": pengeluaran,
@@ -145,7 +144,6 @@ def show_arus_kas(request):
     total = abs(total)
 
     context = {
-        "nama": request.user.username,
         "arus_kas": arus_kas,
         "pemasukan": pemasukan,
         "pengeluaran": pengeluaran,
@@ -164,9 +162,9 @@ def show_arus_kas_json(request):
 def create_arus_kas(request):
     if request.method == "POST":
         try:
-            dompet = Dompet.objects.get(user=request.user)
+            dompet = Dompet.objects.all()[1]
         except (Dompet.DoesNotExist, IndexError) as e:
-            dompet = Dompet.objects.create(user=request.user, saldo=0)
+            dompet = Dompet.objects.create(saldo=0)
         nominal = request.POST.get("nominal")
         keterangan = request.POST.get("keterangan")
         tipe = request.POST.get("tipe")
@@ -179,7 +177,7 @@ def create_arus_kas(request):
         dompet.saldo = temp_saldo
         dompet.save()
         arus_kas = ArusKas.objects.create(
-            dompet=dompet, nominal=nominal, keterangan=keterangan, tipe=tipe
+            nominal=nominal, keterangan=keterangan, tipe=tipe
         )
         arus_kas.save()
         messages.success(request, "Arus kas berhasil dibuat!")
@@ -190,9 +188,7 @@ def create_arus_kas(request):
 # def create_arus_kas(request):
 #     if request.method == "POST":
 #         try:
-#             dompet = Dompet.objects.get(user=request.user)
 #         except (Dompet.DoesNotExist, IndexError) as e:
-#             dompet = Dompet.objects.create(user=request.user, saldo=0)
 
 #         form = ArusKasForm(request.POST)
 
@@ -224,9 +220,9 @@ def create_arus_kas(request):
 def create_arus_kas_ajax(request):
     if request.method == "POST":
         try:
-            dompet = Dompet.objects.get(user=request.user)
+            dompet = Dompet.objects.all()[1]
         except (Dompet.DoesNotExist, IndexError) as e:
-            dompet = Dompet.objects.create(user=request.user, saldo=0)
+            dompet = Dompet.objects.create(saldo=0)
         nominal = request.POST.get("nominal")
         keterangan = request.POST.get("keterangan")
         tipe = request.POST.get("tipe")
@@ -239,7 +235,7 @@ def create_arus_kas_ajax(request):
         dompet.saldo = temp_saldo
         dompet.save()
         arus_kas = ArusKas.objects.create(
-            dompet=dompet, nominal=nominal, keterangan=keterangan, tipe=tipe
+            nominal=nominal, keterangan=keterangan, tipe=tipe
         )
         arus_kas.save()
         resp = {
