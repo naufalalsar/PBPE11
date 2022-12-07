@@ -19,30 +19,31 @@ from django.dispatch import receiver
 # Create your views here.
 def homepage(request):
     context = {"sidebar_hidden": True}
-    return render(request, 'homepage.html', context)
+    return render(request, "homepage.html", context)
+
 
 def login_user(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user) # melakukan login terlebih dahulu
+            login(request, user)  # melakukan login terlebih dahulu
             response = HttpResponseRedirect(reverse("homepage:homepage"))
-            response.set_cookie('news_count', 0)
-            request.session['last_news'] = 'No Last Seen News Yet'
+            response.set_cookie("news_count", 0)
             return response
         else:
-            messages.error(request, 'Username atau Password salah!')
+            messages.error(request, "Username atau Password salah!")
     context = {"sidebar_hidden": True}
-    return render(request, 'login.html', context)
+    return render(request, "login.html", context)
+
 
 def logout_user(request):
     logout(request)
-    response = HttpResponseRedirect(reverse('homepage:login'))
-    response.delete_cookie('news_count')
-    request.session['last_news'] = 'No Last Seen News Yet'
+    response = HttpResponseRedirect(reverse("homepage:login"))
+    response.delete_cookie("news_count")
     return response
+
 
 def register(request):
     form = UserCreationForm()
@@ -51,13 +52,13 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Akun telah berhasil dibuat!')
-            new_user = User.objects.get(username=form.cleaned_data.get('username'))
-            Dompet.objects.create(user=new_user, saldo=0).save()
+            messages.success(request, "Akun telah berhasil dibuat!")
+            # new_user = User.objects.get(username=form.cleaned_data.get("username"))
+            # Dompet.objects.create(user=new_user, saldo=0).save()
 
-            return redirect('homepage:login')
+            return redirect("homepage:login")
         else:
-            messages.error(request, 'Akun gagal dibuat!')
-    
+            messages.error(request, "Akun gagal dibuat!")
+
     context = {"sidebar_hidden": True}
-    return render(request, 'register.html', context)
+    return render(request, "register.html", context)
