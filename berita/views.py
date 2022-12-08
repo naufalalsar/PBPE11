@@ -55,6 +55,7 @@ def delete(request, pk):
     Berita.objects.filter(pk=pk).delete()
     return JsonResponse({'message': 'success'}) 
 
+@csrf_exempt
 def add(request):
     if request.method == 'POST':
         Berita(title=request.POST.get('title'), content=request.POST.get('content'), category=request.POST.get('category'), writer=request.POST.get('writer'), source=request.POST.get('source')).save()
