@@ -10,6 +10,8 @@
 
 <title>Donasi Saya</title>
 
+{% endif %}  
+
 <script>
   $(document).ready(function () {
     $(".donasi-link").addClass("text-primary");
@@ -25,9 +27,9 @@
 
 <div class="flex flex-col gap-y-2" id="card-row">
 
-  {% if user.is_superuser %}
+{% if user.is_superuser %}
 
-  <h1 class="text-4xl font-bold">Semua Donasi</h1>
+<h1 class="text-4xl font-bold">Semua Donasi</h1>
 
 {% else %}
 
@@ -52,6 +54,7 @@
 
 
 {% endfor %}
+
 <a class="btn" href="{% url 'donation:index' %}">Kembali</a>
 </div>
 {% endblock content %}

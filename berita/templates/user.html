@@ -6,25 +6,21 @@
 
 {% block meta %}
 <title>Berita Saku-in!</title>
-<script>
-  $(document).ready(function () {
-    $(".berita-link").addClass("text-primary");
-  });
-</script>
+<script src="{% static 'js/berita_text.js' %}"></script>
 {% endblock meta %}
 
 
 {% block content %}
+
+<div class="flex flex-col gap-x-2 gap-y-2">
+
 <h1 class ="text-4xl items-center text-center font-bold">Berita Finansial Terkini</h1>
 
-<br></br>
+
 
 
 <p class="items-center text-center">Last Seen News : {{ last_news }}</p>
-<p class="items-center text-center">News Read Count : {{ count }}</p>
-
-<br></br>
-
+<p class="items-center text-center">News Read Count This Session : {{ count }}</p>
 
 
 <div class="flex flex-col md:flex-row gap-x-2 items-center gap-y-2">
@@ -39,90 +35,11 @@
 
 <br></br>
 
-<div class="flex flex-col w-3/4 gap-y-2 gap-x-2" id="container">
+<div class="flex flex-col gap-y-2 gap-x-2" id="container">
     
 </div>
 
-{% comment %}
-
-<script>
-    function show_all(){
-        $.get("/berita/json", function(data){
-            $("#container").html("")
-            for(let i = 0; i < data.length; i++){
-                let d = new Date(data[i].fields.date.substring(0,10));
-                const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content">
-  <div class="card-body">
-    <h2 class="card-title">${data[i].fields.title}</h2>
-    <ol class="list-disc">
-  <li>Added : ${date}</li>
-  <li>Category : ${data[i].fields.category}</li>
-  <li>Writer : ${data[i].fields.writer}</li>
-    </ol>
-  </div>
-  <div class="card-actions justify-end">
-      <a class="btn btn-primary" href="/berita/show/${data[i].pk}">Show More</a>
-      
-    </div>
-</div>`)
-            }
-        })
-    }
-
-    $(document).ready(function(){
-          show_all();
-      });
-
-    function show_filter(filter){
-        $.get(`/berita/json`, function(data){
-            $("#container").html("")
-            for(let i = 0; i < data.length; i++){
-                if(data[i].fields.category == filter){
-                let d = new Date(data[i].fields.date.substring(0,10));
-                const date = d.toDateString()
-                $("#container").append(`<div class="card bg-primary text-primary-content">
-  <div class="card-body">
-    <h2 class="card-title">${data[i].fields.title}</h2>
-    <ol class="list-disc">
-  <li>Added : ${date}</li>
-  <li>Category : ${data[i].fields.category}</li>
-  <li>Writer : ${data[i].fields.writer}</li>
-    </ol>
-  </div>
-  <div class="card-actions justify-end">
-      <a class="btn btn-primary" href="/berita/show/${data[i].pk}">Show More</a>
-      
-    </div>
-</div>`)}
-            }
-        })
-    }
-
-    
-
-
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-          const cookies = document.cookie.split(';');
-          for (let i = 0; i < cookies.length; i++) {
-              const cookie = cookies[i].trim();
-              // Does this cookie string begin with the name we want?
-              if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
-          }
-      }
-      return cookieValue;
-  }
-
-
-
-</script>
-
-{% endcomment %}
+</div>
 
 <script src="{% static 'js/berita_user.js' %}"></script>
 

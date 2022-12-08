@@ -18,79 +18,50 @@ from berita.forms import BeritaForm
 
 @login_required(login_url="homepage:login")
 def show(request):
-    if request.user.is_superuser:
-        try:
-            count = request.COOKIES['news_count']
-        except:
-            response = HttpResponseRedirect(reverse("berita:show"))
-            response.set_cookie('news_count', 0)
-            return response
-        form = BeritaForm(request.user)
-        try :
-            context = {
-                'last_news' : request.session['last_news'],
-                'count' : count,
-                'form' : form,
-            }
-        except :
-            context = {
-                'last_news' : 'No Last Seen News Yet',
-                'count' : count,
-                'form' : form,
-            }
-        if request.method == 'POST':
-            form = BeritaForm(request.user, request.POST)
-            if form.is_valid():
-                form.save()
-                return JsonResponse({'message': 'success'})
-        return render(request, "admin.html", context)
-    else:
-        try:
-            count = request.COOKIES['news_count']
-        except:
-            response = HttpResponseRedirect(reverse("berita:show"))
-            response.set_cookie('news_count', 0)
-            return response
-        try :
-            context = {
+    try:
+        count = request.COOKIES['news_count']
+    except:
+        response = HttpResponseRedirect(reverse("berita:show"))
+        response.set_cookie('news_count', 0)
+        return response
+    form = BeritaForm(request.user)
+    try :
+        context = {
             'last_news' : request.session['last_news'],
             'count' : count,
-            }
-        except :
-            context = {
+            'form' : form,
+        }
+    except :
+        context = {
             'last_news' : 'No Last Seen News Yet',
             'count' : count,
-            }
-        return render(request, "user.html", context)
+            'form' : form,
+        }
+    if request.method == 'POST':
+        form = BeritaForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'success'})
+    return render(request, "admin.html", context)
 
-@login_required(login_url="homepage:login")
+
 def json_all(request):
     data = Berita.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 @login_required(login_url="homepage:login")
 def delete(request, pk):
-    if request.user.is_superuser:
-        Berita.objects.filter(pk=pk).delete()
-        return JsonResponse({'message': 'success'})
-    else:
-        return render(request, "forbidden.html")   
+    Berita.objects.filter(pk=pk).delete()
+    return JsonResponse({'message': 'success'}) 
 
 @login_required(login_url="homepage:login")
 def add(request):
-    if request.user.is_superuser:
-        form = BeritaForm()
-        if request.method == 'POST':
-            form = BeritaForm(request.POST, user=request.user)
-            return JsonResponse({'message': 'success'})
-        context = {
-            'form' : form,
-        }
-        return render(request, "create.html", context)
-    else:
-        return render(request, "forbidden.html")
+    if request.method == 'POST':
+        Berita(title=request.POST.get('title'), content=request.POST.get('content'), category=request.POST.get('category'), writer=request.POST.get('writer'), source=request.POST.get('source')).save()
+        return JsonResponse({'message': 'success'})
+    return render(request, "create.html")
 
-@login_required(login_url="homepage:login")
+
 def berita(request, pk):
     data = Berita.objects.filter(pk=pk)
     request.session['last_news'] = data[0].title
@@ -104,11 +75,8 @@ def berita(request, pk):
 
 @login_required(login_url="homepage:login")
 def delete_filter(request, pk):
-    if request.user.is_superuser:
-        Berita.objects.filter(pk=pk).delete()
-        return redirect('berita:show')
-    else:
-        return render(request, "forbidden.html")
+    Berita.objects.filter(pk=pk).delete()
+    return redirect('berita:show')
 
 
 
