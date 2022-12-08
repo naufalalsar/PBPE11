@@ -66,6 +66,7 @@ def create_forum(request):
         temp = Forum(user=request.user, judul=request.POST.get('judul'),isi=request.POST.get('isi'))
         temp.save()
         return redirect('forum:show_forum')
+    return render(request, "create_forum.html")
 
 
 def add_komen(request, pk):
