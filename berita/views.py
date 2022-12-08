@@ -54,7 +54,6 @@ def delete(request, pk):
     Berita.objects.filter(pk=pk).delete()
     return JsonResponse({'message': 'success'}) 
 
-@login_required(login_url="homepage:login")
 def add(request):
     if request.method == 'POST':
         Berita(title=request.POST.get('title'), content=request.POST.get('content'), category=request.POST.get('category'), writer=request.POST.get('writer'), source=request.POST.get('source')).save()
