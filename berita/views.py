@@ -38,7 +38,7 @@ def show(request):
             'form' : form,
         }
     if request.method == 'POST':
-        form = BeritaForm(request.user, request.POST)
+        form = BeritaForm(request.POST)
         if form.is_valid():
             form.save()
             return JsonResponse({'message': 'success'})
