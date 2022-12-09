@@ -233,6 +233,7 @@ def create_arus_kas(request):
 #     return render(request, "dompet.html", {"form": form})
 
 
+@csrf_exempt
 def create_arus_kas_ajax(request):
     if request.method == "POST":
         try:
