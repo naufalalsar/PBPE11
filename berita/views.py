@@ -13,6 +13,7 @@ from django.urls import reverse
 from berita.models import Berita
 from django.http import JsonResponse
 from berita.forms import BeritaForm
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -38,7 +39,7 @@ def show(request):
             'form' : form,
         }
     if request.method == 'POST':
-        form = BeritaForm(request.user, request.POST)
+        form = BeritaForm(request.POST)
         if form.is_valid():
             form.save()
             return JsonResponse({'message': 'success'})
@@ -54,8 +55,15 @@ def delete(request, pk):
     Berita.objects.filter(pk=pk).delete()
     return JsonResponse({'message': 'success'}) 
 
-@login_required(login_url="homepage:login")
+@csrf_exempt
 def add(request):
+    if request.method == 'POST':
+        Berita(title=request.POST.get('title'), content=request.POST.get('content'), category=request.POST.get('category'), writer=request.POST.get('writer'), source=request.POST.get('source')).save()
+        return JsonResponse({'message': 'success'})
+    return render(request, "create.html")
+
+@csrf_exempt
+def add_flutter(request):
     if request.method == 'POST':
         Berita(title=request.POST.get('title'), content=request.POST.get('content'), category=request.POST.get('category'), writer=request.POST.get('writer'), source=request.POST.get('source')).save()
         return JsonResponse({'message': 'success'})
