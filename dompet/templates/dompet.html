@@ -278,7 +278,6 @@
         for="">
         <form method="POST" class="w-full flex flex-col items-center gap-y-3 text-xl" id="submit-arus-kas"
             action="{% url 'dompet:create_arus_kas' %}">
-            {% csrf_token %}
             <div class="py-3 w-full flex flex-row justify-center items-center bg-primary rounded-t-xl">
                 <h1 class="text-lg md:text-xl font-bold">Catatan Arus Kas</h1>
             </div>
