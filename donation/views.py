@@ -15,11 +15,6 @@ def index(request):
 @login_required(login_url="homepage:login")
 def add_donasi(request):
     if request.method == 'POST':
-        
-        # user = request.user
-        # title = request.POST.get("harga_barang")
-        # deskripsi = request.POST.get("deskripsi")
-
         new_task = Donation(user=request.user, 
                     title=request.POST.get('title'), 
                     description=request.POST.get('description'),
