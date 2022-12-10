@@ -85,7 +85,6 @@ def hapus_donasi(request, id):
     messages.info(request, 'Donasi berhasil terhapus!')
     return redirect('donation:donasi_saya')
 
-@login_required(login_url="homepage:login")
 def show_json(request):
     item = Donation.objects.all()
     return HttpResponse(serializers.serialize('json', item))
