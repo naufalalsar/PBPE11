@@ -16,8 +16,7 @@ def index(request):
 @csrf_exempt
 def add_donasi(request):
     if request.method == 'POST':
-        new_task = Donation(user=request.user, 
-                    title=request.POST.get('title'), 
+        new_task = Donation(title=request.POST.get('title'), 
                     description=request.POST.get('description'),
                     target=request.POST.get('target'),
                     achieved=0,
@@ -32,8 +31,7 @@ def add_donasi(request):
 @csrf_exempt
 def add_flutter(request):
     if request.method == 'POST':
-        Donation(user=request.user, 
-                title=request.POST.get('title'), 
+        Donation(title=request.POST.get('title'), 
                 description=request.POST.get('description'), 
                 target=int(request.POST.get('target')), 
                 achieved=0, 
