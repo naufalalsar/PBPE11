@@ -37,6 +37,7 @@ def add_flutter(request):
                 achieved=0, 
                 is_ongoing=True).save()
         return JsonResponse({'message': 'success'})
+    return render(request, 'donation.html')
 
 @login_required(login_url="homepage:login")
 def transaksi_donasi(request, id):
