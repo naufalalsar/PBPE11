@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from forum.models import Forum, Komen
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -59,13 +60,13 @@ def add_forum(request):
             Forum(user=request.user, judul=request.POST.get('judul'), isi=request.POST.get('isi')).save()
             return JsonResponse({'message': 'success'})
 
-
+@csrf_exempt
 def create_forum(request):
     context = {}
     if request.method == "POST":
-        temp = Forum(user=request.user, judul=request.POST.get('judul'),isi=request.POST.get('isi'))
+        temp = Forum(judul=request.POST.get('judul'),isi=request.POST.get('isi'))
         temp.save()
-        return redirect('forum:show_forum')
+        return JsonResponse({'message': 'success'})
     return render(request, "create_forum.html")
 
 
