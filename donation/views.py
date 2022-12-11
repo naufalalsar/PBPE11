@@ -32,14 +32,13 @@ def add_donasi(request):
 @csrf_exempt
 def add_flutter(request):
     if request.method == 'POST':
-        Donation(user=request.POST.get('user'), 
+        Donation(user=request.request.user, 
                 title=request.POST.get('title'), 
                 description=request.POST.get('description'), 
                 target=int(request.POST.get('target')), 
                 achieved=0, 
                 is_ongoing=True).save()
         return JsonResponse({'message': 'success'})
-    return render(request, 'donation.html')
 
 @login_required(login_url="homepage:login")
 def transaksi_donasi(request, id):
