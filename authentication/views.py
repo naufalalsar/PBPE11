@@ -16,7 +16,10 @@ def login_user(request):
             return JsonResponse(
                 {
                     "status": True,
-                    "message": "Successfully Logged In!"
+                    "message": "Successfully Logged In!",
+                    "user_data": {
+                        "username": user.username,
+                    },
                     # Insert any extra data if you want to pass data to Flutter
                 },
                 status=200,
