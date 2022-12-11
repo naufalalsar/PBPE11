@@ -6,20 +6,16 @@ from donation.models import Donation
 from dompet.models import Dompet
 from dompet.models import ArusKas
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 @login_required(login_url="homepage:login")
 def index(request):
     return render(request, 'donation.html')
 
-@login_required(login_url="homepage:login")
+@csrf_exempt
 def add_donasi(request):
     if request.method == 'POST':
-        
-        # user = request.user
-        # title = request.POST.get("harga_barang")
-        # deskripsi = request.POST.get("deskripsi")
-
         new_task = Donation(user=request.user, 
                     title=request.POST.get('title'), 
                     description=request.POST.get('description'),
@@ -32,6 +28,17 @@ def add_donasi(request):
         return HttpResponse(b"CREATED", status=201)
 
     return HttpResponseNotFound()
+
+@csrf_exempt
+def add_flutter(request):
+    if request.method == 'POST':
+        Donation(user=request.user, 
+                title=request.POST.get('title'), 
+                description=request.POST.get('description'), 
+                target=int(request.POST.get('target')), 
+                achieved=0, 
+                is_ongoing=True).save()
+        return JsonResponse({'message': 'success'})
 
 @login_required(login_url="homepage:login")
 def transaksi_donasi(request, id):
@@ -85,7 +92,6 @@ def hapus_donasi(request, id):
     messages.info(request, 'Donasi berhasil terhapus!')
     return redirect('donation:donasi_saya')
 
-@login_required(login_url="homepage:login")
 def show_json(request):
     item = Donation.objects.all()
     return HttpResponse(serializers.serialize('json', item))
