@@ -49,10 +49,7 @@ def register_user(request):
             return JsonResponse(
                 {
                     "status": True,
-                    "message": "Successfully create account",
-                    "user_data": {
-                        "username": username,
-                    },
+                    "message": "Successfully create account with username: " + username,
                     # Insert any extra data if you want to pass data to Flutter
                 },
                 status=200,
