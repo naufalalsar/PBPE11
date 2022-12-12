@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Forum(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     judul = models.CharField(max_length=200, null=True)
     isi = models.TextField(blank=True, null=True)
     tanggal = models.DateTimeField(auto_now=True)

@@ -59,7 +59,8 @@ def add_forum(request):
         if request.method == 'POST':
             Forum(user=request.user, judul=request.POST.get('judul'), isi=request.POST.get('isi')).save()
             return JsonResponse({'message': 'success'})
-
+            
+@login_required(login_url="homepage:login")
 @csrf_exempt
 def create_forum(request):
     context = {}
@@ -75,7 +76,8 @@ def add_komen(request, pk):
             Komen(forum=Forum.objects.get(id=pk),komen=request.POST.get('komen'),user=request.user,idforum=request.POST.get('idforum')).save()
             return JsonResponse({'message': 'success'})
 
-
+@login_required(login_url="homepage:login")
+@csrf_exempt
 def delete_forum(request, pk):
         Forum.objects.filter(pk=pk).delete()
         return JsonResponse({'message': 'success'})
