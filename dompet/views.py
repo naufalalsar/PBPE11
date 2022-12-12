@@ -180,6 +180,7 @@ def create_arus_kas(request):
         keterangan = request.POST.get("keterangan")
         tipe = request.POST.get("tipe")
         temp_saldo = dompet.saldo + int(tipe) * int(nominal)
+        print(keterangan, tipe, nominal, temp_saldo)
 
         if temp_saldo < 0:
             messages.error(request, "Saldo tidak boleh negatif!")
@@ -207,6 +208,13 @@ def create_arus_kas(request):
             },
             status=200,
         )
+    return JsonResponse(
+        {
+            "status": "error",
+            "message": "Method not allowed!",
+        },
+        status=405,
+    )
 
 
 #
