@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from kurs.models import Currency, Exchange
+from django.views.decorators.csrf import csrf_exempt
 import requests
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -191,7 +192,7 @@ def kurs_json(request, currency):
         exchange.amount = "{:,}".format(exchange.amount)
     return HttpResponse(serializers.serialize("json", exchanges, use_natural_foreign_keys=True), content_type="application/json")
 
-
+@csrf_exempt
 def calculate(request):
     if request.method == "POST":
         source_currency = Currency.objects.get(code=request.POST["source_currency"])

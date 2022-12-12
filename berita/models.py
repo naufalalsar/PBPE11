@@ -5,7 +5,6 @@ from datetime import datetime
 # Create your models here.
 
 class Berita(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200, null=True)
     content = models.TextField(blank=True, null=True)
     category = models.CharField(max_length=200, null=True)

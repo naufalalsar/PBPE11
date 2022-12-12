@@ -14,14 +14,14 @@ from django.urls import reverse
 from django.http import JsonResponse
 from dompet.models import Dompet
 from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def homepage(request):
     context = {"sidebar_hidden": True}
     return render(request, "homepage.html", context)
 
-
+@csrf_exempt
 def login_user(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -37,14 +37,14 @@ def login_user(request):
     context = {"sidebar_hidden": True}
     return render(request, "login.html", context)
 
-
+@csrf_exempt
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse("homepage:login"))
     response.delete_cookie("news_count")
     return response
 
-
+@csrf_exempt
 def register(request):
     form = UserCreationForm()
 

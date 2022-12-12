@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from dompet.models import *
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.shortcuts import redirect
@@ -159,6 +160,7 @@ def show_arus_kas_json(request):
     return HttpResponse(arus_kas_json, content_type="application/json")
 
 
+@csrf_exempt
 def create_arus_kas(request):
     if request.method == "POST":
         try:
@@ -172,7 +174,14 @@ def create_arus_kas(request):
 
         if temp_saldo < 0:
             messages.error(request, "Saldo tidak boleh negatif!")
-            return redirect("dompet:show_dompet")
+            # return redirect("dompet:show_dompet")
+            return JsonResponse(
+                {
+                    "status": "error",
+                    "message": "Saldo tidak boleh negatif!",
+                },
+                status=400,
+            )
 
         dompet.saldo = temp_saldo
         dompet.save()
@@ -181,7 +190,14 @@ def create_arus_kas(request):
         )
         arus_kas.save()
         messages.success(request, "Arus kas berhasil dibuat!")
-        return redirect("dompet:show_dompet")
+        # return redirect("dompet:show_dompet")
+        return JsonResponse(
+            {
+                "status": "success",
+                "message": "Arus kas berhasil dibuat!",
+            },
+            status=200,
+        )
 
 
 #
@@ -217,6 +233,7 @@ def create_arus_kas(request):
 #     return render(request, "dompet.html", {"form": form})
 
 
+@csrf_exempt
 def create_arus_kas_ajax(request):
     if request.method == "POST":
         try:
