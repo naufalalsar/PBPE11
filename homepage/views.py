@@ -14,7 +14,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from dompet.models import Dompet
 from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def homepage(request):
@@ -22,6 +22,7 @@ def homepage(request):
     return render(request, "homepage.html", context)
 
 
+@csrf_exempt
 def login_user(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -38,6 +39,7 @@ def login_user(request):
     return render(request, "login.html", context)
 
 
+@csrf_exempt
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse("homepage:login"))
@@ -45,6 +47,7 @@ def logout_user(request):
     return response
 
 
+@csrf_exempt
 def register(request):
     form = UserCreationForm()
 
@@ -53,8 +56,8 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Akun telah berhasil dibuat!")
-            # new_user = User.objects.get(username=form.cleaned_data.get("username"))
-            # Dompet.objects.create(user=new_user, saldo=0).save()
+            new_user = User.objects.get(username=form.cleaned_data.get("username"))
+            Dompet.objects.create(user=new_user, saldo=0).save()
 
             return redirect("homepage:login")
         else:
