@@ -22,7 +22,6 @@ def homepage(request):
     return render(request, "homepage.html", context)
 
 
-@csrf_exempt
 def login_user(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -47,7 +46,6 @@ def logout_user(request):
     return response
 
 
-@csrf_exempt
 def register(request):
     form = UserCreationForm()
 
