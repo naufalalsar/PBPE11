@@ -12,12 +12,13 @@ import datetime
 
 def show_dompet(request, filter_type="all"):
     try:
-        dompet = Dompet.objects.get(user=request.user)
-        # dompet = Dompet.objects.all()[1]
+        # dompet = Dompet.objects.get(user=request.user)
+        dompet = Dompet.objects.all()[1]
     except (Dompet.DoesNotExist, IndexError) as e:
-        dompet = Dompet.objects.create(user=request.user, saldo=0)
+        dompet = Dompet.objects.create(saldo=0)
 
-    arus_kas = ArusKas.objects.filter(dompet=dompet)
+    # arus_kas = ArusKas.objects.filter(dompet=dompet)
+    arus_kas = ArusKas.objects.all()
     if filter_type == "date":
         arus_kas = arus_kas.filter(created_at__date=datetime.date.today())
     elif filter_type == "week":
@@ -59,14 +60,15 @@ def show_dompet(request, filter_type="all"):
 
 def show_dompet_json(request):
     try:
-        dompet = Dompet.objects.get(user=request.user)
-        # dompet = Dompet.objects.all()[1]
+        # dompet = Dompet.objects.get(user=request.user)
+        dompet = Dompet.objects.all()[1]
     except (Dompet.DoesNotExist, IndexError) as e:
-        dompet = Dompet.objects.create(user=request.user, saldo=0)
+        dompet = Dompet.objects.create(saldo=0)
 
     print(Dompet.objects.all())
     print(dompet)
-    arus_kas = ArusKas.objects.filter(dompet=dompet)
+    # arus_kas = ArusKas.objects.filter(dompet=dompet)
+    arus_kas = ArusKas.objects.all()
 
     pemasukan, pengeluaran = 0, 0
     for arus in arus_kas:
@@ -91,12 +93,13 @@ def show_dompet_json(request):
 
 def show_dompet_ajax(request, filter_type="all"):
     try:
-        dompet = Dompet.objects.get(user=request.user)
-        # dompet = Dompet.objects.all()[1]
+        # dompet = Dompet.objects.get(user=request.user)
+        dompet = Dompet.objects.all()[1]
     except (Dompet.DoesNotExist, IndexError) as e:
-        dompet = Dompet.objects.create(user=request.user, saldo=0)
+        dompet = Dompet.objects.create(saldo=0)
 
-    arus_kas = ArusKas.objects.filter(dompet=dompet)
+    # arus_kas = ArusKas.objects.filter(dompet=dompet)
+    arus_kas = ArusKas.objects.all()
     if filter_type == "date":
         arus_kas = arus_kas.filter(created_at__date=datetime.date.today())
     elif filter_type == "week":
@@ -135,7 +138,8 @@ def show_dompet_ajax(request, filter_type="all"):
 
 
 def show_arus_kas(request):
-    arus_kas = ArusKas.objects.filter(dompet__user=request.user)
+    # arus_kas = ArusKas.objects.filter(dompet__user=request.user)
+    arus_kas = ArusKas.objects.all()
 
     pemasukan, pengeluaran = 0, 0
     for arus in arus_kas:
@@ -158,7 +162,8 @@ def show_arus_kas(request):
 
 
 def show_arus_kas_json(request):
-    arus_kas = ArusKas.objects.filter(dompet__user=request.user)
+    # arus_kas = ArusKas.objects.filter(dompet__user=request.user)
+    arus_kas = ArusKas.objects.all()
     arus_kas_json = serializers.serialize("json", arus_kas)
     return HttpResponse(arus_kas_json, content_type="application/json")
 
@@ -167,10 +172,10 @@ def show_arus_kas_json(request):
 def create_arus_kas(request):
     if request.method == "POST":
         try:
-            dompet = Dompet.objects.get(user=request.user)
-            # dompet = Dompet.objects.all()[1]
+            # dompet = Dompet.objects.get(user=request.user)
+            dompet = Dompet.objects.all()[1]
         except (Dompet.DoesNotExist, IndexError) as e:
-            dompet = Dompet.objects.create(user=request.user, saldo=0)
+            dompet = Dompet.objects.create(saldo=0)
         nominal = request.POST.get("nominal")
         keterangan = request.POST.get("keterangan")
         tipe = request.POST.get("tipe")
@@ -190,7 +195,7 @@ def create_arus_kas(request):
         dompet.saldo = temp_saldo
         dompet.save()
         arus_kas = ArusKas.objects.create(
-            dompet=dompet, nominal=nominal, keterangan=keterangan, tipe=tipe
+            nominal=nominal, keterangan=keterangan, tipe=tipe
         )
         arus_kas.save()
         messages.success(request, "Arus kas berhasil dibuat!")
@@ -240,10 +245,10 @@ def create_arus_kas(request):
 def create_arus_kas_ajax(request):
     if request.method == "POST":
         try:
-            dompet = Dompet.objects.get(user=request.user)
-            # dompet = Dompet.objects.all()[1]
+            # dompet = Dompet.objects.get(user=request.user)
+            dompet = Dompet.objects.all()[1]
         except (Dompet.DoesNotExist, IndexError) as e:
-            dompet = Dompet.objects.create(user=request.user, saldo=0)
+            dompet = Dompet.objects.create(saldo=0)
         nominal = request.POST.get("nominal")
         keterangan = request.POST.get("keterangan")
         tipe = request.POST.get("tipe")
@@ -256,7 +261,7 @@ def create_arus_kas_ajax(request):
         dompet.saldo = temp_saldo
         dompet.save()
         arus_kas = ArusKas.objects.create(
-            dompet=dompet, nominal=nominal, keterangan=keterangan, tipe=tipe
+            nominal=nominal, keterangan=keterangan, tipe=tipe
         )
         arus_kas.save()
         resp = {
@@ -272,7 +277,8 @@ def create_arus_kas_ajax(request):
 
 
 def filter_arus_kas_ajax(request, filter_type):
-    arus_kas = ArusKas.objects.filter(dompet__user=request.user)
+    # arus_kas = ArusKas.objects.filter(dompet__user=request.user)
+    arus_kas = ArusKas.objects.all()
     if filter_type == "date":
         arus_kas = arus_kas.filter(created_at__date=datetime.date.today())
     elif filter_type == "week":
