@@ -75,7 +75,7 @@ def add_komen(request, pk):
             Komen(forum=Forum.objects.get(id=pk),komen=request.POST.get('komen'),user=request.user,idforum=request.POST.get('idforum')).save()
             return JsonResponse({'message': 'success'})
 
-
+@csrf_exempt
 def delete_forum(request, pk):
         Forum.objects.filter(pk=pk).delete()
         return JsonResponse({'message': 'success'})
